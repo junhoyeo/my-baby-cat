@@ -61,11 +61,6 @@ inline void resizeConsole(int height, int width) {
   system(command);
 }
 
-inline void updateColor(int fontColor, int bgColor) {
-  int color = (bgColor & 0xF) << 4 | fontColor & 0xF;
-  SetConsoleTextAttribute(CONSOLE_OUTPUT, color);
-}
-
 inline void initWindow() {
   updateHandles();
   updateDpiHandle();
@@ -73,8 +68,6 @@ inline void initWindow() {
   disableConsoleResize();
   disableConsoleSelection();
   resizeConsole(SCREEN_HEIGHT, SCREEN_WIDTH);
-  updateColor(0, 15);
-  system("cls");
 }
 
 #endif

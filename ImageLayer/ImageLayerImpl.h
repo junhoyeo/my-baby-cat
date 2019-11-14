@@ -3,8 +3,8 @@
 #include <Windows.h>
 #include "ImageLayer.h"
 
-#define CONSOLE_WIDTH 50
-#define CONSOLE_HEIGHT 60
+#define CONSOLE_WIDTH 120
+#define CONSOLE_HEIGHT 30
 
 #define DEFAULT_RESOLUTION_SCALE 16
 double RESOLUTION_MULTIPLIER = 1;
