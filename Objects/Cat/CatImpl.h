@@ -47,13 +47,24 @@ void _Cat_waitForMouse(Cat* self) {
   self->isRunning = 0;
 }
 
+void _Cat_move(Cat* self, int changeX, int changeY) {
+  self->x += changeX;
+  self->image->x += changeX;
+
+  self->y += changeY;
+  self->image->y += changeY;
+
+  self->update(self);
+}
+
 void _Cat_run(Cat* self) {
   _beginthread(*(self->waitForMouse), 0, (Cat*) self);
   while (self->isRunning) {
     for (int frame = 1; frame < 8; frame ++) {
       self->image->fileName = RESOURCE_CAT[frame];
-      self->imageLayer->renderAll(self->imageLayer);
+      self->move(self, 8, 0);
 
+      self->imageLayer->renderAll(self->imageLayer);
       Sleep(10);
     }
   }

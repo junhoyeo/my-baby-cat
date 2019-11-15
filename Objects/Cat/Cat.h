@@ -20,6 +20,7 @@ const Cat DEFAULT_CAT = {
   _Cat_update,
   _Cat_isHovered,
   _Cat_waitForMouse,
+  _Cat_move,
   _Cat_run,
   _Cat_addBackgroundThread,
 };

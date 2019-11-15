@@ -19,6 +19,7 @@ typedef struct _Cat {
 	void (*update)(struct Cat*);
 	int (*isHovered)(struct Cat*, struct Mouse*);
   void (*waitForMouse)(struct Cat*);
+  void (*move)(struct Cat*, int, int);
 	void (*run)(struct Cat*);
   void (*addBackgroundThread)(struct Cat*, int (*method)(struct Cat*));
 } Cat;
