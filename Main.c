@@ -6,7 +6,8 @@
 #include <Windows.h>
 #include "Init.h"
 #include "Utils.h"
-#include "Resources.h"
+#include "Mouse/Mouse.h"
+#include "Objects/Cat/Cat.h"
 #include "ImageLayer/ImageLayer.h"
 
 int main() {
@@ -14,23 +15,36 @@ int main() {
   updateResources();
   Sleep(100);
 
+  Mouse mouse = DEFAULT_MOUSE;
+
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
  	imageLayer.initialize(&imageLayer);
 
  	Image images[1] = {
- 		{CAT[0], 0, 0, 3},
+ 		{RESOURCE_CAT[0], 0, 0, 3},
  	};
  	imageLayer.imageCount = 1;
  	imageLayer.images = images;
   imageLayer.renderAll(&imageLayer);
 
-  int frame = 2;
-  while (1) {
-    images[0].fileName = CAT[frame];
-    imageLayer.renderAll(&imageLayer);
+  Cat cat = DEFAULT_CAT;
+  cat.image = &images[0];
+  cat.imageLayer = &imageLayer;
+  cat.init(&cat);
+  cat.update(&cat);
 
-    Sleep(100);
-    frame = (frame > 6) ? 2 : frame + 1;
+  while (1) {
+    // printf("%d\n", mouse.hasInput());
+    if (mouse.isClicked()) {
+      if (!cat.isRunning) {
+        if (cat.isHovered(&cat, &mouse))
+          cat.addBackgroundThread(&cat, cat.run);
+      }
+    }
+    // gotoxy(0, 0);
+    // printf("");
   }
+
+  // cat.run(&cat);
  	getchar();
 }
