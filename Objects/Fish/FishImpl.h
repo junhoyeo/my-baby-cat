@@ -21,7 +21,16 @@ void _Fish_update(Fish* self) {
 	self->image->y = self->y;
 }
 
+void _Fish_waitForEnd(Fish* self) {
+  while (1) {
+    if (self->x < 100)
+      break;
+  }
+  self->isMoving = 0;
+}
+
 void _Fish_move(Fish* self) {
+  _beginthread(*(self->waitForEnd), 0, (Fish*) self);
 	while (self->isMoving) {
 		self->x -= 10;
 		self->update(self);
