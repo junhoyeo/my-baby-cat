@@ -22,7 +22,7 @@ int main() {
  	imageLayer.initialize(&imageLayer);
 
  	Image images[2] = {
- 		{RESOURCE_CAT[0], 0, 0, 3},
+ 		{RESOURCE_CAT[0], 0, 0, 1},
     {RESOURCE_FISH[0], 0, 0, 3},
  	};
  	imageLayer.imageCount = 2;

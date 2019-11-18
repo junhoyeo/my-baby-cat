@@ -16,6 +16,7 @@ void _Cat_init(Cat* self) {
 	GetObject(hbitmap, sizeof(BITMAP), &bitmap);
 	self->width = bitmap.bmWidth;
 	self->height = bitmap.bmHeight;
+  // TODO: set and use scale as 1
 }
 
 // void _Cat_update(Cat* self) {
@@ -75,6 +76,8 @@ void _Cat_run(Cat* self) {
 
 void _Cat_addBackgroundThread(Cat* self, int (*method)(Cat*)) {
   self->isRunning = 1;
+  Sleep(200);
+
   _beginthread(*method, 0, (Cat*) self);
 }
 
