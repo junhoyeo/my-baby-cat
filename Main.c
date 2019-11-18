@@ -27,7 +27,6 @@ int main() {
  	};
  	imageLayer.imageCount = 2;
  	imageLayer.images = images;
-  imageLayer.renderAll(&imageLayer);
 
   // init cat
   Cat cat = DEFAULT_CAT;
@@ -40,13 +39,14 @@ int main() {
   Fish fish = DEFAULT_FISH;
   fish.image = &images[1];
   fish.imageLayer = &imageLayer;
-  fish.x = 976 + 500;
+  fish.x = 1820;
   fish.init(&fish);
 
   // game start
-  cat.addBackgroundThread(&cat, cat.run);
+  imageLayer.renderAll(&imageLayer);
 
-  fish.move(&fish, 10);
+  cat.addBackgroundThread(&cat, cat.run);
+  fish.addBackgroundThread(&fish, fish.move);
 
   // while (1) {
   //   // printf("%d\n", mouse.hasInput());

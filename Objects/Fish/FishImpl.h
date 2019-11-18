@@ -13,6 +13,7 @@ void _Fish_init(Fish* self) {
 	GetObject(hbitmap, sizeof(BITMAP), &bitmap);
 	self->width = bitmap.bmWidth;
 	self->height = bitmap.bmHeight;
+	self->update(self);
 }
 
 void _Fish_update(Fish* self) {
@@ -20,13 +21,19 @@ void _Fish_update(Fish* self) {
 	self->image->y = self->y;
 }
 
-void _Fish_move(Fish* self, int changeX) {
-	while (1) {
-		self->x -= changeX;
+void _Fish_move(Fish* self) {
+	while (self->isMoving) {
+		self->x -= 10;
 		self->update(self);
 		self->imageLayer->renderAll(self->imageLayer);
 		Sleep(100);
 	}
+	// TODO: delete or hide fish here
+}
+
+void _Fish_addBackgroundThread(Fish* self, int (*method)(Fish*)) {
+	self->isMoving = 1;
+  _beginthread(*method, 0, (Fish*) self);
 }
 
 #endif

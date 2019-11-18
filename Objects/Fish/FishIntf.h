@@ -10,13 +10,15 @@ typedef struct _Fish {
   int level;
   int x, y;
   int width, height;
+  int isMoving;
   COORD start, end;
   Image *image;
   ImageLayer *imageLayer;
 
 	void (*init)(struct _Fish*);
 	void (*update)(struct _Fish*);
-  void (*move)(struct _Fish*, int);
+  void (*move)(struct _Fish*);
+  void (*addBackgroundThread)(struct _Fish*, void (*method)(struct _Fish*));
 } Fish;
 
 #endif
