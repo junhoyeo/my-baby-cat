@@ -31,19 +31,20 @@ int main() {
   cat.image = &images[0];
   cat.imageLayer = &imageLayer;
   cat.init(&cat);
-  cat.update(&cat);
+  // cat.update(&cat);
 
-  while (1) {
-    // printf("%d\n", mouse.hasInput());
-    if (mouse.isClicked()) {
-      if (!cat.isRunning) {
-        if (cat.isHovered(&cat, &mouse))
-          cat.addBackgroundThread(&cat, cat.run);
-      }
-    }
-    // gotoxy(0, 0);
-    // printf("");
-  }
+  // 게임 시작
+  cat.addBackgroundThread(&cat, cat.run);
+
+  // while (1) {
+  //   // printf("%d\n", mouse.hasInput());
+  //   // if (!cat.isRunning) {
+  //   //   if (cat.isHovered(&cat, &mouse))
+  //   //     cat.addBackgroundThread(&cat, cat.run);
+  //   // }
+  //   // gotoxy(0, 0);
+  //   // printf("");
+  // }
 
   // cat.run(&cat);
  	getchar();
