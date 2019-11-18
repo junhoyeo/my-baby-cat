@@ -20,10 +20,11 @@ int main() {
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
  	imageLayer.initialize(&imageLayer);
 
- 	Image images[1] = {
+ 	Image images[2] = {
  		{RESOURCE_CAT[0], 0, 0, 3},
+    {RESOURCE_FISH[0], 0, 0, 3},
  	};
- 	imageLayer.imageCount = 1;
+ 	imageLayer.imageCount = 2;
  	imageLayer.images = images;
   imageLayer.renderAll(&imageLayer);
 

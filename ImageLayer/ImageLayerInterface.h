@@ -5,7 +5,7 @@ typedef struct {
 	char* fileName;
 	int x, y;
 	double scale;
-}Image;
+} Image;
 
 typedef struct _ImageLayer {
 	Image* images;
