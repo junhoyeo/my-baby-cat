@@ -5,22 +5,19 @@
 
 #include "Resources.h"
 #include "Objects/Fish/FishIntf.h"
-// #include "Objects/Fish/FishImpl.h"
+#include "Objects/Fish/FishImpl.h"
 
 const Fish DEFAULT_FISH = {
+  0,
   0, 0,
   0, 0,
   { 0, 0, }, { 0, 0, },
   NULL,
   NULL,
 
-  _Cat_init,
-  // _Cat_update,
-  // _Cat_isHovered,
-  // _Cat_waitForMouse,
-  // _Cat_move,
-  // _Cat_run,
-  // _Cat_addBackgroundThread,
+  _Fish_init,
+  _Fish_update,
+  _Fish_move,
 };
 
 #endif

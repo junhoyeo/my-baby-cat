@@ -8,6 +8,7 @@
 #include "Utils.h"
 #include "Mouse/Mouse.h"
 #include "Objects/Cat/Cat.h"
+#include "Objects/Fish/Fish.h"
 #include "ImageLayer/ImageLayer.h"
 
 int main() {
@@ -28,14 +29,24 @@ int main() {
  	imageLayer.images = images;
   imageLayer.renderAll(&imageLayer);
 
+  // init cat
   Cat cat = DEFAULT_CAT;
   cat.image = &images[0];
   cat.imageLayer = &imageLayer;
   cat.init(&cat);
   // cat.update(&cat);
 
-  // 게임 시작
+  // init fish example; later put to loop
+  Fish fish = DEFAULT_FISH;
+  fish.image = &images[1];
+  fish.imageLayer = &imageLayer;
+  fish.x = 976 + 500;
+  fish.init(&fish);
+
+  // game start
   cat.addBackgroundThread(&cat, cat.run);
+
+  fish.move(&fish, 10);
 
   // while (1) {
   //   // printf("%d\n", mouse.hasInput());
