@@ -21,12 +21,16 @@ int main() {
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
  	imageLayer.initialize(&imageLayer);
 
- 	Image images[2] = {
- 		{RESOURCE_CAT[0], 0, 0, 1},
-    {RESOURCE_FISH[0], 0, 0, 3},
- 	};
- 	imageLayer.imageCount = 2;
- 	imageLayer.images = images;
+ 	// Image images[2] = {
+ 	// 	{RESOURCE_CAT[0], 0, 0, 1},
+  //   {RESOURCE_FISH[0], 0, 0, 3},
+ 	// };
+ 	// imageLayer.imageCount = 2;
+ 	// imageLayer.images = images;
+  Image *images = malloc(4 * sizeof(Image));
+  images[0] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 0, .scale = 1 };
+  imageLayer.imageCount = 1;
+  imageLayer.images = images;
 
   // init cat
   Cat cat = DEFAULT_CAT;
@@ -36,17 +40,34 @@ int main() {
   // cat.update(&cat);
 
   // init fish example; later put to loop
-  Fish fish = DEFAULT_FISH;
-  fish.image = &images[1];
-  fish.imageLayer = &imageLayer;
-  fish.x = 1820;
-  fish.init(&fish);
+  // Fish fish = DEFAULT_FISH;
+  // fish.image = &images[1];
+  // fish.imageLayer = &imageLayer;
+  // fish.x = 1820;
+  // fish.init(&fish);
 
   // game start
   imageLayer.renderAll(&imageLayer);
 
   cat.addBackgroundThread(&cat, cat.run);
-  fish.addBackgroundThread(&fish, fish.move);
+  // fish.addBackgroundThread(&fish, fish.move);
+
+  Fish *fishSegments = malloc(3 * sizeof(Fish));
+  // images = malloc(6 * sizeof(Image));
+
+  for(int i = 0; i < 2; i++) {
+    images[i + 1] = (Image) { .fileName = RESOURCE_FISH[0], .x = 0, .y = 0, .scale = 3 };
+    imageLayer.imageCount++;
+
+    fishSegments[i] = DEFAULT_FISH;
+    fishSegments[i].image = &images[1 + i];
+    fishSegments[i].imageLayer = &imageLayer;
+    fishSegments[i].x = 1820;
+    fishSegments[i].init(&fishSegments[i]);
+
+    fishSegments[i].addBackgroundThread(&fishSegments[i], fishSegments[i].move);
+    Sleep(500);
+  }
 
   // while (1) {
   //   // printf("%d\n", mouse.hasInput());
