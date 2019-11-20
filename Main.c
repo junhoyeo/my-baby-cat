@@ -57,17 +57,18 @@ int main() {
   // images = malloc(6 * sizeof(Image));
 
   for(int i = 0; i < 5; i++) {
-    images[i + 2] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1820, .y = 450, .scale = 3 };
+    images[i + 2] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1820, .y = 600, .scale = 1 };
     imageLayer.imageCount++;
 
     fishSegments[i] = DEFAULT_FISH;
     fishSegments[i].image = &images[i + 2];
     fishSegments[i].imageLayer = &imageLayer;
     fishSegments[i].x = 1820;
-    fishSegments[i].y = 450;
+    fishSegments[i].y = 600;
     fishSegments[i].init(&fishSegments[i]);
 
     fishSegments[i].addBackgroundThread(&fishSegments[i], fishSegments[i].move);
+    // TODO: merge background listeners to one in global
     Sleep(2000);
   }
 
