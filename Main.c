@@ -69,6 +69,7 @@ int main() {
 
     fishSegments[i].addBackgroundThread(&fishSegments[i], fishSegments[i].move);
     // TODO: merge background listeners to one in global
+    // fishSegments를 prop으로 받아서 몇 초 간격으로, 하나씩 돌아가면서 체크하면 될 듯.
     Sleep(2000);
   }
 
