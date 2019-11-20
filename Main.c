@@ -27,7 +27,7 @@ int main() {
  	// };
  	// imageLayer.imageCount = 2;
  	// imageLayer.images = images;
-  Image *images = malloc(4 * sizeof(Image));
+  Image *images = malloc(6 * sizeof(Image));
   images[0] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 0, .scale = 1 };
   imageLayer.imageCount = 1;
   imageLayer.images = images;
@@ -52,10 +52,10 @@ int main() {
   cat.addBackgroundThread(&cat, cat.run);
   // fish.addBackgroundThread(&fish, fish.move);
 
-  Fish *fishSegments = malloc(3 * sizeof(Fish));
+  Fish *fishSegments = malloc(5 * sizeof(Fish));
   // images = malloc(6 * sizeof(Image));
 
-  for(int i = 0; i < 2; i++) {
+  for(int i = 0; i < 5; i++) {
     images[i + 1] = (Image) { .fileName = RESOURCE_FISH[0], .x = 0, .y = 0, .scale = 3 };
     imageLayer.imageCount++;
 
@@ -66,7 +66,7 @@ int main() {
     fishSegments[i].init(&fishSegments[i]);
 
     fishSegments[i].addBackgroundThread(&fishSegments[i], fishSegments[i].move);
-    Sleep(500);
+    Sleep(2000);
   }
 
   // while (1) {
