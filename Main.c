@@ -27,14 +27,15 @@ int main() {
  	// };
  	// imageLayer.imageCount = 2;
  	// imageLayer.images = images;
-  Image *images = malloc(6 * sizeof(Image));
-  images[0] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 0, .scale = 1 };
-  imageLayer.imageCount = 1;
+  Image *images = malloc(7 * sizeof(Image));
+  images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1 };
+  images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1 };
+  imageLayer.imageCount = 2;
   imageLayer.images = images;
 
   // init cat
   Cat cat = DEFAULT_CAT;
-  cat.image = &images[0];
+  cat.image = &images[1];
   cat.imageLayer = &imageLayer;
   cat.init(&cat);
   // cat.update(&cat);
@@ -56,13 +57,14 @@ int main() {
   // images = malloc(6 * sizeof(Image));
 
   for(int i = 0; i < 5; i++) {
-    images[i + 1] = (Image) { .fileName = RESOURCE_FISH[0], .x = 0, .y = 0, .scale = 3 };
+    images[i + 2] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1820, .y = 450, .scale = 3 };
     imageLayer.imageCount++;
 
     fishSegments[i] = DEFAULT_FISH;
-    fishSegments[i].image = &images[1 + i];
+    fishSegments[i].image = &images[i + 2];
     fishSegments[i].imageLayer = &imageLayer;
     fishSegments[i].x = 1820;
+    fishSegments[i].y = 450;
     fishSegments[i].init(&fishSegments[i]);
 
     fishSegments[i].addBackgroundThread(&fishSegments[i], fishSegments[i].move);

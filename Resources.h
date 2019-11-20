@@ -9,9 +9,11 @@
 
 #define RESOURCE_CAT_LEN 8
 #define RESOURCE_FISH_LEN 1
+#define RESOURCE_BACKGROUND_LEN 1
 
 char* RESOURCE_CAT[RESOURCE_CAT_LEN];
 char* RESOURCE_FISH[RESOURCE_FISH_LEN];
+char* RESOURCE_BACKGROUND[RESOURCE_BACKGROUND_LEN];
 
 inline void updateResources() {
   // TODO: Abstraction needed!!!
@@ -32,6 +34,15 @@ inline void updateResources() {
     int len = strlen(filename) + 1;
     RESOURCE_FISH[idx - 1] = (char*)malloc(sizeof(char) * len);
     strcpy(RESOURCE_FISH[idx - 1], filename);
+  }
+
+  // export background stages
+  for (int idx = 1; idx <= RESOURCE_BACKGROUND_LEN; idx++) {
+    char filename[100];
+    sprintf(filename, "resources/background/background-st%d.bmp", idx);
+    int len = strlen(filename) + 1;
+    RESOURCE_BACKGROUND[idx - 1] = (char*)malloc(sizeof(char) * len);
+    strcpy(RESOURCE_BACKGROUND[idx - 1], filename);
   }
 }
 
