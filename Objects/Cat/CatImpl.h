@@ -103,10 +103,20 @@ void _Cat_jump(Cat* self) {
   self->addBackgroundThread(self, self->run);
 }
 
+void _Cat_slide(Cat *self) {
+  self->isRunning = 0;
+  self->image->fileName = RESOURCE_CAT[9];
+  self->imageLayer->renderAll(self->imageLayer);
+}
+
 void _Cat_listenKeys(Cat *self) {
   while (1) {
     if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
       self->addBackgroundThread(self, self->jump);
+    } else if (GetAsyncKeyState(VK_DOWN) & 0x8001) {
+      self->slide(self);
+      Sleep(150);
+      self->addBackgroundThread(self, self->run);
     }
   }
 }
