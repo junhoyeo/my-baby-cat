@@ -21,10 +21,14 @@ int animateFishSegments(Fish *(*fishSegmentPointer)[], int fishLength) {
           // 플레이어가 해당 물고기를 먹을 수 있으면 점수
           // 아니면 계속 지나감
           // 끝나면 물고기 없앰 -> remove from pointer
-          (*fishSegmentPointer)[idx]->image->isShown = false;
           // completeCount++;
           // if (completeCount == fishLength)
           //   return 1;
+          Image *image = (*fishSegmentPointer)[idx]->image;
+          if (image->isShown) {
+            image->isShown = false;
+            SCORE.update(&SCORE, 100);
+          }
         } else { // 이동 가능
           // printf("%d\n", (*fishSegmentPointer)[idx]->x);
           (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx], 10);

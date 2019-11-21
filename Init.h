@@ -70,6 +70,8 @@ inline void initWindow() {
   disableConsoleResize();
   disableConsoleSelection();
   resizeConsole(SCREEN_HEIGHT, SCREEN_WIDTH);
+
+  SCORE = createScore();
 }
 
 #endif
