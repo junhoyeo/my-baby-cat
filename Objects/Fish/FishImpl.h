@@ -35,7 +35,6 @@ void _Fish_move(Fish* self) {
 	self->x -= 10;
 	self->update(self);
 	self->imageLayer->renderAll(self->imageLayer);
-		// Sleep(100);
 	// }
 	// TODO: delete or hide fish here
 }

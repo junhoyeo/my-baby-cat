@@ -12,13 +12,12 @@
 #include "ImageLayer/ImageLayer.h"
 
 void addBackgroundFishSegmentsThread(Fish *(*fishSegmentPointer)[], int fishLength) {
-  while (1) {
+  for (int repeat = 0;; repeat++) {
     for (int idx = 0; idx < fishLength; idx++) {
-      // (*(fishSegments))[idx]->move((fishSegments)[idx]);
-      // printf("%p", (&fishSegments)[idx]->isMoving);
-      // printf("%d\n", (*fishSegments + idx).level);
-      (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx]);
-      // printf("%d\n", (*fishSegmentPointer)[idx]->x);
+      if (repeat > 10 * idx) {
+        (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx]);
+        // printf("%d\n", (*fishSegmentPointer)[idx]->x);
+      }
     }
   }
 }
@@ -78,7 +77,8 @@ int main() {
     // fishSegments[i] = DEFAULT_FISH;
     *fishSegments[i] = (Fish) {
       .level = 0,
-      .x = 0, .y = 0,
+      .x = 2000,
+      .y = 600,
       .width = 0, .height = 0,
       .isMoving = 0,
       .start = { 0, 0 }, .end = { 0, 0 },
@@ -94,8 +94,6 @@ int main() {
     // printf("%d\n", fishSegments[i]->x);
     fishSegments[i]->image = &images[i + 2];
     fishSegments[i]->imageLayer = &imageLayer;
-    fishSegments[i]->x = 1820;
-    fishSegments[i]->y = 600;
     fishSegments[i]->init(fishSegments[i]);
 
     // fishSegments[i].addBackgroundThread(&fishSegments[i], fishSegments[i].move);
