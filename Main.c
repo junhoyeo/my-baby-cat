@@ -15,13 +15,13 @@ void addBackgroundFishSegmentsThread(Fish *(*fishSegmentPointer)[], int fishLeng
   for (int repeat = 0;; repeat++) {
     for (int idx = 0; idx < fishLength; idx++) {
       if (repeat > 10 * idx) {
-        if ((*fishSegmentPointer)[idx]->x >= 200) { // 이동 가능
-          (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx], 10);
-          // printf("%d\n", (*fishSegmentPointer)[idx]->x);
-        } else { // 플레이어와 만남
+        if ((*fishSegmentPointer)[idx]->x <= 200) { // 플레이어와 만남
           // 플레이어가 해당 물고기를 먹을 수 있으면 점수
           // 아니면 계속 지나감
           // 끝나면 물고기 없앰 -> remove from pointer
+        } else { // 이동 가능
+          // printf("true\n");
+          (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx], 10);
         }
       }
     }
@@ -71,16 +71,13 @@ int main() {
   // fish.addBackgroundThread(&fish, fish.move);
 
   Fish *fishSegments[5];
-  // fishSegments = malloc(5 * sizeof(Fish));
-  for(int i = 0; i < 5; i++) {
-    fishSegments[i] = malloc(sizeof(Fish));
-  }
 
   for(int i = 0; i < 5; i++) {
-    images[i + 2] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1820, .y = 600, .scale = 1 };
+    images[i + 2] = (Image) { .fileName = RESOURCE_FISH[0], .x = 2000, .y = 600, .scale = 1 };
     imageLayer.imageCount++;
 
     // fishSegments[i] = DEFAULT_FISH;
+    fishSegments[i] = malloc(sizeof(Fish));
     *fishSegments[i] = (Fish) {
       .level = 0,
       .x = 2000,
@@ -109,6 +106,7 @@ int main() {
   }
   Fish *(*fishSegmentPointer)[] = &fishSegments;
   addBackgroundFishSegmentsThread(fishSegmentPointer, 5);
+  SCORE.render(&SCORE);
 
   // while (1) {
   //   // printf("%d\n", mouse.hasInput());

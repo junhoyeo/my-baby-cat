@@ -21,27 +21,26 @@ void _Fish_update(Fish* self) {
 	self->image->y = self->y;
 }
 
-void _Fish_waitForEnd(Fish* self) {
-  while (1) {
-    if (self->x < 100)
-      break;
-  }
-  self->isMoving = 0;
-}
+// void _Fish_waitForEnd(Fish* self) {
+//   while (1) {
+//     if (self->x < 100)
+//       break;
+//   }
+//   self->isMoving = 0;
+// }
 
 void _Fish_move(Fish* self, int changeX) {
-  // _beginthread(*(self->waitForEnd), 0, (Fish*) self);
-	// while (self->isMoving) {
 	self->x -= changeX;
 	self->update(self);
 	self->imageLayer->renderAll(self->imageLayer);
-	// }
+
+  SCORE.render(&SCORE);
 	// TODO: delete or hide fish here
 }
 
-void _Fish_addBackgroundThread(Fish* self, int (*method)(Fish*)) {
-	self->isMoving = 1;
-  _beginthread(*method, 0, (Fish*) self);
-}
+// void _Fish_addBackgroundThread(Fish* self, int (*method)(Fish*)) {
+// 	self->isMoving = 1;
+//   _beginthread(*method, 0, (Fish*) self);
+// }
 
 #endif

@@ -66,12 +66,14 @@ void _Cat_run(Cat* self) {
       // self->move(self, 8, 0);
 
       self->imageLayer->renderAll(self->imageLayer);
+      SCORE.render(&SCORE);
       Sleep(self->delay);
     }
   }
   // MessageBox(NULL, "exit", "", MB_OK);
   self->image->fileName = RESOURCE_CAT[0];
   self->imageLayer->renderAll(self->imageLayer);
+  SCORE.render(&SCORE);
 }
 
 void _Cat_addBackgroundThread(Cat* self, int (*method)(Cat*)) {

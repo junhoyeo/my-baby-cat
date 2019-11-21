@@ -7,7 +7,7 @@
 #include "Mouse/MouseIntf.h"
 
 inline int keyPressed(int key){
-	return (GetAsyncKeyState(key) & 0x8000 != 0);
+	return ((GetAsyncKeyState(key) & 0x8000) != 0);
 }
 
 inline int _Mouse_isClicked() {

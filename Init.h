@@ -9,6 +9,7 @@
 #include <conio.h>
 #include <Windows.h>
 #include "Utils.h"
+#include "Objects/Score/Score.h"
 
 #define SCREEN_HEIGHT 30
 #define SCREEN_WIDTH 120
