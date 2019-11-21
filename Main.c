@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <process.h>
 #include <Windows.h>
 #include "Init.h"
 #include "Utils.h"
@@ -74,6 +75,7 @@ int main() {
   imageLayer.renderAll(&imageLayer);
 
   cat.addBackgroundThread(&cat, cat.run);
+  cat.addBackgroundThread(&cat, cat.listenKeys);
   // fish.addBackgroundThread(&fish, fish.move);
 
   Fish *fishSegments[5];
@@ -110,22 +112,11 @@ int main() {
     // fishSegments를 prop으로 받아서 몇 초 간격으로, 하나씩 돌아가면서 체크하면 될 듯.
     // Sleep(2000);
   }
-  cat.jump(&cat);
 
   Fish *(*fishSegmentPointer)[] = &fishSegments;
   int fishSegmentLength = 5;
   animateFishSegments(fishSegmentPointer, 5);
-  SCORE.render(&SCORE);
-
-  // while (1) {
-  //   // printf("%d\n", mouse.hasInput());
-  //   // if (!cat.isRunning) {
-  //   //   if (cat.isHovered(&cat, &mouse))
-  //   //     cat.addBackgroundThread(&cat, cat.run);
-  //   // }
-  //   // gotoxy(0, 0);
-  //   // printf("");
-  // }
+  // SCORE.render(&SCORE);
 
   // cat.run(&cat);
  	// getchar();

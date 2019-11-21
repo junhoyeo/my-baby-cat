@@ -103,6 +103,14 @@ void _Cat_jump(Cat* self) {
   self->addBackgroundThread(self, self->run);
 }
 
+void _Cat_listenKeys(Cat *self) {
+  while (1) {
+    if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+      self->addBackgroundThread(self, self->jump);
+    }
+  }
+}
+
 void _Cat_addBackgroundThread(Cat* self, int (*method)(Cat*)) {
   self->isRunning = 1;
   Sleep(200);
