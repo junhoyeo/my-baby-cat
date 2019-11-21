@@ -16,12 +16,11 @@ void addBackgroundFishSegmentsThread(Fish *(*fishSegmentPointer)[], int fishLeng
     for (int idx = 0; idx < fishLength; idx++) {
       if (repeat > 10 * idx) {
         if ((*fishSegmentPointer)[idx]->x >= 200) { // 이동 가능
-          (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx], 10);
+          (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx]);
           // printf("%d\n", (*fishSegmentPointer)[idx]->x);
         } else { // 플레이어와 만남
           // 플레이어가 해당 물고기를 먹을 수 있으면 점수
           // 아니면 계속 지나감
-          // 끝나면 물고기 없앰 -> remove from pointer
         }
       }
     }
