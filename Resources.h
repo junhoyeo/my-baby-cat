@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define RESOURCE_CAT_LEN 8
+#define RESOURCE_CAT_LEN 9
 #define RESOURCE_FISH_LEN 1
 #define RESOURCE_BACKGROUND_LEN 1
 

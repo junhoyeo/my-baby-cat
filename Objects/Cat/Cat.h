@@ -23,6 +23,7 @@ const Cat DEFAULT_CAT = {
   // _Cat_waitForMouse,
   // _Cat_move,
   _Cat_run,
+  _Cat_jump,
   _Cat_addBackgroundThread,
 };
 

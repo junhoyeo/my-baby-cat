@@ -76,6 +76,15 @@ void _Cat_run(Cat* self) {
   SCORE.render(&SCORE);
 }
 
+void _Cat_jump(Cat* self) {
+  self->isRunning = 0;
+  self->image->fileName = RESOURCE_CAT[8];
+  self->imageLayer->renderAll(self->imageLayer);
+  Sleep(2000);
+  self->image->fileName = RESOURCE_CAT[1];
+  self->isRunning = 1;
+}
+
 void _Cat_addBackgroundThread(Cat* self, int (*method)(Cat*)) {
   self->isRunning = 1;
   Sleep(200);

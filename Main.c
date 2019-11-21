@@ -18,14 +18,10 @@ int animateFishSegments(Fish *(*fishSegmentPointer)[], int fishLength) {
     for (int idx = 0; idx < fishLength; idx++) {
       if (repeat > 10 * idx) {
         if ((*fishSegmentPointer)[idx]->x <= 200) { // 플레이어와 만남
-          // 플레이어가 해당 물고기를 먹을 수 있으면 점수
-          // 아니면 계속 지나감
-          // 끝나면 물고기 없앰 -> remove from pointer
-          // completeCount++;
-          // if (completeCount == fishLength)
-          //   return 1;
+          // TODO: 점프, 슬라이드 시 플레이어가 해당 물고기를 먹을 수 있는지 확인
           Image *image = (*fishSegmentPointer)[idx]->image;
           if (image->isShown) {
+            // 살아 있는 물고기면 안 보이게 처리
             image->isShown = false;
             SCORE.update(&SCORE, 100);
           }
@@ -114,6 +110,9 @@ int main() {
     // fishSegments를 prop으로 받아서 몇 초 간격으로, 하나씩 돌아가면서 체크하면 될 듯.
     // Sleep(2000);
   }
+  cat.jump(&cat);
+  // exit(0);
+
   Fish *(*fishSegmentPointer)[] = &fishSegments;
   int fishSegmentLength = 5;
   animateFishSegments(fishSegmentPointer, 5);

@@ -22,6 +22,7 @@ typedef struct _Cat {
   // void (*waitForMouse)(struct _Cat*);
   // void (*move)(struct _Cat*, int, int);
 	void (*run)(struct _Cat*);
+  void (*jump)(struct _Cat*);
   void (*addBackgroundThread)(struct _Cat*, void (*method)(struct _Cat*));
 } Cat;
 
