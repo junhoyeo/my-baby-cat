@@ -15,35 +15,25 @@ char* RESOURCE_CAT[RESOURCE_CAT_LEN];
 char* RESOURCE_FISH[RESOURCE_FISH_LEN];
 char* RESOURCE_BACKGROUND[RESOURCE_BACKGROUND_LEN];
 
+char **loadResources(char *(*resourceListPointer)[], int resourceLength, char* formatString) {
+  for (int idx = 1; idx <= resourceLength; idx++) {
+    char filename[100];
+    sprintf(filename, formatString, idx);
+    int len = strlen(filename) + 1;
+    (*resourceListPointer)[idx - 1] = (char*)malloc(sizeof(char) * len);
+    strcpy((*resourceListPointer)[idx - 1], filename);
+  }
+}
+
 inline void updateResources() {
-  // TODO: Abstraction needed!!!
+  char *(*resourceCatPointer)[] = &RESOURCE_CAT;
+  loadResources(resourceCatPointer, RESOURCE_CAT_LEN, "resources/cat/cat-p%d.bmp");
 
-  // export cat resources to array automatically
-  for (int idx = 1; idx <= RESOURCE_CAT_LEN; idx++) {
-    char filename[100];
-    sprintf(filename, "resources/cat/cat-p%d.bmp", idx);
-    int len = strlen(filename) + 1;
-    RESOURCE_CAT[idx - 1] = (char*)malloc(sizeof(char) * len);
-    strcpy(RESOURCE_CAT[idx - 1], filename);
-  }
+  char *(*resourceFishPointer)[] = &RESOURCE_FISH;
+  loadResources(resourceFishPointer, RESOURCE_FISH_LEN, "resources/fish/fish-lv%d.bmp");
 
-  // export fish resources to array automatically
-  for (int idx = 1; idx <= RESOURCE_FISH_LEN; idx++) {
-    char filename[100];
-    sprintf(filename, "resources/fish/fish-lv%d.bmp", idx);
-    int len = strlen(filename) + 1;
-    RESOURCE_FISH[idx - 1] = (char*)malloc(sizeof(char) * len);
-    strcpy(RESOURCE_FISH[idx - 1], filename);
-  }
-
-  // export background stages
-  for (int idx = 1; idx <= RESOURCE_BACKGROUND_LEN; idx++) {
-    char filename[100];
-    sprintf(filename, "resources/background/background-st%d.bmp", idx);
-    int len = strlen(filename) + 1;
-    RESOURCE_BACKGROUND[idx - 1] = (char*)malloc(sizeof(char) * len);
-    strcpy(RESOURCE_BACKGROUND[idx - 1], filename);
-  }
+  char *(*resourceBgPointer)[] = &RESOURCE_BACKGROUND;
+  loadResources(resourceBgPointer, RESOURCE_BACKGROUND_LEN, "resources/background/background-st%d.bmp");
 }
 
 #endif
