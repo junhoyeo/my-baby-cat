@@ -29,10 +29,10 @@ void _Fish_waitForEnd(Fish* self) {
   self->isMoving = 0;
 }
 
-void _Fish_move(Fish* self) {
+void _Fish_move(Fish* self, int changeX) {
   // _beginthread(*(self->waitForEnd), 0, (Fish*) self);
 	// while (self->isMoving) {
-	self->x -= 10;
+	self->x -= changeX;
 	self->update(self);
 	self->imageLayer->renderAll(self->imageLayer);
 	// }
