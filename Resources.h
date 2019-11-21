@@ -15,7 +15,7 @@ char* RESOURCE_CAT[RESOURCE_CAT_LEN];
 char* RESOURCE_FISH[RESOURCE_FISH_LEN];
 char* RESOURCE_BACKGROUND[RESOURCE_BACKGROUND_LEN];
 
-char **loadResources(char *(*resourceListPointer)[], int resourceLength, char* formatString) {
+void loadResources(char *(*resourceListPointer)[], int resourceLength, char* formatString) {
   for (int idx = 1; idx <= resourceLength; idx++) {
     char filename[100];
     sprintf(filename, formatString, idx);

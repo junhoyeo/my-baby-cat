@@ -1,10 +1,12 @@
 #pragma once
+#include <stdbool.h>
 #include <Windows.h>
 
 typedef struct {
 	char* fileName;
 	int x, y;
 	double scale;
+	bool isShown;
 } Image;
 
 typedef struct _ImageLayer {

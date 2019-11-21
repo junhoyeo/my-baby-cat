@@ -3,6 +3,7 @@
 #endif
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <Windows.h>
 #include "Init.h"
 #include "Utils.h"
@@ -11,7 +12,8 @@
 #include "Objects/Fish/Fish.h"
 #include "ImageLayer/ImageLayer.h"
 
-void addBackgroundFishSegmentsThread(Fish *(*fishSegmentPointer)[], int fishLength) {
+int animateFishSegments(Fish *(*fishSegmentPointer)[], int fishLength) {
+  int completeCount = 0;
   for (int repeat = 0;; repeat++) {
     for (int idx = 0; idx < fishLength; idx++) {
       if (repeat > 10 * idx) {
@@ -19,8 +21,12 @@ void addBackgroundFishSegmentsThread(Fish *(*fishSegmentPointer)[], int fishLeng
           // 플레이어가 해당 물고기를 먹을 수 있으면 점수
           // 아니면 계속 지나감
           // 끝나면 물고기 없앰 -> remove from pointer
+          (*fishSegmentPointer)[idx]->image->isShown = false;
+          // completeCount++;
+          // if (completeCount == fishLength)
+          //   return 1;
         } else { // 이동 가능
-          // printf("true\n");
+          // printf("%d\n", (*fishSegmentPointer)[idx]->x);
           (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx], 10);
         }
       }
@@ -45,8 +51,8 @@ int main() {
  	// imageLayer.imageCount = 2;
  	// imageLayer.images = images;
   Image *images = malloc(7 * sizeof(Image));
-  images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1 };
-  images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1 };
+  images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1, .isShown = true };
+  images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1, .isShown = true };
   imageLayer.imageCount = 2;
   imageLayer.images = images;
 
@@ -73,7 +79,7 @@ int main() {
   Fish *fishSegments[5];
 
   for(int i = 0; i < 5; i++) {
-    images[i + 2] = (Image) { .fileName = RESOURCE_FISH[0], .x = 2000, .y = 600, .scale = 1 };
+    images[i + 2] = (Image) { .fileName = RESOURCE_FISH[0], .x = 2000, .y = 600, .scale = 1, .isShown = true };
     imageLayer.imageCount++;
 
     // fishSegments[i] = DEFAULT_FISH;
@@ -91,8 +97,8 @@ int main() {
       .init = _Fish_init,
       .update = _Fish_update,
       .move = _Fish_move,
-      .waitForEnd = _Fish_waitForEnd,
-      .addBackgroundThread = _Fish_addBackgroundThread,
+      // .waitForEnd = _Fish_waitForEnd,
+      // .addBackgroundThread = _Fish_addBackgroundThread,
     };
     // printf("%d\n", fishSegments[i]->x);
     fishSegments[i]->image = &images[i + 2];
@@ -105,7 +111,8 @@ int main() {
     // Sleep(2000);
   }
   Fish *(*fishSegmentPointer)[] = &fishSegments;
-  addBackgroundFishSegmentsThread(fishSegmentPointer, 5);
+  int fishSegmentLength = 5;
+  animateFishSegments(fishSegmentPointer, 5);
   SCORE.render(&SCORE);
 
   // while (1) {
