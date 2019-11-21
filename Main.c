@@ -111,7 +111,6 @@ int main() {
     // Sleep(2000);
   }
   cat.jump(&cat);
-  // exit(0);
 
   Fish *(*fishSegmentPointer)[] = &fishSegments;
   int fishSegmentLength = 5;
