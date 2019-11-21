@@ -11,6 +11,18 @@
 #include "Objects/Fish/Fish.h"
 #include "ImageLayer/ImageLayer.h"
 
+void addBackgroundFishSegmentsThread(Fish *(*fishSegmentPointer)[], int fishLength) {
+  while (1) {
+    for (int idx = 0; idx < fishLength; idx++) {
+      // (*(fishSegments))[idx]->move((fishSegments)[idx]);
+      // printf("%p", (&fishSegments)[idx]->isMoving);
+      // printf("%d\n", (*fishSegments + idx).level);
+      (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx]);
+      // printf("%d\n", (*fishSegmentPointer)[idx]->x);
+    }
+  }
+}
+
 int main() {
   initWindow();
   updateResources();
@@ -53,25 +65,46 @@ int main() {
   cat.addBackgroundThread(&cat, cat.run);
   // fish.addBackgroundThread(&fish, fish.move);
 
-  Fish *fishSegments = malloc(5 * sizeof(Fish));
-  // images = malloc(6 * sizeof(Image));
+  Fish *fishSegments[5];
+  // fishSegments = malloc(5 * sizeof(Fish));
+  for(int i = 0; i < 5; i++) {
+    fishSegments[i] = malloc(sizeof(Fish));
+  }
 
   for(int i = 0; i < 5; i++) {
     images[i + 2] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1820, .y = 600, .scale = 1 };
     imageLayer.imageCount++;
 
-    fishSegments[i] = DEFAULT_FISH;
-    fishSegments[i].image = &images[i + 2];
-    fishSegments[i].imageLayer = &imageLayer;
-    fishSegments[i].x = 1820;
-    fishSegments[i].y = 600;
-    fishSegments[i].init(&fishSegments[i]);
+    // fishSegments[i] = DEFAULT_FISH;
+    *fishSegments[i] = (Fish) {
+      .level = 0,
+      .x = 0, .y = 0,
+      .width = 0, .height = 0,
+      .isMoving = 0,
+      .start = { 0, 0 }, .end = { 0, 0 },
+      .image = NULL,
+      .imageLayer = NULL,
 
-    fishSegments[i].addBackgroundThread(&fishSegments[i], fishSegments[i].move);
+      .init = _Fish_init,
+      .update = _Fish_update,
+      .move = _Fish_move,
+      .waitForEnd = _Fish_waitForEnd,
+      .addBackgroundThread = _Fish_addBackgroundThread,
+    };
+    // printf("%d\n", fishSegments[i]->x);
+    fishSegments[i]->image = &images[i + 2];
+    fishSegments[i]->imageLayer = &imageLayer;
+    fishSegments[i]->x = 1820;
+    fishSegments[i]->y = 600;
+    fishSegments[i]->init(fishSegments[i]);
+
+    // fishSegments[i].addBackgroundThread(&fishSegments[i], fishSegments[i].move);
     // TODO: merge background listeners to one in global
     // fishSegments를 prop으로 받아서 몇 초 간격으로, 하나씩 돌아가면서 체크하면 될 듯.
-    Sleep(2000);
+    // Sleep(2000);
   }
+  Fish *(*fishSegmentPointer)[] = &fishSegments;
+  addBackgroundFishSegmentsThread(fishSegmentPointer, 5);
 
   // while (1) {
   //   // printf("%d\n", mouse.hasInput());
@@ -84,5 +117,5 @@ int main() {
   // }
 
   // cat.run(&cat);
- 	getchar();
+ 	// getchar();
 }

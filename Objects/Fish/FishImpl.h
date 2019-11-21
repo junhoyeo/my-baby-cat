@@ -30,13 +30,13 @@ void _Fish_waitForEnd(Fish* self) {
 }
 
 void _Fish_move(Fish* self) {
-  _beginthread(*(self->waitForEnd), 0, (Fish*) self);
-	while (self->isMoving) {
-		self->x -= 10;
-		self->update(self);
-		self->imageLayer->renderAll(self->imageLayer);
-		Sleep(100);
-	}
+  // _beginthread(*(self->waitForEnd), 0, (Fish*) self);
+	// while (self->isMoving) {
+	self->x -= 10;
+	self->update(self);
+	self->imageLayer->renderAll(self->imageLayer);
+		// Sleep(100);
+	// }
 	// TODO: delete or hide fish here
 }
 
