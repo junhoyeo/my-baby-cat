@@ -7,7 +7,6 @@
 #include "Objects/Obstacle/ObstacleImpl.h"
 
 const Obstacle DEFAULT_OBSTACLE = {
-  0,
   POSITION_BOTTOM,
   0, 0,
   NULL,

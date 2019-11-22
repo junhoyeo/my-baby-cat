@@ -8,16 +8,15 @@
 #include "Utils.h"
 #include "Objects/Obstacle/ObstacleIntf.h"
 
-void _Obstacle_init(Obstacle *self, int type, int pos) {
+void _Obstacle_init(Obstacle *self, int pos) {
   const HBITMAP hbitmap = (HBITMAP)LoadImage(NULL, (LPCSTR)self->image->fileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 	BITMAP bitmap;
 	GetObject(hbitmap, sizeof(BITMAP), &bitmap);
 	int height = bitmap.bmHeight;
 
-  self->type = type;
   self->position = pos;
   self->x = 1000;
-  self->y = 620 - height;
+  self->y = (!pos) ? 620 - height : 20;
   self->update(self);
   self->image->isShown = true;
 }
