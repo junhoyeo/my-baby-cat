@@ -8,9 +8,10 @@
 
 Heart HEART;
 
+// 체력 오브젝트를 생성합니다.
 Heart createHeart() {
   return (Heart) {
-    .hp = 100.0,
+    .hp = 100.0, // 사용자 체력
     .image = NULL,
     .imageLayer = NULL,
 

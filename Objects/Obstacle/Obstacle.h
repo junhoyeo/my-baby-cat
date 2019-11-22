@@ -18,12 +18,14 @@ const Obstacle DEFAULT_OBSTACLE = {
   _Obstacle_move,
 };
 
+// 위치에 따른 장애물 종류(위: 슬라이드로 피함/아래: 점프로 피함)에 따라 랜덤 장애물을 생성해 반환합니다.
 Obstacle createObstacleByPos(int pos, ImageLayer* imageLayer) {
   Obstacle testObstacle = DEFAULT_OBSTACLE;
   imageLayer->imageCount++;
   Image *images = imageLayer->images;
   int imageIndex = imageLayer->imageCount - 1;
 
+  // 종류에 따른 랜덤 장애물 이미지를 가져옵니다.
   char *fileName = (!pos) ?
     RESOURCE_OBST_BOTTOM[randrange(RESOURCE_OBST_BOTTOM_LEN)] :
     RESOURCE_OBST_TOP[randrange(RESOURCE_OBST_TOP_LEN)];
