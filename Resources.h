@@ -49,7 +49,7 @@ inline void updateResources() {
   loadResources(resourceObBottomPointer, RESOURCE_OBST_BOTTOM_LEN, "resources/obstacles/bottom/ob%d.bmp");
 
   char *(*resourceLifePointer)[] = &RESOURCE_LIFE;
-  loadResources(resourceLifePointer, RESOURCE_LIFE_LEN, "resources/heart/hp%d.bmp");
+  loadResources(resourceLifePointer, RESOURCE_LIFE_LEN, "resources/life/hp%d.bmp");
 
   char *(*resourceNumbersPointer)[] = &RESOURCE_NUMBERS;
   loadResources(resourceNumbersPointer, 10, "resources/number/%d.bmp");
