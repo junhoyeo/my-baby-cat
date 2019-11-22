@@ -11,6 +11,7 @@
 #include "Mouse/Mouse.h"
 #include "Objects/Cat/Cat.h"
 #include "Objects/Fish/Fish.h"
+#include "Objects/Obstacle/Obstacle.h"
 #include "ImageLayer/ImageLayer.h"
 
 int animateFishSegments(Fish *(*fishSegmentPointer)[], int fishLength) {
@@ -51,7 +52,7 @@ int main() {
  	// };
  	// imageLayer.imageCount = 2;
  	// imageLayer.images = images;
-  Image *images = malloc(7 * sizeof(Image));
+  Image *images = malloc(8 * sizeof(Image));
   images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1, .isShown = true };
   images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1, .isShown = true };
   imageLayer.imageCount = 2;
@@ -79,7 +80,6 @@ int main() {
   // fish.addBackgroundThread(&fish, fish.move);
 
   Fish *fishSegments[5];
-
   for(int i = 0; i < 5; i++) {
     images[i + 2] = (Image) { .fileName = RESOURCE_FISH[0], .x = 2000, .y = 600, .scale = 1, .isShown = true };
     imageLayer.imageCount++;
@@ -115,8 +115,17 @@ int main() {
 
   Fish *(*fishSegmentPointer)[] = &fishSegments;
   int fishSegmentLength = 5;
-  animateFishSegments(fishSegmentPointer, 5);
+  // animateFishSegments(fishSegmentPointer, 5);
   // SCORE.render(&SCORE);
+
+  Obstacle testObstacle = DEFAULT_OBSTACLE;
+  images[2 + fishSegmentLength] = (Image) { .fileName = RESOURCE_OBST_BOTTOM[0], .x = 0, .y = 0, .scale = 1, .isShown = false };
+  imageLayer.imageCount++;
+
+  testObstacle.image = &images[2 + fishSegmentLength];
+  testObstacle.imageLayer = &imageLayer;
+  testObstacle.init(&testObstacle, 0, 0);
+  imageLayer.renderAll(&imageLayer);
 
   // cat.run(&cat);
  	// getchar();
