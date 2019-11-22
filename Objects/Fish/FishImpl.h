@@ -34,7 +34,6 @@ void _Fish_move(Fish* self, int changeX) {
 	self->update(self);
 	self->imageLayer->renderAll(self->imageLayer);
 
-  SCORE.render(&SCORE);
 	// TODO: delete or hide fish here
 }
 

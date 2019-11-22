@@ -86,7 +86,7 @@ int main() {
   images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1, .isShown = true };
   images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1, .isShown = true };
   images[2] = (Image) { .fileName = RESOURCE_HEART[20], .x = 0, .y = 0, .scale = 1, .isShown = true };
-  for (int idx = 3; idx < 10; idx++) {
+  for (int idx = 3; idx < 9; idx++) {
     images[idx] = (Image) {
       .fileName = RESOURCE_NUMBERS[0],
       .x = 2000 - idx * 65,
@@ -107,6 +107,14 @@ int main() {
   // set HEART
   HEART.image = &images[2];
   HEART.imageLayer = &imageLayer;
+
+  // set SCORE
+  for (int idx = 3; idx < 9; idx++) {
+    SCORE.images[idx - 3] = &images[idx];
+    // printf("%s\n", SCORE.images[idx]->fileName);
+  }
+  SCORE.imageLayer = &imageLayer;
+  // exit(0);
 
   // game start
   imageLayer.renderAll(&imageLayer);

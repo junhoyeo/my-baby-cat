@@ -72,7 +72,6 @@ void _Cat_run(Cat* self) {
     HEART.update(&HEART, -0.025);
     // 달리는 도중에 체력이 미세하게 줄어든다.
 
-    SCORE.render(&SCORE);
     Sleep(self->delay);
 
     if (frame > 6) frame = 1;
@@ -81,7 +80,6 @@ void _Cat_run(Cat* self) {
   // MessageBox(NULL, "exit", "", MB_OK);
   // self->image->fileName = RESOURCE_CAT[0];
   // self->imageLayer->renderAll(self->imageLayer);
-  // SCORE.render(&SCORE);
 }
 
 void _Cat_jump(Cat* self) {

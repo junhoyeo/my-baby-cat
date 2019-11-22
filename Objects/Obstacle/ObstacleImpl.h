@@ -30,8 +30,6 @@ void _Obstacle_move(Obstacle *self, int changeX) {
   self->x -= changeX;
   self->update(self);
   self->imageLayer->renderAll(self->imageLayer);
-
-  SCORE.render(&SCORE);
 }
 
 #endif

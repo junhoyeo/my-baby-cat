@@ -13,10 +13,11 @@ Score createScore() {
     .score = 0,
     .x = 0,
     .y = 0,
+    .images = NULL,
+    .imageLayer = NULL,
 
     .init = _Score_init,
     .update = _Score_update,
-    .render = _Score_render,
     .save = _Score_save,
   };
 }
