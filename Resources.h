@@ -12,12 +12,14 @@
 #define RESOURCE_BACKGROUND_LEN 1
 #define RESOURCE_OBST_TOP_LEN 3
 #define RESOURCE_OBST_BOTTOM_LEN 3
+#define RESOURCE_HEART_LEN 21
 
 char* RESOURCE_CAT[RESOURCE_CAT_LEN];
 char* RESOURCE_FISH[RESOURCE_FISH_LEN];
 char* RESOURCE_BACKGROUND[RESOURCE_BACKGROUND_LEN];
 char* RESOURCE_OBST_TOP[RESOURCE_OBST_TOP_LEN];
 char* RESOURCE_OBST_BOTTOM[RESOURCE_OBST_BOTTOM_LEN];
+char* RESOURCE_HEART[RESOURCE_HEART_LEN];
 
 void loadResources(char *(*resourceListPointer)[], int resourceLength, char* formatString) {
   for (int idx = 1; idx <= resourceLength; idx++) {
@@ -44,6 +46,9 @@ inline void updateResources() {
 
   char *(*resourceObBottomPointer)[] = &RESOURCE_OBST_BOTTOM;
   loadResources(resourceObBottomPointer, RESOURCE_OBST_BOTTOM_LEN, "resources/obstacles/bottom/ob%d.bmp");
+
+  char *(*resourceHeartPointer)[] = &RESOURCE_HEART;
+  loadResources(resourceHeartPointer, RESOURCE_HEART_LEN, "resources/heart/hp%d.bmp");
 }
 
 #endif

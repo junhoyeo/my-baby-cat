@@ -7,7 +7,9 @@
 #include <process.h>
 #include <Windows.h>
 #include "Resources.h"
-#include "Mouse/Mouse.h"
+// #include "Mouse/Mouse.h"
+#include "Objects/Heart/Heart.h"
+#include "Objects/Score/Score.h"
 #include "Objects/Cat/CatIntf.h"
 
 void _Cat_init(Cat* self) {
@@ -66,6 +68,10 @@ void _Cat_run(Cat* self) {
     // self->move(self, 8, 0);
 
     self->imageLayer->renderAll(self->imageLayer);
+
+    HEART.update(&HEART, -0.025);
+    // 달리는 도중에 체력이 미세하게 줄어든다.
+
     SCORE.render(&SCORE);
     Sleep(self->delay);
 

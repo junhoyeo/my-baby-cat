@@ -10,6 +10,7 @@
 #include <conio.h>
 #include <Windows.h>
 #include "Utils.h"
+#include "Objects/Heart/Heart.h"
 #include "Objects/Score/Score.h"
 
 #define SCREEN_HEIGHT 30
@@ -73,6 +74,7 @@ inline void initWindow() {
   resizeConsole(SCREEN_HEIGHT, SCREEN_WIDTH);
 
   srand((unsigned)time(NULL));
+  HEART = createHeart();
   SCORE = createScore();
 }
 
