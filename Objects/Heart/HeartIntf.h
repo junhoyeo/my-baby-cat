@@ -6,12 +6,12 @@
 #include "ImageLayer/ImageLayer.h"
 
 typedef struct _Heart {
-  int hp;
+  float hp;
   Image *image;
   ImageLayer *imageLayer;
 
-  void (*update)(struct _Heart, int change);
-  void (*render)(struct _Heart);
+  void (*update)(struct _Heart*, float change);
+  void (*render)(struct _Heart*);
 } Heart;
 
 #endif

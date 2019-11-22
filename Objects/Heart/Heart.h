@@ -6,13 +6,17 @@
 #include "Objects/Heart/HeartIntf.h"
 #include "Objects/Heart/HeartImpl.h"
 
-const Heart DEFAULT_HEART = {
-  100,
-  NULL,
-  NULL,
+Heart HEART;
 
-  _Heart_update,
-  _Heart_render,
+Heart createHeart() {
+  return (Heart) {
+    .hp = 100.0,
+    .image = NULL,
+    .imageLayer = NULL,
+
+    .update = _Heart_update,
+    .render = _Heart_render,
+  };
 }
 
 #endif

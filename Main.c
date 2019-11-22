@@ -55,10 +55,11 @@ int main() {
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
  	imageLayer.initialize(&imageLayer);
 
-  Image *images = malloc(9 * sizeof(Image));
+  Image *images = malloc(10 * sizeof(Image));
   images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1, .isShown = true };
   images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1, .isShown = true };
-  imageLayer.imageCount = 2;
+  images[2] = (Image) { .fileName = RESOURCE_HEART[20], .x = 0, .y = 0, .scale = 1, .isShown = true };
+  imageLayer.imageCount = 3;
   imageLayer.images = images;
 
   // init cat
@@ -66,6 +67,10 @@ int main() {
   cat.image = &images[1];
   cat.imageLayer = &imageLayer;
   cat.init(&cat);
+
+  // set HEART
+  HEART.image = &images[2];
+  HEART.imageLayer = &imageLayer;
 
   // game start
   imageLayer.renderAll(&imageLayer);
@@ -80,12 +85,12 @@ int main() {
     if (currentFrame.type == KEYFRAME_TYPE_FISH) {
       Fish *fishSegments[5];
       for(int i = 0; i < currentFrame.size; i++) {
-        images[i + 2] = (Image) { .fileName = RESOURCE_FISH[0], .x = 2000, .y = 600, .scale = 1, .isShown = true };
+        images[i + 3] = (Image) { .fileName = RESOURCE_FISH[0], .x = 2000, .y = 600, .scale = 1, .isShown = true };
         imageLayer.imageCount++;
 
         fishSegments[i] = malloc(sizeof(Fish));
         *fishSegments[i] = createFish();
-        fishSegments[i]->image = &images[i + 2];
+        fishSegments[i]->image = &images[i + 3];
         fishSegments[i]->imageLayer = &imageLayer;
         fishSegments[i]->init(fishSegments[i]);
       }
