@@ -119,10 +119,17 @@ int main() {
   // SCORE.render(&SCORE);
 
   Obstacle testObstacle = DEFAULT_OBSTACLE;
-  images[2 + fishSegmentLength] = (Image) { .fileName = RESOURCE_OBST_BOTTOM[0], .x = 0, .y = 0, .scale = 1, .isShown = false };
   imageLayer.imageCount++;
+  images[imageLayer.imageCount - 1] = (Image) {
+    .fileName = RESOURCE_OBST_BOTTOM[randrange(RESOURCE_OBST_BOTTOM_LEN)],
+    .x = 0,
+    .y = 0,
+    .scale = 1,
+    .isShown = false
+  };
+  // imageLayer.imageCount++;
 
-  testObstacle.image = &images[2 + fishSegmentLength];
+  testObstacle.image = &images[imageLayer.imageCount - 1];
   testObstacle.imageLayer = &imageLayer;
   testObstacle.init(&testObstacle, 0, 0);
   imageLayer.renderAll(&imageLayer);

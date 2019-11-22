@@ -3,6 +3,7 @@
 #ifndef _UTILS_
 #define _UTILS_
 
+#include <time.h>
 #include <Windows.h>
 
 #define WINDOW_HEIGHT 800
@@ -11,6 +12,11 @@
 void gotoxy(int x, int y) {
   COORD pos = { x, y };
   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
+
+int randrange(int max) {
+  // 0 ~ (max - 1) 사이의 값을 반환합니다.
+  return (int)(rand() % max);
 }
 
 COLORREF hexToColor(int hex) {

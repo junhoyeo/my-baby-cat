@@ -5,6 +5,7 @@
 
 #include <stdbool.h>
 #include <Windows.h>
+#include "Utils.h"
 #include "Objects/Obstacle/ObstacleIntf.h"
 
 void _Obstacle_init(Obstacle *self, int type, int pos) {
