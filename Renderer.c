@@ -16,16 +16,16 @@ typedef struct _Keyframe {
   int size;
 } Keyframe;
 
-Keyframe *createStageOneKeyframe() {
+Keyframe *createStageOneKeyframes() {
   Keyframe *keyframes = malloc(STAGE_ONE_LENGTH * sizeof(Keyframe));
-  keyframes[0] = {
+  keyframes[0] = (Keyframe) {
     .type = KEYFRAME_TYPE_FISH,
     .size = 5,
   };
-  keyframes[1] = {
+  keyframes[1] = (Keyframe){
     .type = KEYFRAME_TYPE_OBSTACLE_BOTTOM,
     .size = 1,
-  }
+  };
   return keyframes;
 }
 
