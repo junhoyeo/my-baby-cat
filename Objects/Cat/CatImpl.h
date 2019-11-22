@@ -8,7 +8,7 @@
 #include <Windows.h>
 #include "Resources.h"
 // #include "Mouse/Mouse.h"
-#include "Objects/Heart/Heart.h"
+#include "Objects/Life/Life.h"
 #include "Objects/Score/Score.h"
 #include "Objects/Cat/CatIntf.h"
 
@@ -29,7 +29,7 @@ void _Cat_init(Cat* self) {
 // 	self->start.Y = 0;
 // 	self->end.X = self->x + self->width * 3;
 // 	self->end.Y = self->y + self->height * 3;
-}
+// }
 
 // int _Cat_isHovered(Cat* self, Mouse* mouse) {
 //   mouse->updatePosition(mouse);
@@ -74,8 +74,8 @@ void _Cat_run(Cat* self) {
 
     self->imageLayer->renderAll(self->imageLayer);
 
-    HEART.update(&HEART, -0.025);
-    // 달리는 도중에 체력이 미세하게 줄어든다.
+    LIFE.update(&LIFE, -0.025);
+    // 달리는 도중에 생명이 미세하게 줄어든다.
 
     Sleep(self->delay);
 

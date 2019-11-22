@@ -1,5 +1,6 @@
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
+#pragma warning(disable: 4819)
 #endif
 
 #include <stdio.h>
@@ -85,7 +86,7 @@ int main() {
   Image *images = malloc(20 * sizeof(Image));
   images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1, .isShown = true };
   images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1, .isShown = true };
-  images[2] = (Image) { .fileName = RESOURCE_HEART[20], .x = 0, .y = 0, .scale = 1, .isShown = true };
+  images[2] = (Image) { .fileName = RESOURCE_LIFE[20], .x = 0, .y = 0, .scale = 1, .isShown = true };
   for (int idx = 3; idx < 9; idx++) {
     images[idx] = (Image) {
       .fileName = RESOURCE_NUMBERS[0],
@@ -104,9 +105,9 @@ int main() {
   cat.imageLayer = &imageLayer;
   cat.init(&cat);
 
-  // set HEART
-  HEART.image = &images[2];
-  HEART.imageLayer = &imageLayer;
+  // set LIFE
+  LIFE.image = &images[2];
+  LIFE.imageLayer = &imageLayer;
 
   // set SCORE
   for (int idx = 3; idx < 9; idx++) {
