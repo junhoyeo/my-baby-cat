@@ -6,14 +6,16 @@
 #include <stdbool.h>
 #include <process.h>
 #include <Windows.h>
+
 #include "Init.h"
 #include "Utils.h"
-#include "Renderer.c"
-#include "Mouse/Mouse.h"
+// #include "Mouse/Mouse.h"
+#include "Keyframe/Keyframe.h"
+#include "ImageLayer/ImageLayer.h"
+
 #include "Objects/Cat/Cat.h"
 #include "Objects/Fish/Fish.h"
 #include "Objects/Obstacle/Obstacle.h"
-#include "ImageLayer/ImageLayer.h"
 
 Fish *(*fishSegmentPointer)[] = NULL;
 int _animateFishSegements_current = 0;
@@ -48,7 +50,7 @@ int main() {
   updateResources();
   Sleep(100);
 
-  Mouse mouse = DEFAULT_MOUSE;
+  // Mouse mouse = DEFAULT_MOUSE;
 
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
  	imageLayer.initialize(&imageLayer);

@@ -1,20 +1,10 @@
 #pragma once
 
-#ifndef _RENDERER_
-#define _RENDERER_
+#ifndef _KEYFRAME_
+#define _KEYFRAME_
 
-#include "Objects/Fish/Fish.h"
-#include "Objects/Obstacle/Obstacle.h"
-
-#define KEYFRAME_TYPE_FISH 0
-#define KEYFRAME_TYPE_OBSTACLE_BOTTOM 1
-#define KEYFRAME_TYPE_OBSTACLE_TOP 2
-#define STAGE_ONE_LENGTH 2
-
-typedef struct _Keyframe {
-  int type;
-  int size;
-} Keyframe;
+#include <stdlib.h>
+#include "Keyframe/KeyframeIntf.h"
 
 Keyframe *createStageOneKeyframes() {
   Keyframe *keyframes = malloc(STAGE_ONE_LENGTH * sizeof(Keyframe));
