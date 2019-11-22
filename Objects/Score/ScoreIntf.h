@@ -7,7 +7,6 @@
 
 typedef struct _Score {
   int score;
-  int x, y;
 
   Image *images[6];
   ImageLayer *imageLayer;
