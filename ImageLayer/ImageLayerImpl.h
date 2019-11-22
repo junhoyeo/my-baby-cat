@@ -1,5 +1,6 @@
 #pragma once
 #pragma comment (lib, "Msimg32.lib")
+
 #include <Windows.h>
 #include "ImageLayer.h"
 
@@ -77,6 +78,9 @@ inline HDC getRenderedBackDC(ImageLayer* self) {
 	const HDC backDC = createNewBackDC(self->_consoleDC);
 
 	for (int i = 0; i < self->imageCount; i++) {
+		// check isShown
+		if (!self->images[i].isShown)
+			continue;
 		putBitmapToBackDC(backDC, self->images[i], self->transparentColor);
 	}
 	return backDC;

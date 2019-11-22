@@ -19,12 +19,12 @@ void _Cat_init(Cat* self) {
   // TODO: set and use scale as 1
 }
 
-// void _Cat_update(Cat* self) {
-//   self->start.X = 0;
-// 	self->start.Y = 0;
-// 	self->end.X = self->x + self->width * 3;
-// 	self->end.Y = self->y + self->height * 3;
-// }
+void _Cat_update(Cat* self) {
+  self->start.X = 0;
+	self->start.Y = 0;
+	self->end.X = self->x + self->width * 3;
+	self->end.Y = self->y + self->height * 3;
+}
 
 // int _Cat_isHovered(Cat* self, Mouse* mouse) {
 //   mouse->updatePosition(mouse);
@@ -48,32 +48,77 @@ void _Cat_init(Cat* self) {
 //   self->isRunning = 0;
 // }
 
-// void _Cat_move(Cat* self, int changeX, int changeY) {
-//   self->x += changeX;
-//   self->image->x += changeX;
+void _Cat_move(Cat* self, int changeX, int changeY) {
+  self->x += changeX;
+  self->image->x += changeX;
 
-//   self->y += changeY;
-//   self->image->y += changeY;
+  self->y += changeY;
+  self->image->y += changeY;
 
-//   self->update(self);
-// }
+  self->update(self);
+}
 
 void _Cat_run(Cat* self) {
   // _beginthread(*(self->waitForMouse), 0, (Cat*) self);
+  int frame = 1;
   while (self->isRunning) {
-    for (int frame = 1; frame < 8; frame ++) {
-      self->image->fileName = RESOURCE_CAT[frame];
-      // self->move(self, 8, 0);
+    self->image->fileName = RESOURCE_CAT[frame];
+    // self->move(self, 8, 0);
 
-      self->imageLayer->renderAll(self->imageLayer);
-      SCORE.render(&SCORE);
-      Sleep(self->delay);
-    }
+    self->imageLayer->renderAll(self->imageLayer);
+    SCORE.render(&SCORE);
+    Sleep(self->delay);
+
+    if (frame > 6) frame = 1;
+    else frame++;
   }
   // MessageBox(NULL, "exit", "", MB_OK);
-  self->image->fileName = RESOURCE_CAT[0];
+  // self->image->fileName = RESOURCE_CAT[0];
+  // self->imageLayer->renderAll(self->imageLayer);
+  // SCORE.render(&SCORE);
+}
+
+void _Cat_jump(Cat* self) {
+  self->isRunning = 0;
+
+  for(int i = 1; i <= 5; i++) {
+    self->move(self, 0, -i * 10);
+    self->imageLayer->renderAll(self->imageLayer);
+    Sleep((5 - i) * 8);
+  }
+
+  self->image->fileName = RESOURCE_CAT[8];
   self->imageLayer->renderAll(self->imageLayer);
-  SCORE.render(&SCORE);
+  Sleep(300);
+
+  for(int i = 5; i >= 1; i--) {
+    self->move(self, 0, i * 10);
+    self->imageLayer->renderAll(self->imageLayer);
+    Sleep((5 - i) * 8);
+  }
+
+  // self->image->fileName = RESOURCE_CAT[1];
+  // self->imageLayer->renderAll(self->imageLayer);
+
+  self->addBackgroundThread(self, self->run);
+}
+
+void _Cat_slide(Cat *self) {
+  self->isRunning = 0;
+  self->image->fileName = RESOURCE_CAT[9];
+  self->imageLayer->renderAll(self->imageLayer);
+}
+
+void _Cat_listenKeys(Cat *self) {
+  while (1) {
+    if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+      self->addBackgroundThread(self, self->jump);
+    } else if (GetAsyncKeyState(VK_DOWN) & 0x8001) {
+      self->slide(self);
+      Sleep(150);
+      self->addBackgroundThread(self, self->run);
+    }
+  }
 }
 
 void _Cat_addBackgroundThread(Cat* self, int (*method)(Cat*)) {

@@ -6,14 +6,19 @@
 #include "Objects/Score/ScoreIntf.h"
 #include "Objects/Score/ScoreImpl.h"
 
-const Score SCORE = {
-  0, // score
-  0, 0, // x, y
+Score SCORE;
 
-  _Score_init,
-  _Score_update,
-  _Score_render,
-  _Score_save,
-};
+Score createScore() {
+  return (Score) {
+    .score = 0,
+    .x = 0,
+    .y = 0,
+
+    .init = _Score_init,
+    .update = _Score_update,
+    .render = _Score_render,
+    .save = _Score_save,
+  };
+}
 
 #endif

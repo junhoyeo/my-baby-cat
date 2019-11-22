@@ -17,11 +17,14 @@ typedef struct _Cat {
   ImageLayer *imageLayer;
 
 	void (*init)(struct _Cat*);
-	// void (*update)(struct _Cat*);
+	void (*update)(struct _Cat*);
 	// int (*isHovered)(struct _Cat*, struct Mouse*);
   // void (*waitForMouse)(struct _Cat*);
-  // void (*move)(struct _Cat*, int, int);
+  void (*move)(struct _Cat*, int, int);
 	void (*run)(struct _Cat*);
+  void (*jump)(struct _Cat*);
+  void (*slide)(struct _Cat*);
+  void (*listenKeys)(struct _Cat);
   void (*addBackgroundThread)(struct _Cat*, void (*method)(struct _Cat*));
 } Cat;
 

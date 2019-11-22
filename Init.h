@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 #include <conio.h>
 #include <Windows.h>
 #include "Utils.h"
@@ -70,6 +71,9 @@ inline void initWindow() {
   disableConsoleResize();
   disableConsoleSelection();
   resizeConsole(SCREEN_HEIGHT, SCREEN_WIDTH);
+
+  srand((unsigned)time(NULL));
+  SCORE = createScore();
 }
 
 #endif

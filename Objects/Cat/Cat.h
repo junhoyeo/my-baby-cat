@@ -18,11 +18,14 @@ const Cat DEFAULT_CAT = {
   NULL,
 
   _Cat_init,
-  // _Cat_update,
+  _Cat_update,
   // _Cat_isHovered,
   // _Cat_waitForMouse,
-  // _Cat_move,
+  _Cat_move,
   _Cat_run,
+  _Cat_jump,
+  _Cat_slide,
+  _Cat_listenKeys,
   _Cat_addBackgroundThread,
 };
 
