@@ -20,6 +20,7 @@ char* RESOURCE_BACKGROUND[RESOURCE_BACKGROUND_LEN];
 char* RESOURCE_OBST_TOP[RESOURCE_OBST_TOP_LEN];
 char* RESOURCE_OBST_BOTTOM[RESOURCE_OBST_BOTTOM_LEN];
 char* RESOURCE_HEART[RESOURCE_HEART_LEN];
+char* RESOURCE_NUMBERS[10];
 
 void loadResources(char *(*resourceListPointer)[], int resourceLength, char* formatString) {
   for (int idx = 1; idx <= resourceLength; idx++) {
@@ -49,6 +50,9 @@ inline void updateResources() {
 
   char *(*resourceHeartPointer)[] = &RESOURCE_HEART;
   loadResources(resourceHeartPointer, RESOURCE_HEART_LEN, "resources/heart/hp%d.bmp");
+
+  char *(*resourceNumbersPointer)[] = &RESOURCE_NUMBERS;
+  loadResources(resourceNumbersPointer, 10, "resources/number/%d.bmp");
 }
 
 #endif
