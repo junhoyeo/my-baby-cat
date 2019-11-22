@@ -18,10 +18,11 @@
 #include "Objects/Obstacle/Obstacle.h"
 
 Fish *(*fishSegmentPointer)[] = NULL;
-int _animateFishSegements_current = 0;
-bool _animateFishSegments_done = false;
+int _animateFishSegments_shown = 0;
+// int _animateFishSegments_finished = 0;
+// bool _animateFishSegments_done = false;
 
-int animateFishSegments(int fishLength) {
+void animateFishSegments(int fishLength) {
   for (int repeat = 0;; repeat++) {
     for (int idx = 0; idx < fishLength; idx++) {
       if (repeat > 10 * idx) {
@@ -32,13 +33,39 @@ int animateFishSegments(int fishLength) {
             // 살아 있는 물고기면 안 보이게 처리
             image->isShown = false;
             SCORE.update(&SCORE, 100);
+            // _animateFishSegments_finished++;
           }
         } else { // 이동 가능
           // printf("%d\n", (*fishSegmentPointer)[idx]->x);
           (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx], 10);
           if ((*fishSegmentPointer)[idx]->x <= 1400) {
-            _animateFishSegements_current++;
+            _animateFishSegments_shown++;
           }
+        }
+      }
+    }
+  }
+}
+
+Obstacle *(*ObstacleSegmentPointer)[] = NULL;
+int _animateObstacleSegments_shown = 0;
+
+void animateObstacleSegments(int obstacleLength) {
+  for (int repeat = 0;; repeat++) {
+    for (int idx = 0; idx < obstacleLength; idx++) {
+      if (repeat > 10 * idx) {
+        //   // if ((*ObstacleSegmentPointer)[idx]->x <= 200) { // 플레이어와 만남
+        //   // } else { // 이동 가능
+        //   //   (*ObstacleSegmentPointer)[idx]->move((*ObstacleSegmentPointer)[idx], 10);
+        //   //   // if ((*ObstacleSegmentPointer)[idx]->x <= 1400) {
+        //   //   //   _animateFishSegments_shown++;
+        //   //   // }
+        //   // }
+        // }
+        Sleep(150);
+        (*ObstacleSegmentPointer)[idx]->move((*ObstacleSegmentPointer)[idx], 10);
+        if ((*ObstacleSegmentPointer)[idx]->x <= 1500) {
+          _animateObstacleSegments_shown++;
         }
       }
     }
@@ -94,26 +121,35 @@ int main() {
     if (currentFrame.type == KEYFRAME_TYPE_FISH) {
       Fish *fishSegments[5];
       for(int i = 0; i < currentFrame.size; i++) {
-        images[i + 9] = (Image) { .fileName = RESOURCE_FISH[0], .x = 2000, .y = 600, .scale = 1, .isShown = true };
-        imageLayer.imageCount++;
+        images[imageLayer.imageCount] = (Image) { .fileName = RESOURCE_FISH[0], .x = 2000, .y = 600, .scale = 1, .isShown = true };
 
         fishSegments[i] = malloc(sizeof(Fish));
         *fishSegments[i] = createFish();
-        fishSegments[i]->image = &images[i + 9];
+        fishSegments[i]->image = &images[imageLayer.imageCount];
         fishSegments[i]->imageLayer = &imageLayer;
         fishSegments[i]->init(fishSegments[i]);
+        imageLayer.imageCount++;
       }
       fishSegmentPointer = &fishSegments;
 
-      _animateFishSegements_current = 0;
+      _animateFishSegments_shown = 0;
       _beginthread(animateFishSegments, 0, (int) currentFrame.size);
-      while (_animateFishSegements_current < currentFrame.size) {};
-    } else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_BOTTOM) {
-      Obstacle testObstacle = createObstacleByPos(POSITION_BOTTOM, &imageLayer);
-      imageLayer.renderAll(&imageLayer);
-    } else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_TOP) {
-      Obstacle testObstacle = createObstacleByPos(POSITION_TOP, &imageLayer);
-      imageLayer.renderAll(&imageLayer);
+      // _beginthread(moniterAnimateFishSegmentsEnd, 0, (int) currentFrame.size);
+      while (_animateFishSegments_shown < currentFrame.size) {};
+    }
+    else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_BOTTOM) {
+      Obstacle *ObstacleSegments[5];
+      for(int i = 0; i < currentFrame.size; i++) {
+        ObstacleSegments[i] = malloc(sizeof(Obstacle));
+        *ObstacleSegments[i] = createObstacleByPos(POSITION_BOTTOM, &imageLayer);
+      }
+      ObstacleSegmentPointer = &ObstacleSegments;
+      _beginthread(animateObstacleSegments, 0, (int) currentFrame.size);
+      while (_animateObstacleSegments_shown < currentFrame.size) {};
+    }
+    else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_TOP) {
+      // obstacle = createObstacleByPos(POSITION_T OP, &imageLayer);
+      // imageLayer.renderAll(&imageLayer);
     }
   }
 

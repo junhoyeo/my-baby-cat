@@ -15,7 +15,7 @@ void _Obstacle_init(Obstacle *self, int pos) {
 	int height = bitmap.bmHeight;
 
   self->position = pos;
-  self->x = 1000;
+  self->x = 2000;
   self->y = (!pos) ? 620 - height : 20;
   self->update(self);
   self->image->isShown = true;
