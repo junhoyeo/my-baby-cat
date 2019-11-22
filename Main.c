@@ -6,16 +6,22 @@
 #include <stdbool.h>
 #include <process.h>
 #include <Windows.h>
+
 #include "Init.h"
 #include "Utils.h"
-#include "Mouse/Mouse.h"
+// #include "Mouse/Mouse.h"
+#include "Keyframe/Keyframe.h"
+#include "ImageLayer/ImageLayer.h"
+
 #include "Objects/Cat/Cat.h"
 #include "Objects/Fish/Fish.h"
 #include "Objects/Obstacle/Obstacle.h"
-#include "ImageLayer/ImageLayer.h"
 
-int animateFishSegments(Fish *(*fishSegmentPointer)[], int fishLength) {
-  int completeCount = 0;
+Fish *(*fishSegmentPointer)[] = NULL;
+int _animateFishSegements_current = 0;
+bool _animateFishSegments_done = false;
+
+int animateFishSegments(int fishLength) {
   for (int repeat = 0;; repeat++) {
     for (int idx = 0; idx < fishLength; idx++) {
       if (repeat > 10 * idx) {
@@ -30,35 +36,13 @@ int animateFishSegments(Fish *(*fishSegmentPointer)[], int fishLength) {
         } else { // 이동 가능
           // printf("%d\n", (*fishSegmentPointer)[idx]->x);
           (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx], 10);
+          if ((*fishSegmentPointer)[idx]->x <= 1400) {
+            _animateFishSegements_current++;
+          }
         }
       }
     }
   }
-}
-
-Obstacle createObstacleByPos(int pos, ImageLayer* imageLayer) {
-  Obstacle testObstacle = DEFAULT_OBSTACLE;
-  imageLayer->imageCount++;
-  Image *images = imageLayer->images;
-  int imageIndex = imageLayer->imageCount - 1;
-
-  char *fileName = (!pos) ?
-    RESOURCE_OBST_BOTTOM[randrange(RESOURCE_OBST_BOTTOM_LEN)] :
-    RESOURCE_OBST_TOP[randrange(RESOURCE_OBST_TOP_LEN)];
-
-  images[imageIndex] = (Image) {
-    .fileName = fileName,
-    .x = 0,
-    .y = 0,
-    .scale = 1,
-    .isShown = false
-  };
-  // imageLayer.imageCount++;
-
-  testObstacle.image = &images[imageIndex];
-  testObstacle.imageLayer = imageLayer;
-  testObstacle.init(&testObstacle, pos);
-  return testObstacle;
 }
 
 int main() {
@@ -66,17 +50,11 @@ int main() {
   updateResources();
   Sleep(100);
 
-  Mouse mouse = DEFAULT_MOUSE;
+  // Mouse mouse = DEFAULT_MOUSE;
 
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
  	imageLayer.initialize(&imageLayer);
 
- 	// Image images[2] = {
- 	// 	{RESOURCE_CAT[0], 0, 0, 1},
-  //   {RESOURCE_FISH[0], 0, 0, 3},
- 	// };
- 	// imageLayer.imageCount = 2;
- 	// imageLayer.images = images;
   Image *images = malloc(9 * sizeof(Image));
   images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1, .isShown = true };
   images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1, .isShown = true };
@@ -88,14 +66,6 @@ int main() {
   cat.image = &images[1];
   cat.imageLayer = &imageLayer;
   cat.init(&cat);
-  // cat.update(&cat);
-
-  // init fish example; later put to loop
-  // Fish fish = DEFAULT_FISH;
-  // fish.image = &images[1];
-  // fish.imageLayer = &imageLayer;
-  // fish.x = 1820;
-  // fish.init(&fish);
 
   // game start
   imageLayer.renderAll(&imageLayer);
@@ -104,51 +74,34 @@ int main() {
   cat.addBackgroundThread(&cat, cat.listenKeys);
   // fish.addBackgroundThread(&fish, fish.move);
 
-  Fish *fishSegments[5];
-  for(int i = 0; i < 5; i++) {
-    images[i + 2] = (Image) { .fileName = RESOURCE_FISH[0], .x = 2000, .y = 600, .scale = 1, .isShown = true };
-    imageLayer.imageCount++;
+  Keyframe *keyframes = createStageOneKeyframes();
+  for (int frame = 0; frame < STAGE_ONE_LENGTH; frame++) {
+    Keyframe currentFrame = keyframes[frame];
+    if (currentFrame.type == KEYFRAME_TYPE_FISH) {
+      Fish *fishSegments[5];
+      for(int i = 0; i < currentFrame.size; i++) {
+        images[i + 2] = (Image) { .fileName = RESOURCE_FISH[0], .x = 2000, .y = 600, .scale = 1, .isShown = true };
+        imageLayer.imageCount++;
 
-    // fishSegments[i] = DEFAULT_FISH;
-    fishSegments[i] = malloc(sizeof(Fish));
-    *fishSegments[i] = (Fish) {
-      .level = 0,
-      .x = 2000,
-      .y = 600,
-      .width = 0, .height = 0,
-      .isMoving = 0,
-      .start = { 0, 0 }, .end = { 0, 0 },
-      .image = NULL,
-      .imageLayer = NULL,
+        fishSegments[i] = malloc(sizeof(Fish));
+        *fishSegments[i] = createFish();
+        fishSegments[i]->image = &images[i + 2];
+        fishSegments[i]->imageLayer = &imageLayer;
+        fishSegments[i]->init(fishSegments[i]);
+      }
+      fishSegmentPointer = &fishSegments;
 
-      .init = _Fish_init,
-      .update = _Fish_update,
-      .move = _Fish_move,
-      // .waitForEnd = _Fish_waitForEnd,
-      // .addBackgroundThread = _Fish_addBackgroundThread,
-    };
-    // printf("%d\n", fishSegments[i]->x);
-    fishSegments[i]->image = &images[i + 2];
-    fishSegments[i]->imageLayer = &imageLayer;
-    fishSegments[i]->init(fishSegments[i]);
-
-    // fishSegments[i].addBackgroundThread(&fishSegments[i], fishSegments[i].move);
-    // TODO: merge background listeners to one in global
-    // fishSegments를 prop으로 받아서 몇 초 간격으로, 하나씩 돌아가면서 체크하면 될 듯.
-    // Sleep(2000);
+      _animateFishSegements_current = 0;
+      _beginthread(animateFishSegments, 0, (int) currentFrame.size);
+      while (_animateFishSegements_current < currentFrame.size) {};
+    } else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_BOTTOM) {
+      Obstacle testObstacle = createObstacleByPos(POSITION_BOTTOM, &imageLayer);
+      imageLayer.renderAll(&imageLayer);
+    } else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_TOP) {
+      Obstacle testObstacle = createObstacleByPos(POSITION_TOP, &imageLayer);
+      imageLayer.renderAll(&imageLayer);
+    }
   }
 
-  Fish *(*fishSegmentPointer)[] = &fishSegments;
-  int fishSegmentLength = 5;
-  // animateFishSegments(fishSegmentPointer, 5);
-  // SCORE.render(&SCORE);
-
-  Obstacle testObstacle = createObstacleByPos(POSITION_TOP, &imageLayer);
-  imageLayer.renderAll(&imageLayer);
-
-  Obstacle testObstacle2 = createObstacleByPos(POSITION_BOTTOM, &imageLayer);
-  imageLayer.renderAll(&imageLayer);
-
-  // cat.run(&cat);
- 	// getchar();
+ 	getchar();
 }
