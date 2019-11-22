@@ -36,6 +36,27 @@ int animateFishSegments(Fish *(*fishSegmentPointer)[], int fishLength) {
   }
 }
 
+Obstacle createObstacleByPos(int pos, ImageLayer* imageLayer) {
+  Obstacle testObstacle = DEFAULT_OBSTACLE;
+  imageLayer->imageCount++;
+  Image *images = imageLayer->images;
+  int imageIndex = imageLayer->imageCount - 1;
+
+  images[imageIndex] = (Image) {
+    .fileName = RESOURCE_OBST_BOTTOM[randrange(RESOURCE_OBST_BOTTOM_LEN)],
+    .x = 0,
+    .y = 0,
+    .scale = 1,
+    .isShown = false
+  };
+  // imageLayer.imageCount++;
+
+  testObstacle.image = &images[imageIndex];
+  testObstacle.imageLayer = imageLayer;
+  testObstacle.init(&testObstacle, 0, 0);
+  return testObstacle;
+}
+
 int main() {
   initWindow();
   updateResources();
@@ -118,20 +139,7 @@ int main() {
   // animateFishSegments(fishSegmentPointer, 5);
   // SCORE.render(&SCORE);
 
-  Obstacle testObstacle = DEFAULT_OBSTACLE;
-  imageLayer.imageCount++;
-  images[imageLayer.imageCount - 1] = (Image) {
-    .fileName = RESOURCE_OBST_BOTTOM[randrange(RESOURCE_OBST_BOTTOM_LEN)],
-    .x = 0,
-    .y = 0,
-    .scale = 1,
-    .isShown = false
-  };
-  // imageLayer.imageCount++;
-
-  testObstacle.image = &images[imageLayer.imageCount - 1];
-  testObstacle.imageLayer = &imageLayer;
-  testObstacle.init(&testObstacle, 0, 0);
+  Obstacle testObstacle = createObstacleByPos(POSITION_BOTTOM, &imageLayer);
   imageLayer.renderAll(&imageLayer);
 
   // cat.run(&cat);
