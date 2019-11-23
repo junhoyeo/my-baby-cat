@@ -21,17 +21,20 @@ void _Cat_init(Cat* self) {
   GetObject(hbitmap, sizeof(BITMAP), &bitmap);
   self->width = bitmap.bmWidth;
   self->height = bitmap.bmHeight;
+  self->y = 450;
+  self->update(self);
+}
+
+void _Cat_update(Cat* self) {
+  self->image->y = self->x;
+  self->image->y = self->y;
 }
 
 // 고양이 객체를 changeX, changeY만큼 움직입니다.
 void _Cat_move(Cat* self, int changeX, int changeY) {
   self->x += changeX;
-  self->image->x += changeX;
-
   self->y += changeY;
-  self->image->y += changeY;
-
-  // self->update(self);
+  self->update(self);
 }
 
 // 고양이를 달리게 합니다. self->isRunning이 설정되어 있는 한 계속 돌아갑니다.

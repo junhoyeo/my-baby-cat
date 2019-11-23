@@ -21,12 +21,19 @@
 #include "Objects/Obstacle/Obstacle.h"
 #include "Objects/Item/Item.h"
 
+typedef struct _AnimateProps {
+  Cat *cat;
+  int objectLength;
+} AnimateProps;
+
 Fish *(*fishSegmentPointer)[] = NULL;
 int _animateFishSegments_shown = 0;
 // int _animateFishSegments_finished = 0;
 // bool _animateFishSegments_done = false;
 
-void animateFishSegments(int fishLength) {
+void animateFishSegments(AnimateProps* animateProps) {
+  Cat *cat = animateProps->cat;
+  int fishLength = animateProps->objectLength;
   while (1) {
     for (int idx = 0; idx < fishLength; idx++) {
       if ((*fishSegmentPointer)[idx]->x <= 200) { // 플레이어와 만남
@@ -35,7 +42,10 @@ void animateFishSegments(int fishLength) {
         if (image->isShown) {
           // 살아 있는 물고기면 안 보이게 처리
           image->isShown = false;
-          SCORE.update(&SCORE, 100);
+
+          if (cat->y == 450) {
+            SCORE.update(&SCORE, 100);
+          }
           // _animateFishSegments_finished++;
         }
       } else { // 이동 가능
@@ -53,7 +63,9 @@ void animateFishSegments(int fishLength) {
 Obstacle *(*ObstacleSegmentPointer)[] = NULL;
 int _animateObstacleSegments_shown = 0;
 
-void animateObstacleSegments(int obstacleLength) {
+void animateObstacleSegments(AnimateProps* animateProps) {
+  Cat *cat = animateProps->cat;
+  int obstacleLength = animateProps->objectLength;
   while (1) {
     for (int idx = 0; idx < obstacleLength; idx++) {
       Sleep(SPEED.delay / 10);
@@ -68,7 +80,9 @@ void animateObstacleSegments(int obstacleLength) {
 Item *(*ItemSegmentPointer)[] = NULL;
 int _animateItemSegments_shown = 0;
 
-void animateItemSegments(int itemLength) {
+void animateItemSegments(AnimateProps* animateProps) {
+  Cat *cat = animateProps->cat;
+  int itemLength = animateProps->objectLength;
   while (1) {
     for (int idx = 0; idx < itemLength; idx++) {
       Sleep(SPEED.delay / 5);
@@ -137,6 +151,11 @@ int main() {
   Keyframe *keyframes = createStageOneKeyframes();
   for (int frame = 0; frame < STAGE_ONE_LENGTH; frame++) {
     Keyframe currentFrame = keyframes[frame];
+    AnimateProps animateProps = (AnimateProps) {
+      .cat = &cat,
+      .objectLength = currentFrame.size,
+    };
+
     if (currentFrame.type == KEYFRAME_TYPE_FISH) {
       Fish *fishSegments[5];
       for(int i = 0; i < currentFrame.size; i++) {
@@ -152,8 +171,7 @@ int main() {
       fishSegmentPointer = &fishSegments;
 
       _animateFishSegments_shown = 0;
-      _beginthread(animateFishSegments, 0, (int) currentFrame.size);
-      // _beginthread(moniterAnimateFishSegmentsEnd, 0, (int) currentFrame.size);
+      _beginthread(animateFishSegments, 0, (AnimateProps*) &animateProps);
       while (_animateFishSegments_shown < currentFrame.size) {};
     }
     else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_BOTTOM) {
@@ -163,7 +181,7 @@ int main() {
         *ObstacleSegments[i] = createObstacleByPos(&imageLayer, POSITION_BOTTOM);
       }
       ObstacleSegmentPointer = &ObstacleSegments;
-      _beginthread(animateObstacleSegments, 0, (int) currentFrame.size);
+      _beginthread(animateObstacleSegments, 0, (AnimateProps*) &animateProps);
       while (_animateObstacleSegments_shown < currentFrame.size) {};
     }
     else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_TOP) {
@@ -177,7 +195,7 @@ int main() {
         *ItemSegments[i] = createItemByType(&imageLayer, currentFrame.effect);
       }
       ItemSegmentPointer = &ItemSegments;
-      _beginthread(animateItemSegments, 0, (int) currentFrame.size);
+      _beginthread(animateItemSegments, 0, (AnimateProps*) &animateProps);
       while (_animateItemSegments_shown < currentFrame.size) {};
     }
   }
