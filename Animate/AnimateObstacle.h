@@ -24,9 +24,9 @@ void animateObstacleSegments(AnimateProps* animateProps) {
         if (image->isShown) {
           image->isShown = false;
 
-          if (cat->y >= 450) { // 부딧힘
-            MessageBox(NULL, "아야", "", MB_OK);
-            exit(0);
+          if (cat->y >= 450) { // 부딪힘
+            // 속도 느리게
+            SPEED.decrease(&SPEED);
           }
         }
       } else {

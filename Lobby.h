@@ -38,9 +38,10 @@ void renderLobby() {
   imageLayer.renderAll(&imageLayer);
 
   // FIXME: mouse
-  if (getchar()) {
-    return;
-  }
+  // if (getchar()) {
+  //   return;
+  // }
+  Sleep(1000);
 }
 
 #endif
