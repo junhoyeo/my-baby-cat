@@ -35,6 +35,10 @@ int main() {
   Sleep(100);
   renderTitle();
 
+  CONSOLE_WIDTH = 120;
+  CONSOLE_HEIGHT = 30;
+  resizeConsole(SCREEN_HEIGHT, SCREEN_WIDTH);
+
   // Mouse mouse = DEFAULT_MOUSE;
 
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;

@@ -19,8 +19,8 @@ boolean renderTitle() {
   imageLayer.images = images;
   imageLayer.renderAll(&imageLayer);
 
-  while (1) {};
-  return 1;
+  if (getchar())
+    return 1;
 }
 
 #endif

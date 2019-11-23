@@ -77,7 +77,7 @@ inline void initWindow() {
   hideConsoleCursor();
   disableConsoleResize();
   disableConsoleSelection();
-  resizeConsole(SCREEN_HEIGHT, SCREEN_WIDTH);
+  resizeConsole(SCREEN_HEIGHT + 2, SCREEN_WIDTH);
 
   // 랜덤 시드를 초기화합니다.
   srand((unsigned)time(NULL));
