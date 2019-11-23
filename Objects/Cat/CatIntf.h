@@ -3,6 +3,7 @@
 #ifndef _OBJ_CAT_INTF_
 #define _OBJ_CAT_INTF_
 
+#include <stdbool.h>
 #include <Windows.h>
 #include "Mouse/Mouse.h"
 #include "ImageLayer/ImageLayer.h"
@@ -11,6 +12,7 @@ typedef struct _Cat {
   int x, y;
   int width, height;
   int isRunning;
+  bool isSliding;
   COORD start, end;
   Image *image;
   ImageLayer *imageLayer;

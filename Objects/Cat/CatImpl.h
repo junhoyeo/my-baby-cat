@@ -97,8 +97,10 @@ void _Cat_listenKeys(Cat *self) {
       self->addBackgroundThread(self, self->run);
     } else if (GetAsyncKeyState(VK_DOWN) & 0x8001) {
       // 슬라이드 키를 누르고 있는 동안 슬라이딩합니다.
+      self->isSliding = true;
       self->slide(self);
       Sleep(150);
+      self->isSliding = false;
       self->addBackgroundThread(self, self->run);
     }
   }

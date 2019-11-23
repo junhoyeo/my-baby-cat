@@ -9,21 +9,25 @@
 #include "Objects/Cat/CatImpl.h"
 
 const Cat DEFAULT_CAT = {
-  0, 0,
-  0, 0,
-  0,
-  { 0, 0, }, { 0, 0, },
-  NULL,
-  NULL,
+  .x = 0,
+  .y = 0,
+  .width = 0,
+  .height = 0,
+  .isRunning = 0,
+  .isSliding = false,
+  .start = { 0, 0, },
+  .end = { 0, 0, },
+  .image = NULL,
+  .imageLayer = NULL,
 
-  _Cat_init,
-  _Cat_update,
-  _Cat_move,
-  _Cat_run,
-  _Cat_jump,
-  _Cat_slide,
-  _Cat_listenKeys,
-  _Cat_addBackgroundThread,
+  .init = _Cat_init,
+  .update = _Cat_update,
+  .move = _Cat_move,
+  .run = _Cat_run,
+  .jump = _Cat_jump,
+  .slide = _Cat_slide,
+  .listenKeys = _Cat_listenKeys,
+  .addBackgroundThread = _Cat_addBackgroundThread,
 };
 
 #endif
