@@ -21,93 +21,10 @@
 #include "Objects/Obstacle/Obstacle.h"
 #include "Objects/Item/Item.h"
 
-typedef struct _AnimateProps {
-  Cat *cat;
-  int objectLength;
-} AnimateProps;
-
-Fish *(*fishSegmentPointer)[] = NULL;
-int _animateFishSegments_shown = 0;
-// int _animateFishSegments_finished = 0;
-// bool _animateFishSegments_done = false;
-
-void animateFishSegments(AnimateProps* animateProps) {
-  Cat *cat = animateProps->cat;
-  int fishLength = animateProps->objectLength;
-  while (1) {
-    for (int idx = 0; idx < fishLength; idx++) {
-      Fish *currentFish = (*fishSegmentPointer)[idx];
-
-      if (currentFish->x <= 200) { // 플레이어와 만남
-        Image *image = currentFish->image;
-        if (image->isShown) {
-          // 살아 있는 물고기면 안 보이게 처리
-          image->isShown = false;
-
-          if (cat->y >= 400) {
-            SCORE.update(&SCORE, 100);
-          }
-          // _animateFishSegments_finished++;
-        }
-      } else { // 이동 가능
-        // printf("%d\n", currentFish->x);
-        currentFish->move(currentFish, 80);
-        if (currentFish->x <= 1400) {
-          _animateFishSegments_shown++;
-        }
-      }
-    }
-    Sleep(SPEED.delay / 1.5);
-  }
-}
-
-Obstacle *(*ObstacleSegmentPointer)[] = NULL;
-int _animateObstacleSegments_shown = 0;
-
-void animateObstacleSegments(AnimateProps* animateProps) {
-  Cat *cat = animateProps->cat;
-  int obstacleLength = animateProps->objectLength;
-  while (1) {
-    for (int idx = 0; idx < obstacleLength; idx++) {
-      Obstacle *currentObstacle = (*ObstacleSegmentPointer)[idx];
-
-      if (currentObstacle->x <= 200) { // 플레이어와 만남
-        Image *image = currentObstacle->image;
-        if (image->isShown) {
-          image->isShown = false;
-
-          if (cat->y >= 450) { // 부딧힘
-            MessageBox(NULL, "아야", "", MB_OK);
-            exit(0);
-          }
-        }
-      } else {
-        currentObstacle->move(currentObstacle, 20);
-        if (currentObstacle->x <= 1500) {
-          _animateObstacleSegments_shown++;
-        }
-      }
-      Sleep(SPEED.delay / 1.5);
-    }
-  }
-}
-
-Item *(*ItemSegmentPointer)[] = NULL;
-int _animateItemSegments_shown = 0;
-
-void animateItemSegments(AnimateProps* animateProps) {
-  Cat *cat = animateProps->cat;
-  int itemLength = animateProps->objectLength;
-  while (1) {
-    for (int idx = 0; idx < itemLength; idx++) {
-      Sleep(SPEED.delay / 1.5);
-      (*ItemSegmentPointer)[idx]->move((*ItemSegmentPointer)[idx], 20);
-      if ((*ItemSegmentPointer)[idx]->x <= 1500) {
-        _animateItemSegments_shown++;
-      }
-    }
-  }
-}
+#include "Animate/Animate.h"
+#include "Animate/AnimateFish.h"
+#include "Animate/AnimateItem.h"
+#include "Animate/AnimateObstacle.h"
 
 int main() {
   PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
