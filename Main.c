@@ -36,9 +36,10 @@ void animateFishSegments(AnimateProps* animateProps) {
   int fishLength = animateProps->objectLength;
   while (1) {
     for (int idx = 0; idx < fishLength; idx++) {
-      if ((*fishSegmentPointer)[idx]->x <= 200) { // 플레이어와 만남
-        // TODO: 점프, 슬라이드 시 플레이어가 해당 물고기를 먹을 수 있는지 확인
-        Image *image = (*fishSegmentPointer)[idx]->image;
+      Fish *currentFish = (*fishSegmentPointer)[idx];
+
+      if (currentFish->x <= 200) { // 플레이어와 만남
+        Image *image = currentFish->image;
         if (image->isShown) {
           // 살아 있는 물고기면 안 보이게 처리
           image->isShown = false;
@@ -49,9 +50,9 @@ void animateFishSegments(AnimateProps* animateProps) {
           // _animateFishSegments_finished++;
         }
       } else { // 이동 가능
-        // printf("%d\n", (*fishSegmentPointer)[idx]->x);
-        (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx], SPEED.delay / 10);
-        if ((*fishSegmentPointer)[idx]->x <= 1400) {
+        // printf("%d\n", currentFish->x);
+        currentFish->move(currentFish, SPEED.delay / 10);
+        if (currentFish->x <= 1400) {
           _animateFishSegments_shown++;
         }
       }
@@ -68,11 +69,25 @@ void animateObstacleSegments(AnimateProps* animateProps) {
   int obstacleLength = animateProps->objectLength;
   while (1) {
     for (int idx = 0; idx < obstacleLength; idx++) {
-      Sleep(SPEED.delay / 10);
-      (*ObstacleSegmentPointer)[idx]->move((*ObstacleSegmentPointer)[idx], SPEED.delay / 20);
-      if ((*ObstacleSegmentPointer)[idx]->x <= 1500) {
-        _animateObstacleSegments_shown++;
+      Obstacle *currentObstacle = (*ObstacleSegmentPointer)[idx];
+
+      if (currentObstacle->x <= 200) { // 플레이어와 만남
+        Image *image = currentObstacle->image;
+        if (image->isShown) {
+          image->isShown = false;
+
+          if (cat->y >= 450) { // 부딧힘
+            MessageBox(NULL, "아야", "", MB_OK);
+            exit(0);
+          }
+        }
+      } else {
+        currentObstacle->move(currentObstacle, SPEED.delay / 20);
+        if (currentObstacle->x <= 1500) {
+          _animateObstacleSegments_shown++;
+        }
       }
+      Sleep(SPEED.delay / 10);
     }
   }
 }
