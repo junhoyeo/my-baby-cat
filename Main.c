@@ -11,6 +11,7 @@
 
 #include "Init.h"
 #include "Utils.h"
+#include "Speed.h"
 // #include "Mouse/Mouse.h"
 #include "Keyframe/Keyframe.h"
 #include "ImageLayer/ImageLayer.h"
@@ -40,7 +41,8 @@ void animateFishSegments(int fishLength) {
           }
         } else { // 이동 가능
           // printf("%d\n", (*fishSegmentPointer)[idx]->x);
-          (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx], 10);
+          Sleep(SPEED.delay);
+          (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx], SPEED.delay / 10);
           if ((*fishSegmentPointer)[idx]->x <= 1400) {
             _animateFishSegments_shown++;
           }
@@ -65,8 +67,8 @@ void animateObstacleSegments(int obstacleLength) {
         //   //   // }
         //   // }
         // }
-        Sleep(150);
-        (*ObstacleSegmentPointer)[idx]->move((*ObstacleSegmentPointer)[idx], 10);
+        Sleep(SPEED.delay);
+        (*ObstacleSegmentPointer)[idx]->move((*ObstacleSegmentPointer)[idx], SPEED.delay / 10);
         if ((*ObstacleSegmentPointer)[idx]->x <= 1500) {
           _animateObstacleSegments_shown++;
         }
@@ -82,8 +84,8 @@ void animateItemSegments(int itemLength) {
   for (int repeat = 0;; repeat++) {
     for (int idx = 0; idx < itemLength; idx++) {
       if (repeat > 10 * idx) {
-        Sleep(150);
-        (*ItemSegmentPointer)[idx]->move((*ItemSegmentPointer)[idx], 10);
+        Sleep(SPEED.delay);
+        (*ItemSegmentPointer)[idx]->move((*ItemSegmentPointer)[idx], SPEED.delay / 10);
         if ((*ItemSegmentPointer)[idx]->x <= 1500) {
           _animateItemSegments_shown++;
         }
@@ -140,6 +142,8 @@ int main() {
   // game start
   imageLayer.renderAll(&imageLayer);
 
+  SPEED.addBackgroundThread(&SPEED, SPEED.init);
+
   cat.addBackgroundThread(&cat, cat.run);
   cat.addBackgroundThread(&cat, cat.listenKeys);
   // fish.addBackgroundThread(&fish, fish.move);
@@ -150,7 +154,7 @@ int main() {
     if (currentFrame.type == KEYFRAME_TYPE_FISH) {
       Fish *fishSegments[5];
       for(int i = 0; i < currentFrame.size; i++) {
-        images[imageLayer.imageCount] = (Image) { .fileName = RESOURCE_FISH[0], .x = 2000, .y = 600, .scale = 1, .isShown = true };
+        images[imageLayer.imageCount] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1900, .y = 600, .scale = 1, .isShown = true };
 
         fishSegments[i] = malloc(sizeof(Fish));
         *fishSegments[i] = createFish();
@@ -170,7 +174,7 @@ int main() {
       Obstacle *ObstacleSegments[5];
       for(int i = 0; i < currentFrame.size; i++) {
         ObstacleSegments[i] = malloc(sizeof(Obstacle));
-        *ObstacleSegments[i] = createObstacleByPos(POSITION_BOTTOM, &imageLayer);
+        *ObstacleSegments[i] = createObstacleByPos(&imageLayer, POSITION_BOTTOM);
       }
       ObstacleSegmentPointer = &ObstacleSegments;
       _beginthread(animateObstacleSegments, 0, (int) currentFrame.size);
@@ -180,11 +184,11 @@ int main() {
       // obstacle = createObstacleByPos(POSITION_T OP, &imageLayer);
       // imageLayer.renderAll(&imageLayer);
     }
-    else if (currentFrame.type == KEYFRAME_TYPE_ITEM_LIFE) {
+    else if (currentFrame.type == KEYFRAME_TYPE_ITEM) {
       Item *ItemSegments[5];
       for (int i = 0; i < currentFrame.size; i++) {
         ItemSegments[i] = malloc(sizeof(Item));
-        *ItemSegments[i] = createItemByType(&imageLayer, ITEM_TYPE_LIFE, 1000);
+        *ItemSegments[i] = createItemByType(&imageLayer, currentFrame.effect);
       }
       ItemSegmentPointer = &ItemSegments;
       _beginthread(animateItemSegments, 0, (int) currentFrame.size);

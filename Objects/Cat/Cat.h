@@ -12,15 +12,11 @@ const Cat DEFAULT_CAT = {
   0, 0,
   0, 0,
   0,
-  180.0, // delay for running speed
   { 0, 0, }, { 0, 0, },
   NULL,
   NULL,
 
   _Cat_init,
-  // _Cat_update,
-  // _Cat_isHovered,
-  // _Cat_waitForMouse,
   _Cat_move,
   _Cat_run,
   _Cat_jump,

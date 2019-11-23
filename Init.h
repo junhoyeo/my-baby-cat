@@ -10,6 +10,7 @@
 #include <conio.h>
 #include <Windows.h>
 #include "Utils.h"
+#include "Speed.h"
 #include "Objects/Life/Life.h"
 #include "Objects/Score/Score.h"
 
@@ -81,11 +82,14 @@ inline void initWindow() {
   // 랜덤 시드를 초기화합니다.
   srand((unsigned)time(NULL));
 
-  // 생명 바 오브젝트를 생성합니다.
+  // 생명 바 오브젝트를 초기화합니다.
   LIFE = createLife();
 
-  // 점수 오브젝트를 생성합니다.
+  // 점수 오브젝트를 초기화합니다.
   SCORE = createScore();
+
+  // 속도 오브젝트를 초기화합니다.
+  SPEED = createSpeed();
 }
 
 #endif

@@ -24,7 +24,7 @@ const Fish DEFAULT_FISH = {
 
 Fish createFish() {
   Fish fish = DEFAULT_FISH;
-  fish.x = 2000;
+  fish.x = 1900;
   fish.y = 600;
   return fish;
 }
