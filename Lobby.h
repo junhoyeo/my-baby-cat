@@ -5,6 +5,7 @@
 
 #include "Resources.h"
 #include "ImageLayer/ImageLayer.h"
+#include "Objects/Score/Score.h"
 
 void renderLobby() {
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
@@ -25,6 +26,15 @@ void renderLobby() {
 
   imageLayer.imageCount = 7;
   imageLayer.images = images;
+  imageLayer.renderAll(&imageLayer);
+
+  int score = SCORE.loadHighScore(&SCORE, "data.dat");
+  int imageIdx = 1;
+  while (score != 0) {
+    images[imageIdx].fileName = RESOURCE_NUMBERS[score % 10];
+    score /= 10;
+    imageIdx++;
+  }
   imageLayer.renderAll(&imageLayer);
 
   // FIXME: mouse
