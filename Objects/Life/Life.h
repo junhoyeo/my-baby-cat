@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef _OBJ_LIFE_
 #define _OBJ_LIFE_

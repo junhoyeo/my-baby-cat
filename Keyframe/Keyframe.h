@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef _KEYFRAME_
 #define _KEYFRAME_

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef _OBJ_CAT_INTF_
 #define _OBJ_CAT_INTF_

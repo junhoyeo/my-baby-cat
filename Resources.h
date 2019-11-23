@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef _RESOURCES_
 #define _RESOURCES_

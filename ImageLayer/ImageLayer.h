@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "ImageLayerInterface.h"
 #include "ImageLayerImpl.h"
 

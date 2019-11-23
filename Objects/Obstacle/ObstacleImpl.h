@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef _OBJ_OBSTACLE_IMPL_
 #define _OBJ_OBSTACLE_IMPL_
