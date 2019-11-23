@@ -1,12 +1,8 @@
 ﻿# 마이 베이비 캣
-- 사실상 11월 18일부터 시작합니다.
-- 그런데 22일 11시까지 제출입니다.
-- 제 인생은 레전드입니다.
-- 게임 설명서는 늦어도 목요일부터는 작성해 나가야 합니다.
-- 이미지를 포함한 모든 파일은 `Main.c`가 위치한 프로젝트 루트에서부터 절대경로로 참조됩니다. 이는 설명서에 명시되어야 합니다.
-- OS X에서 페러렐즈를 이용해, 가상화된 Windows 환경에서 개발되었으므로 일부 실행 환경에서 오류가 발생할 수 있음 역시 명시해야 합니다.
+- 이미지를 포함한 모든 파일은 `Main.c`가 위치한 프로젝트 루트에서부터 절대경로로 참조됩니다.
+- OS X에서 페러렐즈를 이용해 가상화된 Windows 환경에서 개발했습니다.
 
-## TODO
+## Todo
 
 - [x] 점프 고치기
 - [x] 슬라이딩 고치기 및 플래그 추가
@@ -22,30 +18,70 @@
 - [ ] 최고 점수 저장하기
 - [ ] 메모리 잡아먹는 애니메이션 적용하기
 
-## 기획
+## Structure
 
-### 레이아웃
-- 쿠키런 같은 느낌
-- 가로로 긴 스크린
-- 고양이는 왼편에 고정됨(속도에 맞춰 제자리걸음)
-- 배경/장애물 오른쪽에서 왼쪽으로 움직임
-- 슬라이딩, 점프, 죽었을 때 스프라이트 필요
-
-### 조작
-- 공룡 게임처럼...
-- 스페이스 바 눌러서 점프
-- 다운 키 눌러서 슬라이딩
-- 아이템은 접촉하면 바로 써짐
-- 물고기(?)도 접촉하면 바로 먹는 거임
-
-### 아이템
-- 생명 회복
-- 속도 감소 or 대시
-- 무적
-- 물고기(젤리 같은 거임) 당 추가점수
-
-### 기능
-- 배경음악 재생
-- 메인 화면(로비) 존재
-- 죽고선 점수 보여주고 재시작 또는 메인 화면으로 돌아가기
-- 최고 점수, 코인, 레벨 등 저장됨
+```text
+.
+├── Animate
+│   ├── Animate.h
+│   ├── AnimateFish.h
+│   ├── AnimateItem.h
+│   └── AnimateObstacle.h
+├── ImageLayer
+│   ├── ImageLayer.h
+│   ├── ImageLayerImpl.h
+│   └── ImageLayerInterface.h
+├── Init.h
+├── Keyframe
+│   ├── Keyframe.h
+│   └── KeyframeIntf.h
+├── Main.c
+├── Mouse
+│   ├── Mouse.h
+│   ├── MouseImpl.h
+│   └── MouseIntf.h
+├── MyBabyCat.sln
+├── MyBabyCat.vcxproj
+├── MyBabyCat.vcxproj.filters
+├── MyBabyCat.vcxproj.user
+├── Objects
+│   ├── Cat
+│   │   ├── Cat.h
+│   │   ├── CatImpl.h
+│   │   └── CatIntf.h
+│   ├── Fish
+│   │   ├── Fish.h
+│   │   ├── FishImpl.h
+│   │   └── FishIntf.h
+│   ├── Item
+│   │   ├── Item.h
+│   │   ├── ItemImpl.h
+│   │   └── ItemIntf.h
+│   ├── Life
+│   │   ├── Life.h
+│   │   ├── LifeImpl.h
+│   │   └── LifeIntf.h
+│   ├── Obstacle
+│   │   ├── Obstacle.h
+│   │   ├── ObstacleImpl.h
+│   │   └── ObstacleIntf.h
+│   └── Score
+│       ├── Score.h
+│       ├── ScoreImpl.h
+│       └── ScoreIntf.h
+├── README.md
+├── Resources.h
+├── Speed.h
+├── Stage.h
+├── Utils.h
+└── resources
+    ├── background
+    ├── cat
+    ├── fish
+    ├── item
+    ├── life
+    ├── number
+    ├── obstacles
+    ├── sound
+    └── tile
+```
