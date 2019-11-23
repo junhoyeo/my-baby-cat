@@ -29,7 +29,7 @@ int _animateFishSegments_shown = 0;
 void animateFishSegments(int fishLength) {
   for (int repeat = 0;; repeat++) {
     for (int idx = 0; idx < fishLength; idx++) {
-      if (repeat > 10 * idx) {
+      if (repeat > 2 * idx) {
         if ((*fishSegmentPointer)[idx]->x <= 200) { // 플레이어와 만남
           // TODO: 점프, 슬라이드 시 플레이어가 해당 물고기를 먹을 수 있는지 확인
           Image *image = (*fishSegmentPointer)[idx]->image;
@@ -41,7 +41,7 @@ void animateFishSegments(int fishLength) {
           }
         } else { // 이동 가능
           // printf("%d\n", (*fishSegmentPointer)[idx]->x);
-          Sleep(SPEED.delay);
+          Sleep(SPEED.delay / 4);
           (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx], SPEED.delay / 10);
           if ((*fishSegmentPointer)[idx]->x <= 1400) {
             _animateFishSegments_shown++;
@@ -67,7 +67,7 @@ void animateObstacleSegments(int obstacleLength) {
         //   //   // }
         //   // }
         // }
-        Sleep(SPEED.delay);
+        Sleep(SPEED.delay / 5);
         (*ObstacleSegmentPointer)[idx]->move((*ObstacleSegmentPointer)[idx], SPEED.delay / 10);
         if ((*ObstacleSegmentPointer)[idx]->x <= 1500) {
           _animateObstacleSegments_shown++;
@@ -84,7 +84,7 @@ void animateItemSegments(int itemLength) {
   for (int repeat = 0;; repeat++) {
     for (int idx = 0; idx < itemLength; idx++) {
       if (repeat > 10 * idx) {
-        Sleep(SPEED.delay);
+        Sleep(SPEED.delay / 5);
         (*ItemSegmentPointer)[idx]->move((*ItemSegmentPointer)[idx], SPEED.delay / 10);
         if ((*ItemSegmentPointer)[idx]->x <= 1500) {
           _animateItemSegments_shown++;
