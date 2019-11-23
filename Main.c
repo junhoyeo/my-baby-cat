@@ -1,6 +1,7 @@
 ﻿#ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #pragma warning(disable: 4819)
+#pragma comment(lib, "winmm.lib")
 #endif
 
 #include <stdio.h>
@@ -74,6 +75,7 @@ void animateObstacleSegments(int obstacleLength) {
 }
 
 int main() {
+  PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
   initWindow();
   updateResources();
   Sleep(100);
