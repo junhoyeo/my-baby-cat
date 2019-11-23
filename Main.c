@@ -75,6 +75,23 @@ void animateObstacleSegments(int obstacleLength) {
   }
 }
 
+Item *(*ItemSegmentPointer)[] = NULL;
+int _animateItemSegments_shown = 0;
+
+void animateItemSegments(int itemLength) {
+  for (int repeat = 0;; repeat++) {
+    for (int idx = 0; idx < itemLength; idx++) {
+      if (repeat > 10 * idx) {
+        Sleep(150);
+        (*ItemSegmentPointer)[idx]->move((*ItemSegmentPointer)[idx], 10);
+        if ((*ItemSegmentPointer)[idx]->x <= 1500) {
+          _animateItemSegments_shown++;
+        }
+      }
+    }
+  }
+}
+
 int main() {
   PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
   initWindow();
@@ -127,11 +144,6 @@ int main() {
   cat.addBackgroundThread(&cat, cat.listenKeys);
   // fish.addBackgroundThread(&fish, fish.move);
 
-  printf("%s\n", RESOURCE_ITEM[ITEM_TYPE_HEART]);
-  Item testItem = createItemByType(&imageLayer, ITEM_TYPE_HEART, 1000);
-  testItem.move(&testItem, 10);
-  exit(0);
-
   Keyframe *keyframes = createStageOneKeyframes();
   for (int frame = 0; frame < STAGE_ONE_LENGTH; frame++) {
     Keyframe currentFrame = keyframes[frame];
@@ -168,7 +180,17 @@ int main() {
       // obstacle = createObstacleByPos(POSITION_T OP, &imageLayer);
       // imageLayer.renderAll(&imageLayer);
     }
+    else if (currentFrame.type == KEYFRAME_TYPE_ITEM_LIFE) {
+      Item *ItemSegments[5];
+      for (int i = 0; i < currentFrame.size; i++) {
+        ItemSegments[i] = malloc(sizeof(Item));
+        *ItemSegments[i] = createItemByType(&imageLayer, ITEM_TYPE_LIFE, 1000);
+      }
+      ItemSegmentPointer = &ItemSegments;
+      _beginthread(animateItemSegments, 0, (int) currentFrame.size);
+      while (_animateItemSegments_shown < currentFrame.size) {};
+    }
   }
 
-   getchar();
+  getchar();
 }

@@ -3,7 +3,7 @@
 #ifndef _OBJ_ITEM_INTF_
 #define _OBJ_ITEM_INTF_
 
-#define ITEM_TYPE_HEART 0 // 생명 더 주는 아이템
+#define ITEM_TYPE_LIFE 0 // 생명 더 주는 아이템
 #define ITEM_TYPE_FASTER 1 // 속도 증가 아이템
 #define ITEM_TYPE_SLOWER 2 // 속도 감소 아이템
 #define ITEM_TYPE_GRACE 3 // 무적 아이템
