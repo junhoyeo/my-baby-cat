@@ -10,14 +10,14 @@
 
 // GetAsyncKeyState의 wrapper로 특정 키의 상태를 반환합니다.
 inline int keyPressed(int key){
-	return ((GetAsyncKeyState(key) & 0x8000) != 0);
+  return ((GetAsyncKeyState(key) & 0x8000) != 0);
 }
 
 // 마우스 입력을 감지합니다.
 inline int _Mouse_isClicked() {
-	if (keyPressed(VK_LBUTTON)) return 1;
-	if (keyPressed(VK_RBUTTON)) return 2;
-	return 0;
+  if (keyPressed(VK_LBUTTON)) return 1;
+  if (keyPressed(VK_RBUTTON)) return 2;
+  return 0;
 }
 
 // 마우스 포지션을 업데이트합니다. 다른 쓰레드에서 돌리거나 해야 합니다.

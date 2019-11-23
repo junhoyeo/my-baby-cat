@@ -15,10 +15,10 @@
 // 고양이 객체를 초기화합니다. 렌더링 시 위치 조절에 사용될 수 있도록 이미지의 height, width를 얻어 저장합니다.
 void _Cat_init(Cat* self) {
   const HBITMAP hbitmap = (HBITMAP)LoadImage(NULL, (LPCSTR)RESOURCE_CAT[0], IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-	BITMAP bitmap;
-	GetObject(hbitmap, sizeof(BITMAP), &bitmap);
-	self->width = bitmap.bmWidth;
-	self->height = bitmap.bmHeight;
+  BITMAP bitmap;
+  GetObject(hbitmap, sizeof(BITMAP), &bitmap);
+  self->width = bitmap.bmWidth;
+  self->height = bitmap.bmHeight;
 }
 
 // 아래는 사용되지 않는 코드입니다.
@@ -26,16 +26,16 @@ void _Cat_init(Cat* self) {
 
 // void _Cat_update(Cat* self) {
 //   self->start.X = 0;
-// 	self->start.Y = 0;
-// 	self->end.X = self->x + self->width * 3;
-// 	self->end.Y = self->y + self->height * 3;
+//   self->start.Y = 0;
+//   self->end.X = self->x + self->width * 3;
+//   self->end.Y = self->y + self->height * 3;
 // }
 
 // int _Cat_isHovered(Cat* self, Mouse* mouse) {
 //   mouse->updatePosition(mouse);
 //   COORD mousePos = mouse->pos;
 //   if (mousePos.X >= self->start.X && mousePos.X <= self->end.X
-// 		&& mousePos.Y >= self->start.Y && mousePos.Y <= self->end.Y)
+//     && mousePos.Y >= self->start.Y && mousePos.Y <= self->end.Y)
 //     return 1;
 //   return 0;
 // }
