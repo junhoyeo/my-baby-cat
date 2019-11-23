@@ -52,8 +52,11 @@ boolean renderTitle() {
   };
   _beginthread(animateTitle, 0, (AnimateTitleProps*) &animateTitleProps);
 
+  // FIXME: mouse
   if (getchar()) {
     _Title_isRunning = false;
+    images[0].fileName = RESOURCE_BACKGROUND_LOBBY;
+
     return 1;
   }
 }

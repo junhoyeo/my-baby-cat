@@ -13,6 +13,7 @@
 #include "Utils.h"
 #include "Speed.h"
 #include "Title.h"
+#include "Lobby.h"
 
 // #include "Mouse/Mouse.h"
 #include "Keyframe/Keyframe.h"
@@ -33,7 +34,8 @@ int main() {
   initWindow();
   updateResources();
   Sleep(100);
-  renderTitle();
+  // renderTitle();
+  renderLobby();
 
   CONSOLE_WIDTH = 120;
   CONSOLE_HEIGHT = 30;
