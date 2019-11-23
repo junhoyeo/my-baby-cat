@@ -12,6 +12,8 @@
 #include "Init.h"
 #include "Utils.h"
 #include "Speed.h"
+#include "Title.h"
+
 // #include "Mouse/Mouse.h"
 #include "Keyframe/Keyframe.h"
 #include "ImageLayer/ImageLayer.h"
@@ -31,11 +33,12 @@ int main() {
   initWindow();
   updateResources();
   Sleep(100);
+  renderTitle();
 
   // Mouse mouse = DEFAULT_MOUSE;
 
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
-   imageLayer.initialize(&imageLayer);
+  imageLayer.initialize(&imageLayer);
 
   Image *images = malloc(20 * sizeof(Image));
   images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1, .isShown = true };

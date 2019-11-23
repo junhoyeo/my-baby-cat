@@ -18,6 +18,8 @@
 
 #define RESOURCE_SOUND_BGM_1 "resources/sound/bgm-1.wav"
 
+#define RESOURCE_BACKGROUND_TITLE "resources/background/title.bmp"
+
 char* RESOURCE_CAT[RESOURCE_CAT_LEN];
 char* RESOURCE_FISH[RESOURCE_FISH_LEN];
 char* RESOURCE_BACKGROUND[RESOURCE_BACKGROUND_LEN];
