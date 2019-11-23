@@ -1,5 +1,8 @@
 ﻿#ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
+#pragma warning(disable: 4024)
+#pragma warning(disable: 4047)
+#pragma warning(disable: 4224)
 #pragma warning(disable: 4819)
 #pragma comment(lib, "winmm.lib")
 #endif
