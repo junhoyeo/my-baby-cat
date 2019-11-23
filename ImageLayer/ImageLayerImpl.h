@@ -78,9 +78,11 @@ inline HDC getRenderedBackDC(ImageLayer* self) {
 	const HDC backDC = createNewBackDC(self->_consoleDC);
 
 	for (int i = 0; i < self->imageCount; i++) {
-		// check isShown
+
+		// isShown 값이 거짓인 이미지는 렌더링되지 않도록 수정했습니다.
 		if (!self->images[i].isShown)
 			continue;
+
 		putBitmapToBackDC(backDC, self->images[i], self->transparentColor);
 	}
 	return backDC;
@@ -100,6 +102,8 @@ inline BLENDFUNCTION getBlendFunction() {
 	bf.SourceConstantAlpha = 0;
 	return bf;
 }
+
+// 개발 당시 사용하지 않는 함수를 임시로 주석처리했으나 영영 사용하지 못할 것 같습니다...
 
 // inline void _renderAndFadeIn(ImageLayer* self, void(*applyToBackDC)(HDC)) {
 // 	const HDC consoleDC = self->_consoleDC;

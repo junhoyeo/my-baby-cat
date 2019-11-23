@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef _OBJ_SCORE_
 #define _OBJ_SCORE_
@@ -8,15 +8,15 @@
 
 Score SCORE;
 
+// 점수 오브젝트를 생성합니다.
 Score createScore() {
   return (Score) {
-    .score = 0,
-    .x = 0,
-    .y = 0,
+    .score = 0, // 사용자 점수
+    .images = NULL,
+    .imageLayer = NULL,
 
     .init = _Score_init,
     .update = _Score_update,
-    .render = _Score_render,
     .save = _Score_save,
   };
 }

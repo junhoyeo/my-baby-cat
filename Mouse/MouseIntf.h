@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef _MOUSE_INTF_
 #define _MOUSE_INTF_

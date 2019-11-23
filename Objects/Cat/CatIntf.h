@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef _OBJ_CAT_INTF_
 #define _OBJ_CAT_INTF_
@@ -17,7 +17,7 @@ typedef struct _Cat {
   ImageLayer *imageLayer;
 
 	void (*init)(struct _Cat*);
-	void (*update)(struct _Cat*);
+	// void (*update)(struct _Cat*);
 	// int (*isHovered)(struct _Cat*, struct Mouse*);
   // void (*waitForMouse)(struct _Cat*);
   void (*move)(struct _Cat*, int, int);

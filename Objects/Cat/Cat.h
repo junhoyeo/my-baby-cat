@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef _OBJ_CAT_
 #define _OBJ_CAT_
@@ -18,7 +18,7 @@ const Cat DEFAULT_CAT = {
   NULL,
 
   _Cat_init,
-  _Cat_update,
+  // _Cat_update,
   // _Cat_isHovered,
   // _Cat_waitForMouse,
   _Cat_move,

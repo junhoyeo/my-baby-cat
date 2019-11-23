@@ -126,8 +126,36 @@
     <ClCompile Include="Main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ImageLayer\ImageLayer.h" />
+    <ClInclude Include="ImageLayer\ImageLayerImpl.h" />
+    <ClInclude Include="ImageLayer\ImageLayerInterface.h" />
     <ClInclude Include="Init.h" />
+    <ClInclude Include="Keyframe\Keyframe.h" />
+    <ClInclude Include="Keyframe\KeyframeIntf.h" />
+    <ClInclude Include="Mouse\Mouse.h" />
+    <ClInclude Include="Mouse\MouseImpl.h" />
+    <ClInclude Include="Mouse\MouseIntf.h" />
+    <ClInclude Include="Objects\Cat\Cat.h" />
+    <ClInclude Include="Objects\Cat\CatImpl.h" />
+    <ClInclude Include="Objects\Cat\CatIntf.h" />
+    <ClInclude Include="Objects\Fish\Fish.h" />
+    <ClInclude Include="Objects\Fish\FishImpl.h" />
+    <ClInclude Include="Objects\Fish\FishIntf.h" />
+    <ClInclude Include="Objects\Life\Life.h" />
+    <ClInclude Include="Objects\Life\LifeImpl.h" />
+    <ClInclude Include="Objects\Life\LifeIntf.h" />
+    <ClInclude Include="Objects\Obstacle\Obstacle.h" />
+    <ClInclude Include="Objects\Obstacle\ObstacleImpl.h" />
+    <ClInclude Include="Objects\Obstacle\ObstacleIntf.h" />
+    <ClInclude Include="Objects\Score\Score.h" />
+    <ClInclude Include="Objects\Score\ScoreImpl.h" />
+    <ClInclude Include="Objects\Score\ScoreIntf.h" />
+    <ClInclude Include="Resources.h" />
     <ClInclude Include="Utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
