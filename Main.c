@@ -43,7 +43,7 @@ void animateFishSegments(AnimateProps* animateProps) {
           // 살아 있는 물고기면 안 보이게 처리
           image->isShown = false;
 
-          if (cat->y > 400) {
+          if (cat->y >= 400) {
             SCORE.update(&SCORE, 100);
           }
           // _animateFishSegments_finished++;
