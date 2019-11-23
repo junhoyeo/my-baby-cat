@@ -11,10 +11,20 @@ typedef struct _Speed {
 } Speed;
 
 void _Speed_init(Speed* self) {
-  for (int speed = self->delay; speed > 50; speed+=5) {
-    Sleep(50);
+  for (int speed = self->delay; speed > 50; speed-=20) {
+    Sleep(800);
     self->delay = speed;
+    gotoxy(0,0);
+    printf("[%d]\n", self->delay);
   }
+}
+
+void _Speed_increase(Speed*self) {
+  
+}
+
+void _Speed_decrease(Speed*self) {
+  
 }
 
 void _Speed_addBackgroundThread(Speed* self, int (*method)(Speed*)) {

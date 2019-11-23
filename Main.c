@@ -51,13 +51,13 @@ void animateFishSegments(AnimateProps* animateProps) {
         }
       } else { // 이동 가능
         // printf("%d\n", currentFish->x);
-        currentFish->move(currentFish, SPEED.delay / 10);
+        currentFish->move(currentFish, 80);
         if (currentFish->x <= 1400) {
           _animateFishSegments_shown++;
         }
       }
     }
-    Sleep(SPEED.delay / 15);
+    Sleep(SPEED.delay / 1.5);
   }
 }
 
@@ -82,12 +82,12 @@ void animateObstacleSegments(AnimateProps* animateProps) {
           }
         }
       } else {
-        currentObstacle->move(currentObstacle, SPEED.delay / 20);
+        currentObstacle->move(currentObstacle, 20);
         if (currentObstacle->x <= 1500) {
           _animateObstacleSegments_shown++;
         }
       }
-      Sleep(SPEED.delay / 10);
+      Sleep(SPEED.delay / 1.5);
     }
   }
 }
@@ -100,8 +100,8 @@ void animateItemSegments(AnimateProps* animateProps) {
   int itemLength = animateProps->objectLength;
   while (1) {
     for (int idx = 0; idx < itemLength; idx++) {
-      Sleep(SPEED.delay / 5);
-      (*ItemSegmentPointer)[idx]->move((*ItemSegmentPointer)[idx], SPEED.delay / 20);
+      Sleep(SPEED.delay / 1.5);
+      (*ItemSegmentPointer)[idx]->move((*ItemSegmentPointer)[idx], 20);
       if ((*ItemSegmentPointer)[idx]->x <= 1500) {
         _animateItemSegments_shown++;
       }

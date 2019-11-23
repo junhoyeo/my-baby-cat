@@ -50,7 +50,7 @@ void _Cat_run(Cat* self) {
     LIFE.update(&LIFE, -0.025);
     // 달리는 도중에 생명이 미세하게 줄어든다.
 
-    Sleep(SPEED.delay / 7);
+    Sleep(SPEED.delay / 3);
 
     if (frame > 6) frame = 1;
     else frame++;
