@@ -9,7 +9,7 @@
 #include "Objects/Item/ItemImpl.h"
 
 const Item DEFAULT_ITEM = {
-  .x = 0,
+  .x = 2000,
   .y = 500,
   .image = NULL,
   .imageLayer = NULL,
@@ -19,7 +19,7 @@ const Item DEFAULT_ITEM = {
   .move = _Item_move,
 };
 
-Item createItemByType(ImageLayer* imageLayer, int type, int startX) {
+Item createItemByType(ImageLayer* imageLayer, int type) {
   Item newItem = DEFAULT_ITEM;
   imageLayer->imageCount++;
   Image *images = imageLayer->images;
@@ -36,7 +36,6 @@ Item createItemByType(ImageLayer* imageLayer, int type, int startX) {
 
   newItem.image = &images[imageIndex];
   newItem.imageLayer = imageLayer;
-  newItem.x = startX;
   newItem.init(&newItem);
   return newItem;
 }

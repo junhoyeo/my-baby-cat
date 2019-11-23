@@ -11,6 +11,7 @@
 
 #include "Init.h"
 #include "Utils.h"
+#include "Speed.h"
 // #include "Mouse/Mouse.h"
 #include "Keyframe/Keyframe.h"
 #include "ImageLayer/ImageLayer.h"
@@ -26,27 +27,26 @@ int _animateFishSegments_shown = 0;
 // bool _animateFishSegments_done = false;
 
 void animateFishSegments(int fishLength) {
-  for (int repeat = 0;; repeat++) {
+  while (1) {
     for (int idx = 0; idx < fishLength; idx++) {
-      if (repeat > 10 * idx) {
-        if ((*fishSegmentPointer)[idx]->x <= 200) { // 플레이어와 만남
-          // TODO: 점프, 슬라이드 시 플레이어가 해당 물고기를 먹을 수 있는지 확인
-          Image *image = (*fishSegmentPointer)[idx]->image;
-          if (image->isShown) {
-            // 살아 있는 물고기면 안 보이게 처리
-            image->isShown = false;
-            SCORE.update(&SCORE, 100);
-            // _animateFishSegments_finished++;
-          }
-        } else { // 이동 가능
-          // printf("%d\n", (*fishSegmentPointer)[idx]->x);
-          (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx], 10);
-          if ((*fishSegmentPointer)[idx]->x <= 1400) {
-            _animateFishSegments_shown++;
-          }
+      if ((*fishSegmentPointer)[idx]->x <= 200) { // 플레이어와 만남
+        // TODO: 점프, 슬라이드 시 플레이어가 해당 물고기를 먹을 수 있는지 확인
+        Image *image = (*fishSegmentPointer)[idx]->image;
+        if (image->isShown) {
+          // 살아 있는 물고기면 안 보이게 처리
+          image->isShown = false;
+          SCORE.update(&SCORE, 100);
+          // _animateFishSegments_finished++;
+        }
+      } else { // 이동 가능
+        // printf("%d\n", (*fishSegmentPointer)[idx]->x);
+        (*fishSegmentPointer)[idx]->move((*fishSegmentPointer)[idx], SPEED.delay / 10);
+        if ((*fishSegmentPointer)[idx]->x <= 1400) {
+          _animateFishSegments_shown++;
         }
       }
     }
+    Sleep(SPEED.delay / 15);
   }
 }
 
@@ -54,22 +54,12 @@ Obstacle *(*ObstacleSegmentPointer)[] = NULL;
 int _animateObstacleSegments_shown = 0;
 
 void animateObstacleSegments(int obstacleLength) {
-  for (int repeat = 0;; repeat++) {
+  while (1) {
     for (int idx = 0; idx < obstacleLength; idx++) {
-      if (repeat > 10 * idx) {
-        //   // if ((*ObstacleSegmentPointer)[idx]->x <= 200) { // 플레이어와 만남
-        //   // } else { // 이동 가능
-        //   //   (*ObstacleSegmentPointer)[idx]->move((*ObstacleSegmentPointer)[idx], 10);
-        //   //   // if ((*ObstacleSegmentPointer)[idx]->x <= 1400) {
-        //   //   //   _animateFishSegments_shown++;
-        //   //   // }
-        //   // }
-        // }
-        Sleep(150);
-        (*ObstacleSegmentPointer)[idx]->move((*ObstacleSegmentPointer)[idx], 10);
-        if ((*ObstacleSegmentPointer)[idx]->x <= 1500) {
-          _animateObstacleSegments_shown++;
-        }
+      Sleep(SPEED.delay / 10);
+      (*ObstacleSegmentPointer)[idx]->move((*ObstacleSegmentPointer)[idx], SPEED.delay / 20);
+      if ((*ObstacleSegmentPointer)[idx]->x <= 1500) {
+        _animateObstacleSegments_shown++;
       }
     }
   }
@@ -79,14 +69,12 @@ Item *(*ItemSegmentPointer)[] = NULL;
 int _animateItemSegments_shown = 0;
 
 void animateItemSegments(int itemLength) {
-  for (int repeat = 0;; repeat++) {
+  while (1) {
     for (int idx = 0; idx < itemLength; idx++) {
-      if (repeat > 10 * idx) {
-        Sleep(150);
-        (*ItemSegmentPointer)[idx]->move((*ItemSegmentPointer)[idx], 10);
-        if ((*ItemSegmentPointer)[idx]->x <= 1500) {
-          _animateItemSegments_shown++;
-        }
+      Sleep(SPEED.delay / 5);
+      (*ItemSegmentPointer)[idx]->move((*ItemSegmentPointer)[idx], SPEED.delay / 20);
+      if ((*ItemSegmentPointer)[idx]->x <= 1500) {
+        _animateItemSegments_shown++;
       }
     }
   }
@@ -140,6 +128,8 @@ int main() {
   // game start
   imageLayer.renderAll(&imageLayer);
 
+  SPEED.addBackgroundThread(&SPEED, SPEED.init);
+
   cat.addBackgroundThread(&cat, cat.run);
   cat.addBackgroundThread(&cat, cat.listenKeys);
   // fish.addBackgroundThread(&fish, fish.move);
@@ -150,10 +140,10 @@ int main() {
     if (currentFrame.type == KEYFRAME_TYPE_FISH) {
       Fish *fishSegments[5];
       for(int i = 0; i < currentFrame.size; i++) {
-        images[imageLayer.imageCount] = (Image) { .fileName = RESOURCE_FISH[0], .x = 2000, .y = 600, .scale = 1, .isShown = true };
+        images[imageLayer.imageCount] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1900, .y = 600, .scale = 1, .isShown = true };
 
         fishSegments[i] = malloc(sizeof(Fish));
-        *fishSegments[i] = createFish();
+        *fishSegments[i] = createFish(1900 + i * 200);
         fishSegments[i]->image = &images[imageLayer.imageCount];
         fishSegments[i]->imageLayer = &imageLayer;
         fishSegments[i]->init(fishSegments[i]);
@@ -170,7 +160,7 @@ int main() {
       Obstacle *ObstacleSegments[5];
       for(int i = 0; i < currentFrame.size; i++) {
         ObstacleSegments[i] = malloc(sizeof(Obstacle));
-        *ObstacleSegments[i] = createObstacleByPos(POSITION_BOTTOM, &imageLayer);
+        *ObstacleSegments[i] = createObstacleByPos(&imageLayer, POSITION_BOTTOM);
       }
       ObstacleSegmentPointer = &ObstacleSegments;
       _beginthread(animateObstacleSegments, 0, (int) currentFrame.size);
@@ -180,11 +170,11 @@ int main() {
       // obstacle = createObstacleByPos(POSITION_T OP, &imageLayer);
       // imageLayer.renderAll(&imageLayer);
     }
-    else if (currentFrame.type == KEYFRAME_TYPE_ITEM_LIFE) {
+    else if (currentFrame.type == KEYFRAME_TYPE_ITEM) {
       Item *ItemSegments[5];
       for (int i = 0; i < currentFrame.size; i++) {
         ItemSegments[i] = malloc(sizeof(Item));
-        *ItemSegments[i] = createItemByType(&imageLayer, ITEM_TYPE_LIFE, 1000);
+        *ItemSegments[i] = createItemByType(&imageLayer, currentFrame.effect);
       }
       ItemSegmentPointer = &ItemSegments;
       _beginthread(animateItemSegments, 0, (int) currentFrame.size);

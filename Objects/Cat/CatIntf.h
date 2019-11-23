@@ -11,7 +11,6 @@ typedef struct _Cat {
   int x, y;
   int width, height;
   int isRunning;
-  float delay;
   COORD start, end;
   Image *image;
   ImageLayer *imageLayer;

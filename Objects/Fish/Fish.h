@@ -22,9 +22,9 @@ const Fish DEFAULT_FISH = {
   // _Fish_addBackgroundThread,
 };
 
-Fish createFish() {
+Fish createFish(int startX) {
   Fish fish = DEFAULT_FISH;
-  fish.x = 2000;
+  fish.x = startX;
   fish.y = 600;
   return fish;
 }

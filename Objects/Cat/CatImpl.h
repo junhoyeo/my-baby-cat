@@ -6,7 +6,9 @@
 #include <stdbool.h>
 #include <process.h>
 #include <Windows.h>
+
 #include "Resources.h"
+#include "Speed.h"
 // #include "Mouse/Mouse.h"
 #include "Objects/Life/Life.h"
 #include "Objects/Score/Score.h"
@@ -20,38 +22,6 @@ void _Cat_init(Cat* self) {
   self->width = bitmap.bmWidth;
   self->height = bitmap.bmHeight;
 }
-
-// 아래는 사용되지 않는 코드입니다.
-// TODO: set and use scale as 1
-
-// void _Cat_update(Cat* self) {
-//   self->start.X = 0;
-//   self->start.Y = 0;
-//   self->end.X = self->x + self->width * 3;
-//   self->end.Y = self->y + self->height * 3;
-// }
-
-// int _Cat_isHovered(Cat* self, Mouse* mouse) {
-//   mouse->updatePosition(mouse);
-//   COORD mousePos = mouse->pos;
-//   if (mousePos.X >= self->start.X && mousePos.X <= self->end.X
-//     && mousePos.Y >= self->start.Y && mousePos.Y <= self->end.Y)
-//     return 1;
-//   return 0;
-// }
-
-// bool loop = true;
-
-// void _Cat_waitForMouse(Cat* self) {
-//   Mouse mouse = DEFAULT_MOUSE;
-//   while (1) {
-//     if (mouse.isClicked() && self->isHovered(self, &mouse)) {
-//       // MessageBox(NULL, "wait -> clicked", "", MB_OK);
-//       break;
-//     }
-//   }
-//   self->isRunning = 0;
-// }
 
 // 고양이 객체를 changeX, changeY만큼 움직입니다.
 void _Cat_move(Cat* self, int changeX, int changeY) {
@@ -77,14 +47,11 @@ void _Cat_run(Cat* self) {
     LIFE.update(&LIFE, -0.025);
     // 달리는 도중에 생명이 미세하게 줄어든다.
 
-    Sleep(self->delay);
+    Sleep(SPEED.delay / 7);
 
     if (frame > 6) frame = 1;
     else frame++;
   }
-  // MessageBox(NULL, "exit", "", MB_OK);
-  // self->image->fileName = RESOURCE_CAT[0];
-  // self->imageLayer->renderAll(self->imageLayer);
 }
 
 // 고양이가 점프하게 합니다.
@@ -141,7 +108,7 @@ void _Cat_listenKeys(Cat *self) {
 // 백그라운드 쓰레드를 시작합니다.
 void _Cat_addBackgroundThread(Cat* self, int (*method)(Cat*)) {
   self->isRunning = 1;
-  Sleep(200);
+  // Sleep(50);
 
   _beginthread(*method, 0, (Cat*) self);
 }

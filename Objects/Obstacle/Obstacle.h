@@ -10,7 +10,7 @@
 
 const Obstacle DEFAULT_OBSTACLE = {
   POSITION_BOTTOM,
-  0, 0,
+  2000, 0,
   NULL,
   NULL,
 
@@ -20,7 +20,7 @@ const Obstacle DEFAULT_OBSTACLE = {
 };
 
 // 위치에 따른 장애물 종류(위: 슬라이드로 피함/아래: 점프로 피함)에 따라 랜덤 장애물을 생성해 반환합니다.
-Obstacle createObstacleByPos(int pos, ImageLayer* imageLayer) {
+Obstacle createObstacleByPos(ImageLayer* imageLayer, int pos) {
   Obstacle newObstacle = DEFAULT_OBSTACLE;
   imageLayer->imageCount++;
   Image *images = imageLayer->images;
