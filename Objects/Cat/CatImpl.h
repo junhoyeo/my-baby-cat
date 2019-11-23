@@ -78,12 +78,6 @@ void _Cat_jump(Cat* self) {
     self->imageLayer->renderAll(self->imageLayer);
     Sleep((5 - i) * 8);
   }
-
-  // self->image->fileName = RESOURCE_CAT[1];
-  // self->imageLayer->renderAll(self->imageLayer);
-
-  // 점프 후 쓰레드를 다시 시작해 다시 달리게 합니다.
-  self->addBackgroundThread(self, self->run);
 }
 
 // 고양이를 슬라이딩하게 합니다.
@@ -98,7 +92,9 @@ void _Cat_listenKeys(Cat *self) {
   while (1) {
     if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
       // 스페이스 키가 입력된다면 점프합니다.
-      self->addBackgroundThread(self, self->jump);
+      self->jump(self);
+      // 점프 후 쓰레드를 다시 시작해 다시 달리게 합니다.
+      self->addBackgroundThread(self, self->run);
     } else if (GetAsyncKeyState(VK_DOWN) & 0x8001) {
       // 슬라이드 키를 누르고 있는 동안 슬라이딩합니다.
       self->slide(self);
