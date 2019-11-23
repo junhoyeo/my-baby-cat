@@ -7,8 +7,6 @@
 #define KEYFRAME_TYPE_OBSTACLE_BOTTOM 1
 #define KEYFRAME_TYPE_OBSTACLE_TOP 2
 
-#define STAGE_ONE_LENGTH 2
-
 typedef struct _Keyframe {
   int type;
   int size;

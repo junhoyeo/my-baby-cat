@@ -8,6 +8,8 @@
 #define ITEM_TYPE_SLOWER 2 // 속도 감소 아이템
 #define ITEM_TYPE_GRACE 3 // 무적 아이템
 
+#include "ImageLayer/ImageLayer.h"
+
 typedef struct _Item {
   int x, y;
   int width, height;
