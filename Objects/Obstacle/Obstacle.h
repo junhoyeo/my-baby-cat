@@ -3,6 +3,7 @@
 #ifndef _OBJ_OBSTACLE_
 #define _OBJ_OBSTACLE_
 
+#include <stdbool.h>
 #include "Resources.h"
 #include "Objects/Obstacle/ObstacleIntf.h"
 #include "Objects/Obstacle/ObstacleImpl.h"
@@ -20,7 +21,7 @@ const Obstacle DEFAULT_OBSTACLE = {
 
 // 위치에 따른 장애물 종류(위: 슬라이드로 피함/아래: 점프로 피함)에 따라 랜덤 장애물을 생성해 반환합니다.
 Obstacle createObstacleByPos(int pos, ImageLayer* imageLayer) {
-  Obstacle testObstacle = DEFAULT_OBSTACLE;
+  Obstacle newObstacle = DEFAULT_OBSTACLE;
   imageLayer->imageCount++;
   Image *images = imageLayer->images;
   int imageIndex = imageLayer->imageCount - 1;
@@ -35,14 +36,14 @@ Obstacle createObstacleByPos(int pos, ImageLayer* imageLayer) {
     .x = 0,
     .y = 0,
     .scale = 1,
-    .isShown = false
+    .isShown = false,
   };
-  // imageLayer.imageCount++;
+  // imageLayer->imageCount++;
 
-  testObstacle.image = &images[imageIndex];
-  testObstacle.imageLayer = imageLayer;
-  testObstacle.init(&testObstacle, pos);
-  return testObstacle;
+  newObstacle.image = &images[imageIndex];
+  newObstacle.imageLayer = imageLayer;
+  newObstacle.init(&newObstacle, pos);
+  return newObstacle;
 }
 
 #endif

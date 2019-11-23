@@ -18,6 +18,7 @@
 #include "Objects/Cat/Cat.h"
 #include "Objects/Fish/Fish.h"
 #include "Objects/Obstacle/Obstacle.h"
+#include "Objects/Item/Item.h"
 
 Fish *(*fishSegmentPointer)[] = NULL;
 int _animateFishSegments_shown = 0;
@@ -83,7 +84,7 @@ int main() {
   // Mouse mouse = DEFAULT_MOUSE;
 
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
- 	imageLayer.initialize(&imageLayer);
+   imageLayer.initialize(&imageLayer);
 
   Image *images = malloc(20 * sizeof(Image));
   images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1, .isShown = true };
@@ -126,6 +127,11 @@ int main() {
   cat.addBackgroundThread(&cat, cat.listenKeys);
   // fish.addBackgroundThread(&fish, fish.move);
 
+  printf("%s\n", RESOURCE_ITEM[ITEM_TYPE_HEART]);
+  Item testItem = createItemByType(&imageLayer, ITEM_TYPE_HEART, 1000);
+  testItem.move(&testItem, 10);
+  exit(0);
+
   Keyframe *keyframes = createStageOneKeyframes();
   for (int frame = 0; frame < STAGE_ONE_LENGTH; frame++) {
     Keyframe currentFrame = keyframes[frame];
@@ -164,5 +170,5 @@ int main() {
     }
   }
 
- 	getchar();
+   getchar();
 }

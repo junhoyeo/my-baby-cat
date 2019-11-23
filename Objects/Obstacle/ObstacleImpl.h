@@ -11,9 +11,9 @@
 // 장애물을 초기화합니다. 인수로 받은 장애물 위치와 비트맵을 통해 구한 높이에 따라 시작 위치를 조정합니다.
 void _Obstacle_init(Obstacle *self, int pos) {
   const HBITMAP hbitmap = (HBITMAP)LoadImage(NULL, (LPCSTR)self->image->fileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-	BITMAP bitmap;
-	GetObject(hbitmap, sizeof(BITMAP), &bitmap);
-	int height = bitmap.bmHeight;
+  BITMAP bitmap;
+  GetObject(hbitmap, sizeof(BITMAP), &bitmap);
+  int height = bitmap.bmHeight;
 
   self->position = pos;
   self->x = 2000;
