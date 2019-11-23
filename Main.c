@@ -37,7 +37,7 @@ int main() {
   initWindow();
   updateResources();
   Sleep(100);
-  // renderTitle();
+  renderTitle();
   renderLobby();
 
   CONSOLE_WIDTH = 120;
