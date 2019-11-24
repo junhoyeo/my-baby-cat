@@ -1,51 +1,75 @@
 ﻿#pragma once
 
-#ifndef _LOBBY_
-#define _LOBBY_
+#ifndef _TITLE_
+#define _TITLE_
 
+#include <stdbool.h>
+// #include <process.h>
 #include "Resources.h"
 #include "ImageLayer/ImageLayer.h"
-#include "Objects/Score/Score.h"
 
-void renderLobby() {
-  ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
-  imageLayer.initialize(&imageLayer);
+// typedef struct _AnimateTitleProps {
+//   Image *image;
+//   ImageLayer *imageLayer;
+// } AnimateTitleProps;
 
-  Image images[7] = {
-    { RESOURCE_BACKGROUND_LOBBY, -10, -10, 1, .isShown = true },
-    { NULL, 0, 0, 1, .isShown = false },
-  };
+// bool _Title_isRunning = false;
+
+// void animateTitle(AnimateTitleProps *animateTitleProps) {
+//   _Title_isRunning = true;
+//   Image *textImage = animateTitleProps->image;
+//   ImageLayer *imageLayer = animateTitleProps->imageLayer;
+
+//   bool first = false;
+//   while (_Title_isRunning) {
+//     first = !first;
+//     Sleep(first ? 300 : 500);
+//     textImage->x = first ? 640 : 670;
+//     textImage->scale = first ? 1 : 0.9;
+//     imageLayer->renderAll(imageLayer);
+//   }
+// }
+
+void renderLobby(ImageLayer* imageLayer, bool showTitle /* = false */) {
+  Image *preImages = malloc(8 * sizeof(Image));
+  preImages[0] = (Image) { RESOURCE_BACKGROUND_TITLE, -10, -10, 1, .isShown = true };
+  preImages[1] = (Image) { RESOURCE_TEXT_START, 670, 880, 0.9, .isShown = true };
+  imageLayer->imageCount = 2;
+  imageLayer->images = preImages;
+
+  // render title
+  if (showTitle) {
+    imageLayer->renderAll(imageLayer);
+    Sleep(1000);
+  }
+
+  // render lobby
+  preImages[0].fileName = RESOURCE_BACKGROUND_LOBBY;
+  preImages[1].isShown = false;
   for (int idx = 2; idx < 8; idx++) {
-    images[idx] = (Image) {
+    preImages[idx] = (Image) {
       .fileName = RESOURCE_NUMBERS[0],
-      .x = 1900 - idx * 65,
+      .x = 1945 - idx * 60,
       .y = 110,
       .scale = 1,
       .isShown = true,
     };
+    imageLayer->imageCount++;
   }
-
-  imageLayer.imageCount = 8;
-  imageLayer.images = images;
-  imageLayer.renderAll(&imageLayer);
-  Sleep(500);
-
+  // exit(0);
+  imageLayer->renderAll(imageLayer);
   int score = SCORE.loadHighScore(&SCORE, "data.dat");
   int imageIdx = 2;
   while (score != 0) {
-    images[imageIdx].fileName = RESOURCE_NUMBERS[score % 10];
+    preImages[imageIdx].fileName = RESOURCE_NUMBERS[score % 10];
     // images[imageIdx].x = 1900 - imageIdx * 65,
     score /= 10;
     imageIdx++;
   }
-  imageLayer.renderAll(&imageLayer);
+  imageLayer->renderAll(imageLayer);
+  Sleep(3000);
 
-  // FIXME: mouse
-  // Sleep(500);
-  if (getchar()) {
-    return;
-  }
-  // Sleep(1000);
+  free(preImages);
 }
 
 #endif
