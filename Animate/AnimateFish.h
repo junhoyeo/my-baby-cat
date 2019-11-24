@@ -27,7 +27,11 @@ void animateFishSegments(AnimateProps* animateProps) {
           // 살아 있는 물고기면 안 보이게 처리
           image->isShown = false;
 
-          if (cat->y >= 400) {
+          if (cat->y >= 400) { // 물고기를 먹었을 때
+            // 효과음 재생
+            PlaySound(RESOURCE_SOUND_FISH, NULL, SND_FILENAME);
+            PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+
             SCORE.update(&SCORE, 100);
           }
           // _animateFishSegments_finished++;

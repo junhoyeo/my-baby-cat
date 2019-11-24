@@ -32,13 +32,21 @@
 #include "Animate/AnimateItem.h"
 #include "Animate/AnimateObstacle.h"
 
+#include <setjmp.h>
+
+// TRY, CATCH에 사용한다.
+#define TRY do{ jmp_buf ex_buf__; if(!setjmp(ex_buf__)){
+#define CATCH } else {
+#define ETRY } } while(0)
+#define THROW longjmp(ex_buf__, 1)
+
 int main() {
   PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
   initWindow();
   updateResources();
   Sleep(100);
-  renderTitle();
-  renderLobby();
+  // renderTitle();
+  // renderLobby();
 
   CONSOLE_WIDTH = 120;
   CONSOLE_HEIGHT = 30;
@@ -53,7 +61,8 @@ int main() {
   images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1, .isShown = true };
   images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1, .isShown = true };
   images[2] = (Image) { .fileName = RESOURCE_LIFE[20], .x = 0, .y = 0, .scale = 1, .isShown = true };
-  for (int idx = 3; idx < 9; idx++) {
+  images[3] = (Image) { .fileName = RESOURCE_EFFECT[0], .x = -50, .y = 100, .scale = 0.9, .isShown = false };
+  for (int idx = 4; idx < 10; idx++) {
     images[idx] = (Image) {
       .fileName = RESOURCE_NUMBERS[0],
       .x = 2000 - idx * 65,
@@ -62,7 +71,7 @@ int main() {
       .isShown = true,
     };
   }
-  imageLayer.imageCount = 9;
+  imageLayer.imageCount = 10;
   imageLayer.images = images;
 
   // init cat
@@ -76,8 +85,8 @@ int main() {
   LIFE.imageLayer = &imageLayer;
 
   // set SCORE
-  for (int idx = 3; idx < 9; idx++) {
-    SCORE.images[idx - 3] = &images[idx];
+  for (int idx = 4; idx < 10; idx++) {
+    SCORE.images[idx - 4] = &images[idx];
     // printf("%s\n", SCORE.images[idx]->fileName);
   }
   SCORE.imageLayer = &imageLayer;
