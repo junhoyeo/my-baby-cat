@@ -52,12 +52,9 @@ boolean renderTitle() {
   };
   _beginthread(animateTitle, 0, (AnimateTitleProps*) &animateTitleProps);
 
-  // FIXME: mouse
-  if (getchar()) {
-    _Title_isRunning = false;
+  Sleep(1000);
 
-    return 1;
-  }
+  return 1;
 }
 
 #endif

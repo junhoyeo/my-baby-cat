@@ -6,6 +6,7 @@
 #include <Windows.h>
 #include "Animate/Animate.h"
 #include "Objects/Cat/Cat.h"
+#include "Objects/Effect/Effect.h"
 #include "Objects/Obstacle/Obstacle.h"
 #include "ImageLayer/ImageLayer.h"
 
@@ -25,6 +26,10 @@ void animateObstacleSegments(AnimateProps* animateProps) {
           image->isShown = false;
 
           if (cat->y >= 450) { // 부딪힘
+            // 애니메이션 표시
+            Effect effect = createEffect(currentObstacle->imageLayer);
+            effect.addBackgroundThread(&effect, effect.render);
+
             // 속도 느리게
             SPEED.decrease(&SPEED);
           }
