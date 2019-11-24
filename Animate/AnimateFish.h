@@ -27,6 +27,7 @@ void animateFishSegments(AnimateProps* animateProps) {
         if (image->isShown) {
           // 살아 있는 물고기면 안 보이게 처리
           image->isShown = false;
+          _animateFishSegments_finished++;
 
           if (cat->y >= 400) { // 물고기를 먹었을 때
             // 효과음 재생
@@ -34,7 +35,6 @@ void animateFishSegments(AnimateProps* animateProps) {
             PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
             SCORE.update(&SCORE, 100);
-            _animateFishSegments_finished++;
           }
         }
       } else { // 이동 가능

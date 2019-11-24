@@ -8,7 +8,7 @@
 #include "Stage/StageIntf.h"
 
 void _Stage_createStageOneKeyframes(Stage *self) {
-  int STAGE_ONE_LENGTH = 4;
+  int STAGE_ONE_LENGTH = 5;
   Keyframe *keyframes = malloc(STAGE_ONE_LENGTH * sizeof(Keyframe));
   keyframes[0] = (Keyframe) {
     .type = KEYFRAME_TYPE_FISH,
@@ -20,11 +20,6 @@ void _Stage_createStageOneKeyframes(Stage *self) {
     .effect = NULL,
     .size = 1,
   };
-  // keyframes[2] = (Keyframe){
-  //   .type = KEYFRAME_TYPE_OBSTACLE_TOP,
-  //   .effect = NULL,
-  //   .size = 2,
-  // };
   keyframes[2] = (Keyframe) {
     .type = KEYFRAME_TYPE_ITEM,
     .effect = ITEM_TYPE_LIFE,
@@ -34,6 +29,11 @@ void _Stage_createStageOneKeyframes(Stage *self) {
     .type = KEYFRAME_TYPE_FISH,
     .effect = NULL,
     .size = 5,
+  };
+  keyframes[4] = (Keyframe){
+    .type = KEYFRAME_TYPE_OBSTACLE_BOTTOM,
+    .effect = NULL,
+    .size = 2,
   };
   self->keyframes = keyframes;
   self->length = STAGE_ONE_LENGTH;

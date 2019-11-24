@@ -161,16 +161,10 @@ int main() {
             fishSegments[i]->imageLayer = &imageLayer;
             imageLayer.imageCount++;
           }
+          fishSegments[i]->image->isShown = true;
           fishSegments[i]->init(fishSegments[i]);
         }
         fishSegmentPointer = &fishSegments;
-
-        // 보여주기
-        if (_animateFishSegments_received != 0) {
-          for(int i=0;i<currentFrame.size; i++) {
-            fishSegments[i]->image->isShown = true;
-          }
-        }
 
         // 각종 플래그 초기화
         _animateFishSegments_finished = 0;
@@ -193,6 +187,8 @@ int main() {
           // *ObstacleBottomSegments[i] = createObstacleByPos(&imageLayer, POSITION_BOTTOM);
           *ObstacleBottomSegments[i] = createObstacleByPos(&imageLayer, POSITION_BOTTOM);
           ObstacleBottomSegments[i]->x = 1900 + i * 200;
+          ObstacleBottomSegments[i]->image->isShown = true;
+          printf("%d\n", ObstacleBottomSegments[i]->x);
         }
         ObstacleSegmentPointer = &ObstacleBottomSegments;
 

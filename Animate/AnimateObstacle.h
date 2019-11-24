@@ -27,6 +27,9 @@ void animateObstacleSegments(AnimateProps* animateProps) {
         if (image->isShown) {
           image->isShown = false;
 
+          // 플래그 업데이트
+          _animateObstacleSegments_finished++;
+
           if (cat->y >= 450) { // 부딪힘
             // 애니메이션 표시
             Effect effect = createEffect(currentObstacle->imageLayer);
@@ -41,9 +44,6 @@ void animateObstacleSegments(AnimateProps* animateProps) {
 
             // 체력 감소
             LIFE.update(&LIFE, -30);
-
-            // 플래그 업데이트
-            _animateFishSegments_finished++;
           }
         }
       } else {
