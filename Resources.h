@@ -16,6 +16,7 @@
 #define RESOURCE_ITEM_LEN 4
 #define RESOURCE_TILE_LEN 1
 #define RESOURCE_EFFECT_LEN 10
+#define RESOURCE_TEXT_STAGE_LEN 5
 
 #define RESOURCE_SOUND_BGM_1 "resources/sound/bgm-1.wav"
 #define RESOURCE_SOUND_FISH "resources/sound/sfx1.wav"
@@ -36,6 +37,7 @@ char* RESOURCE_LIFE[RESOURCE_LIFE_LEN];
 char* RESOURCE_ITEM[RESOURCE_ITEM_LEN];
 char* RESOURCE_TILE[RESOURCE_TILE_LEN];
 char* RESOURCE_EFFECT[RESOURCE_EFFECT_LEN];
+char* RESOURCE_TEXT_STAGE[RESOURCE_TEXT_STAGE_LEN];
 char* RESOURCE_NUMBERS[10];
 
 void loadResources(char *resouceList, int resourceLength, char* formatString) {
@@ -59,6 +61,7 @@ inline void updateResources() {
   loadResources(&RESOURCE_ITEM, RESOURCE_ITEM_LEN, "resources/item/item%d.bmp");
   loadResources(&RESOURCE_TILE, RESOURCE_TILE_LEN, "resources/tile/tile%d.bmp");
   loadResources(&RESOURCE_EFFECT, RESOURCE_EFFECT_LEN, "resources/effect/bomb-effect%d.bmp");
+  loadResources(&RESOURCE_TEXT_STAGE, RESOURCE_TEXT_STAGE_LEN, "resources/text/stagename%d.bmp");
   loadResources(&RESOURCE_NUMBERS, 10, "resources/number/%d.bmp");
 }
 
