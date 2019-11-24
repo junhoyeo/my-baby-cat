@@ -23,8 +23,10 @@ char* _Life_loadResource(Life *self) {
 
 // _Life_loadResource의 결과로 생명 바에 해당하는 이미지를 업데이트한 뒤, 렌더링합니다.
 void _Life_render(Life *self) {
-  self->image->fileName = _Life_loadResource(self);
-  self->imageLayer->renderAll(self->imageLayer);
+  if (self->image) {
+    self->image->fileName = _Life_loadResource(self);
+    self->imageLayer->renderAll(self->imageLayer);
+  }
 }
 
 #endif

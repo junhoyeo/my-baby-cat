@@ -63,7 +63,7 @@ int main() {
     for (int idx = 5; idx < 11; idx++) {
       images[idx] = (Image) {
         .fileName = RESOURCE_NUMBERS[0],
-        .x = 2000 - idx * 65,
+        .x = 1945 - idx * 65,
         .y = 30,
         .scale = 1,
         .isShown = true,
@@ -103,6 +103,7 @@ int main() {
     for (int idx = 0; idx < 5; idx++) {
       stages[idx] = malloc(sizeof(Stage));
       *stages[idx] = (Stage) {
+        .index = idx,
         .keyframes = NULL,
         .length = 0,
         .image = &images[4],
@@ -144,7 +145,7 @@ int main() {
     }
 
     double isDead = false;
-    for (int key = 0; key < 5; key++) {
+    for (int key = 0; key < 1; key++) {
       Stage *currentStage = stages[key];
 
       // 타이틀 보여주기
@@ -273,12 +274,29 @@ int main() {
 
     // isDead 플래그가 설정되어 있다면 사고사,
     // 설정되어 있지 않다면 자연사
-    if (isDead)
-      printf("디졌군ㅋ");
-    else
-      printf("자연사");
+    // if (isDead)
+    //   printf("디졌군ㅋ");
+    // else
+    //   printf("자연사");
+
+    // render dead screen
+    images[0] = (Image) { .fileName = RESOURCE_BACKGROUND_RESULT, .x = 0, .y = 0, .scale = 1, .isShown = true };
+    for (int i = 1; i < 5; i++) {
+      images[i].isShown = false;
+    }
+    for (int idx = 5; idx < 11; idx++) {
+      images[idx].fileName = RESOURCE_NUMBERS[0];
+      images[idx].x = 1565 - idx * 85;
+      images[idx].y = 450;
+      images[idx].isShown = true;
+      images[idx].scale = 1.4;
+    }
+    imageLayer.imageCount = 11;
+    SCORE.update(&SCORE, 0); // 점수 표시
+    imageLayer.renderAll(&imageLayer);
 
     SCORE.save(&SCORE, "data.dat");
+    while (1) {};
   }
   firstRun = false;
 }

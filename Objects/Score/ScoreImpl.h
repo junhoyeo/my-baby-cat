@@ -35,11 +35,14 @@ void _Score_update(Score *self, int change) {
   }
 }
 
-// filename의 파일로부터 점수를 저장합니다.
+// filename의 파일에 기록된 최고 점수보다 현재 점수가 높을 경우, 현재 점수를 파일에 저장합니다.
 void _Score_save(Score *self, char *filename) {
-  FILE *fp = fopen(filename, "w");
-  fprintf(fp, "%d\n", self->score);
-  fclose(fp);
+  int highScore = self->loadHighScore(self, filename);
+  if (highScore < self->score) {
+    FILE *fp = fopen(filename, "w");
+    fprintf(fp, "%d\n", self->score);
+    fclose(fp);
+  }
 }
 
 // filename의 파일로부터 점수를 읽어와 반환합니다.
