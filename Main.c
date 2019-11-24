@@ -134,7 +134,6 @@ int main() {
     ObstacleBottomSegments[i] = malloc(sizeof(Obstacle));
 
     ObstacleTopSegments[i] = malloc(sizeof(Obstacle));
-    // *ObstacleTopSegments[i] = createObstacleByPos(&imageLayer, POSITION_TOP);
   }
 
   for (int key = 0; key < 5; key++) {
@@ -183,8 +182,6 @@ int main() {
         while (_animateObstacleSegments_finished < _animateObstacleSegments_received) {};
 
         for(int i = 0; i < currentFrame.size; i++) {
-          // ObstacleBottomSegments[i] = malloc(sizeof(Obstacle));
-          // *ObstacleBottomSegments[i] = createObstacleByPos(&imageLayer, POSITION_BOTTOM);
           *ObstacleBottomSegments[i] = createObstacleByPos(&imageLayer, POSITION_BOTTOM);
           ObstacleBottomSegments[i]->x = 1900 + i * 200;
           ObstacleBottomSegments[i]->image->isShown = true;
@@ -203,11 +200,20 @@ int main() {
 
       // 위쪽에 있는 장애물 키프레임 렌더링
       else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_TOP) {
+        while (_animateObstacleSegments_finished < _animateObstacleSegments_received) {};
+
         for(int i = 0; i < currentFrame.size; i++) {
-          ObstacleTopSegments[i] = malloc(sizeof(Obstacle));
           *ObstacleTopSegments[i] = createObstacleByPos(&imageLayer, POSITION_TOP);
+          ObstacleTopSegments[i]->x = 1900 + i * 200;
+          ObstacleTopSegments[i]->image->isShown = true;
         }
         ObstacleSegmentPointer = &ObstacleTopSegments;
+
+        // 각종 플래그 초기화
+        _animateObstacleSegments_finished = 0;
+        _animateObstacleSegments_shown = 0;
+        _animateObstacleSegments_received = currentFrame.size;
+
         _beginthread(animateObstacleSegments, 0, (AnimateProps*) &animateProps);
         while (_animateObstacleSegments_shown < currentFrame.size) {};
       }
