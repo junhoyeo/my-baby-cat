@@ -40,7 +40,7 @@ void animateObstacleSegments(AnimateProps* animateProps) {
             PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
             // 속도 느리게
-            SPEED.decrease(&SPEED);
+            SPEED.addBackgroundThread(&SPEED, SPEED.decrease);
 
             // 체력 감소
             LIFE.update(&LIFE, -30);

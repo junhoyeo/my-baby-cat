@@ -17,6 +17,7 @@ int _animateItemSegments_finished = 0;
 void animateItemSegments(AnimateProps* animateProps) {
   Cat *cat = animateProps->cat;
   int itemLength = animateProps->objectLength;
+  int itemType = animateProps->objectClass;
   while (1) {
     for (int idx = 0; idx < itemLength; idx++) {
       Item *currentItem = (*ItemSegmentPointer)[idx];
@@ -33,6 +34,26 @@ void animateItemSegments(AnimateProps* animateProps) {
             PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
             // TODO: 아이템 타입에 맞게 효과 재생
+            switch (itemType) {
+              case ITEM_TYPE_LIFE:
+                // 체력 회복 아이템
+                LIFE.update(&LIFE, 20);
+                break;
+
+              case ITEM_TYPE_FASTER:
+                // 속도 증가 아이템
+                SPEED.addBackgroundThread(&SPEED, SPEED.increase);
+                break;
+
+              case ITEM_TYPE_SLOWER:
+                // 속도 감소 아에템
+                SPEED.addBackgroundThread(&SPEED, SPEED.decrease);
+                break;
+
+              default:
+                break;
+            }
+
 
             // 아이템도 젤리니까 점수 줌
             SCORE.update(&SCORE, 80);
