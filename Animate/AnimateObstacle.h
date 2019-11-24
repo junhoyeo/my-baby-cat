@@ -18,6 +18,7 @@ int _animateObstacleSegments_finished = 0;
 void animateObstacleSegments(AnimateProps* animateProps) {
   Cat *cat = animateProps->cat;
   int obstacleLength = animateProps->objectLength;
+  int obstacleType = animateProps->objectClass;
   while (1) {
     for (int idx = 0; idx < obstacleLength; idx++) {
       Obstacle *currentObstacle = (*ObstacleSegmentPointer)[idx];
@@ -30,9 +31,25 @@ void animateObstacleSegments(AnimateProps* animateProps) {
           // 플래그 업데이트
           _animateObstacleSegments_finished++;
 
-          if (cat->y >= 450) { // 부딪힘
+          if (obstacleType == KEYFRAME_TYPE_OBSTACLE_BOTTOM && cat->y >= 450) { // 부딪힘
             // 애니메이션 표시
-            Effect effect = createEffect(currentObstacle->imageLayer);
+            Effect effect = createEffect(currentObstacle->imageLayer, obstacleType);
+            effect.addBackgroundThread(&effect, effect.render);
+
+            // 효과음 재생
+            PlaySound(RESOURCE_SOUND_OBST, NULL, SND_FILENAME);
+            PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+
+            // 속도 느리게
+            SPEED.addBackgroundThread(&SPEED, SPEED.decrease);
+
+            // 체력 감소
+            LIFE.update(&LIFE, -30);
+          } else if (obstacleType == KEYFRAME_TYPE_OBSTACLE_TOP && !(cat->isSliding)) {
+            // 위에 달린 장애물을 만난 상태에서 슬라이드하는 중이 아니라 부딪힘
+
+            // 애니메이션 표시
+            Effect effect = createEffect(currentObstacle->imageLayer, obstacleType);
             effect.addBackgroundThread(&effect, effect.render);
 
             // 효과음 재생

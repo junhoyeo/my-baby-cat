@@ -16,7 +16,7 @@ void _Stage_createStageOneKeyframes(Stage *self) {
     .size = 5,
   };
   keyframes[1] = (Keyframe){
-    .type = KEYFRAME_TYPE_OBSTACLE_BOTTOM,
+    .type = KEYFRAME_TYPE_OBSTACLE_TOP,
     .effect = NULL,
     .size = 1,
   };
@@ -31,7 +31,7 @@ void _Stage_createStageOneKeyframes(Stage *self) {
     .size = 5,
   };
   keyframes[4] = (Keyframe){
-    .type = KEYFRAME_TYPE_OBSTACLE_BOTTOM,
+    .type = KEYFRAME_TYPE_OBSTACLE_TOP,
     .effect = NULL,
     .size = 2,
   };
