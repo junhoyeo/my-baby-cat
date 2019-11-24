@@ -18,6 +18,9 @@
 #define RESOURCE_EFFECT_LEN 10
 
 #define RESOURCE_SOUND_BGM_1 "resources/sound/bgm-1.wav"
+#define RESOURCE_SOUND_FISH "resources/sound/sfx1.wav"
+#define RESOURCE_SOUND_ITEM "resources/sound/sfx2.wav"
+#define RESOURCE_SOUND_OBST "resources/sound/sfx3.wav"
 
 #define RESOURCE_BACKGROUND_TITLE "resources/background/title.bmp"
 #define RESOURCE_BACKGROUND_LOBBY "resources/background/lobby.bmp"

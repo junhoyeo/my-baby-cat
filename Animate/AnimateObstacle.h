@@ -30,6 +30,10 @@ void animateObstacleSegments(AnimateProps* animateProps) {
             Effect effect = createEffect(currentObstacle->imageLayer);
             effect.addBackgroundThread(&effect, effect.render);
 
+            // 효과음 재생
+            PlaySound(RESOURCE_SOUND_OBST, NULL, SND_FILENAME);
+            PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+
             // 속도 느리게
             SPEED.decrease(&SPEED);
 
