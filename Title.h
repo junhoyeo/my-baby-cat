@@ -20,15 +20,12 @@ void animateTitle(AnimateTitleProps *animateTitleProps) {
   Image *textImage = animateTitleProps->image;
   ImageLayer *imageLayer = animateTitleProps->imageLayer;
 
+  bool first = false;
   while (_Title_isRunning) {
-    Sleep(300);
-    textImage->x = 640;
-    textImage->scale = 1;
-    imageLayer->renderAll(imageLayer);
-    Sleep(500);
-
-    textImage->x = 670;
-    textImage->scale = 0.9;
+    first = !first;
+    Sleep(first ? 300 : 500);
+    textImage->x = first ? 640 : 670;
+    textImage->scale = first ? 1 : 0.9;
     imageLayer->renderAll(imageLayer);
   }
 }
