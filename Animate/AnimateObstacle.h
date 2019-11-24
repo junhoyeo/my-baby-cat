@@ -11,7 +11,9 @@
 #include "ImageLayer/ImageLayer.h"
 
 Obstacle *(*ObstacleSegmentPointer)[] = NULL;
+int _animateObstacleSegments_received = 0;
 int _animateObstacleSegments_shown = 0;
+int _animateObstacleSegments_finished = 0;
 
 void animateObstacleSegments(AnimateProps* animateProps) {
   Cat *cat = animateProps->cat;
@@ -39,6 +41,9 @@ void animateObstacleSegments(AnimateProps* animateProps) {
 
             // 체력 감소
             LIFE.update(&LIFE, -30);
+
+            // 플래그 업데이트
+            _animateFishSegments_finished++;
           }
         }
       } else {

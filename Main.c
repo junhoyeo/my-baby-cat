@@ -118,10 +118,23 @@ int main() {
   for (int i = 0; i < 5; i++)
     stages[i]->update(stages[i]);
 
+  // 최대 물고기 떼, 장애물 떼, 아이템 떼는 5개까지만!
+  // 여기에 각각의 개체 포인터를 저장할 스토리지를 만들어 초기화
   Fish *fishSegments[5];
+
+  // 시간이 없으니 Bottom, Top 위치별로 따로 저장
+  Obstacle *ObstacleBottomSegments[5];
+  Obstacle *ObstacleTopSegments[5];
+  Item *ItemSegments[5];
+
   for (int i = 0; i < 5; i++) {
     fishSegments[i] = malloc(sizeof(Fish));
     *fishSegments[i] = createFish(1900 + i * 200);
+
+    ObstacleBottomSegments[i] = malloc(sizeof(Obstacle));
+
+    ObstacleTopSegments[i] = malloc(sizeof(Obstacle));
+    // *ObstacleTopSegments[i] = createObstacleByPos(&imageLayer, POSITION_TOP);
   }
 
   for (int key = 0; key < 5; key++) {
@@ -133,56 +146,78 @@ int main() {
         .objectLength = currentFrame.size,
       };
 
+      // TODO: 나중에 다시 건드리게 되면 추상화시키기,,, 꼭,,,
+      // 물고기 키프레임 렌더링
       if (currentFrame.type == KEYFRAME_TYPE_FISH) {
+        // 이미 물고기 떼가 있으면, 다 사라질 때까지 대기한다.
         while (_animateFishSegments_finished < _animateFishSegments_received) {};
-        // if (_animateFishSegments_received != 0) {
-        //   for(int i = 0; i < 5; i ++) {
-        //     free((*fishSegmentPointer)[i]);
-        //   }
-        // }
 
-        // Fish *fishSegments[5];
         for(int i = 0; i < currentFrame.size; i++) {
-          images[imageLayer.imageCount] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1900, .y = 600, .scale = 1, .isShown = true };
-
-          // fishSegments[i] = malloc(sizeof(Fish));
-          // *fishSegments[i] = createFish(1900 + i * 200);
+          // 물고기 위치 이동시키고 초기화
           fishSegments[i]->x = 1900 + i * 200;
-          fishSegments[i]->image = &images[imageLayer.imageCount];
-          fishSegments[i]->imageLayer = &imageLayer;
+          if (_animateFishSegments_received == 0) {
+            images[imageLayer.imageCount] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1900, .y = 600, .scale = 1, .isShown = true };
+            fishSegments[i]->image = &images[imageLayer.imageCount];
+            fishSegments[i]->imageLayer = &imageLayer;
+            imageLayer.imageCount++;
+          }
           fishSegments[i]->init(fishSegments[i]);
-          imageLayer.imageCount++;
         }
         fishSegmentPointer = &fishSegments;
 
+        // 보여주기
+        if (_animateFishSegments_received != 0) {
+          for(int i=0;i<currentFrame.size; i++) {
+            fishSegments[i]->image->isShown = true;
+          }
+        }
+
+        // 각종 플래그 초기화
         _animateFishSegments_finished = 0;
         _animateFishSegments_shown = 0;
         _animateFishSegments_received = currentFrame.size;
+
+        // 백그라운드 쓰레드를 만들어서 배경에서 움직이게 함
         _beginthread(animateFishSegments, 0, (AnimateProps*) &animateProps);
+
+        // 화면에 다 보여질 때까지 기다림
         while (_animateFishSegments_shown < currentFrame.size) {};
       }
+
+      // 아래쪽에 있는 장애물 키프레임 렌더링
       else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_BOTTOM) {
-        Obstacle *ObstacleSegments[5];
+        while (_animateObstacleSegments_finished < _animateObstacleSegments_received) {};
+
         for(int i = 0; i < currentFrame.size; i++) {
-          ObstacleSegments[i] = malloc(sizeof(Obstacle));
-          *ObstacleSegments[i] = createObstacleByPos(&imageLayer, POSITION_BOTTOM);
+          // ObstacleBottomSegments[i] = malloc(sizeof(Obstacle));
+          // *ObstacleBottomSegments[i] = createObstacleByPos(&imageLayer, POSITION_BOTTOM);
+          *ObstacleBottomSegments[i] = createObstacleByPos(&imageLayer, POSITION_BOTTOM);
+          ObstacleBottomSegments[i]->x = 1900 + i * 200;
         }
-        ObstacleSegmentPointer = &ObstacleSegments;
+        ObstacleSegmentPointer = &ObstacleBottomSegments;
+
+        // 각종 플래그 초기화
+        _animateObstacleSegments_finished = 0;
+        _animateObstacleSegments_shown = 0;
+        _animateObstacleSegments_received = currentFrame.size;
+
         _beginthread(animateObstacleSegments, 0, (AnimateProps*) &animateProps);
         while (_animateObstacleSegments_shown < currentFrame.size) {};
       }
+
+      // 위쪽에 있는 장애물 키프레임 렌더링
       else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_TOP) {
-        Obstacle *ObstacleSegments[5];
         for(int i = 0; i < currentFrame.size; i++) {
-          ObstacleSegments[i] = malloc(sizeof(Obstacle));
-          *ObstacleSegments[i] = createObstacleByPos(&imageLayer, POSITION_TOP);
+          ObstacleTopSegments[i] = malloc(sizeof(Obstacle));
+          *ObstacleTopSegments[i] = createObstacleByPos(&imageLayer, POSITION_TOP);
         }
-        ObstacleSegmentPointer = &ObstacleSegments;
+        ObstacleSegmentPointer = &ObstacleTopSegments;
         _beginthread(animateObstacleSegments, 0, (AnimateProps*) &animateProps);
         while (_animateObstacleSegments_shown < currentFrame.size) {};
       }
+
+      // 아이템 키프레임 렌더링 -> 이건 효과별로 따로 줘야 하니까 이따 생각
       else if (currentFrame.type == KEYFRAME_TYPE_ITEM) {
-        Item *ItemSegments[5];
         for (int i = 0; i < currentFrame.size; i++) {
           ItemSegments[i] = malloc(sizeof(Item));
           *ItemSegments[i] = createItemByType(&imageLayer, currentFrame.effect);

@@ -10,7 +10,7 @@
 
 const Obstacle DEFAULT_OBSTACLE = {
   POSITION_BOTTOM,
-  2000, 0,
+  0, 0,
   NULL,
   NULL,
 
