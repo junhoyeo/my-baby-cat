@@ -14,6 +14,7 @@ typedef struct _Score {
   void (*init)(struct _Score*);
   void (*update)(struct _Score*, int);
   void (*save)(struct _Score*, char*);
+  int (*loadHighScore)(struct _Score*, char*);
 } Score;
 
 #endif

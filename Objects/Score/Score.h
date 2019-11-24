@@ -18,6 +18,7 @@ Score createScore() {
     .init = _Score_init,
     .update = _Score_update,
     .save = _Score_save,
+    .loadHighScore = _Score_loadHighScore,
   };
 }
 

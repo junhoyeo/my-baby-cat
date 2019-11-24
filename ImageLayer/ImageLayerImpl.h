@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 #pragma comment (lib, "Msimg32.lib")
 
 #include <Windows.h>
 #include "ImageLayer.h"
 
-#define CONSOLE_WIDTH 120
-#define CONSOLE_HEIGHT 30
+int CONSOLE_WIDTH = 120;
+int CONSOLE_HEIGHT = 35;
 
 #define DEFAULT_RESOLUTION_SCALE 16
 double RESOLUTION_MULTIPLIER = 1;

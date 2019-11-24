@@ -3,8 +3,16 @@
 #ifndef _OBJ_SCORE_IMPL_
 #define _OBJ_SCORE_IMPL_
 
+#include <Windows.h>
+#include <stdbool.h>
 #include "Utils.h"
 #include "Objects/Score/ScoreIntf.h"
+
+bool _Score_isFileExists(LPCTSTR szPath) {
+  DWORD dwAttrib = GetFileAttributes(szPath);
+  return (dwAttrib != INVALID_FILE_ATTRIBUTES &&
+        !(dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
+}
 
 // 실제로 사용되지 않는 더미 함수입니다.
 void _Score_init(Score *self) {
@@ -29,12 +37,21 @@ void _Score_update(Score *self, int change) {
 
 // filename의 파일로부터 점수를 저장합니다.
 void _Score_save(Score *self, char *filename) {
-  return;
+  FILE *fp = fopen(filename, "w");
+  fprintf(fp, "%d\n", self->score);
+  fclose(fp);
 }
 
-// filename의 파일로부터 점수를 불러옵니다.
-void _Score_load(Score *self, char *filename) {
-  return;
+// filename의 파일로부터 점수를 읽어와 반환합니다.
+int _Score_loadHighScore(Score *self, char *filename) {
+  if (!_Score_isFileExists((LPCTSTR) filename)) {
+    self->save(self, filename);
+  }
+  int highScore;
+  FILE *fp = fopen(filename, "r");
+  fscanf(fp, "%d", &highScore);
+  fclose(fp);
+  return highScore;
 }
 
 #endif

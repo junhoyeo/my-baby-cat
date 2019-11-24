@@ -1,5 +1,8 @@
 ﻿#ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
+#pragma warning(disable: 4024)
+#pragma warning(disable: 4047)
+#pragma warning(disable: 4224)
 #pragma warning(disable: 4819)
 #pragma comment(lib, "winmm.lib")
 #endif
@@ -12,6 +15,8 @@
 #include "Init.h"
 #include "Utils.h"
 #include "Speed.h"
+#include "Lobby.h"
+
 // #include "Mouse/Mouse.h"
 #include "Keyframe/Keyframe.h"
 #include "ImageLayer/ImageLayer.h"
@@ -35,13 +40,20 @@ int main() {
   // Mouse mouse = DEFAULT_MOUSE;
 
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
-   imageLayer.initialize(&imageLayer);
+  imageLayer.initialize(&imageLayer);
+
+  renderLobby(&imageLayer, true);
+
+  CONSOLE_WIDTH = 120;
+  CONSOLE_HEIGHT = 30;
+  resizeConsole(SCREEN_HEIGHT, SCREEN_WIDTH);
 
   Image *images = malloc(20 * sizeof(Image));
   images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1, .isShown = true };
   images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1, .isShown = true };
   images[2] = (Image) { .fileName = RESOURCE_LIFE[20], .x = 0, .y = 0, .scale = 1, .isShown = true };
-  for (int idx = 3; idx < 9; idx++) {
+  images[3] = (Image) { .fileName = RESOURCE_EFFECT[0], .x = -50, .y = 100, .scale = 0.9, .isShown = false };
+  for (int idx = 4; idx < 10; idx++) {
     images[idx] = (Image) {
       .fileName = RESOURCE_NUMBERS[0],
       .x = 2000 - idx * 65,
@@ -50,7 +62,7 @@ int main() {
       .isShown = true,
     };
   }
-  imageLayer.imageCount = 9;
+  imageLayer.imageCount = 10;
   imageLayer.images = images;
 
   // init cat
@@ -64,8 +76,8 @@ int main() {
   LIFE.imageLayer = &imageLayer;
 
   // set SCORE
-  for (int idx = 3; idx < 9; idx++) {
-    SCORE.images[idx - 3] = &images[idx];
+  for (int idx = 4; idx < 10; idx++) {
+    SCORE.images[idx - 4] = &images[idx];
     // printf("%s\n", SCORE.images[idx]->fileName);
   }
   SCORE.imageLayer = &imageLayer;

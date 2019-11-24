@@ -19,14 +19,14 @@ void _Speed_init(Speed* self) {
   }
 }
 
-// 서서히 딜레이 값을 25 줄입니다. 3초 유지 후 바로 25를 올립니다.
+// 서서히 딜레이 값을 80 줄입니다. 1초 유지 후 바로 80를 올립니다.
 void _Speed_increase(Speed*self) {
   for (int i = 0; i < 5; i++) {
-    Sleep(50);
-    self->delay += 5;
+    Sleep(10);
+    self->delay += 16;
   }
-  Sleep(3000);
-  self->delay += 25;
+  Sleep(1000);
+  self->delay += 80;
 }
 
 // 서서히 딜레이 값을 25 늘립니다. 3초 유지 후 바로 25를 줄입니다.
