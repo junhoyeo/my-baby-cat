@@ -8,16 +8,11 @@
 #include "Stage/StageIntf.h"
 
 void _Stage_createStageOneKeyframes(Stage *self) {
-  // int STAGE_ONE_LENGTH = 5;
-  int STAGE_ONE_LENGTH = 1;
-  Keyframe *keyframes = malloc(STAGE_ONE_LENGTH * sizeof(Keyframe));
-  // keyframes[0] = (Keyframe) {
-  //   .type = KEYFRAME_TYPE_FISH,
-  //   .effect = NULL,
-  //   .size = 5,
-  // };
+  // int STAGE_LENGTH = 5;
+  int STAGE_LENGTH = 1;
+  Keyframe *keyframes = malloc(STAGE_LENGTH * sizeof(Keyframe));
   keyframes[0] = (Keyframe) {
-    .type = KEYFRAME_TYPE_OBSTACLE_TOP,
+    .type = KEYFRAME_TYPE_FISH,
     .effect = NULL,
     .size = 5,
   };
@@ -42,23 +37,55 @@ void _Stage_createStageOneKeyframes(Stage *self) {
   //   .size = 2,
   // };
   self->keyframes = keyframes;
-  self->length = STAGE_ONE_LENGTH;
+  self->length = STAGE_LENGTH;
 }
 
 void _Stage_createStageTwoKeyframes(Stage *self) {
-  return;
+  int STAGE_LENGTH = 1;
+  Keyframe *keyframes = malloc(STAGE_LENGTH * sizeof(Keyframe));
+  keyframes[0] = (Keyframe) {
+    .type = KEYFRAME_TYPE_FISH,
+    .effect = NULL,
+    .size = 5,
+  };
+  self->keyframes = keyframes;
+  self->length = STAGE_LENGTH;
 }
 
 void _Stage_createStageThreeKeyframes(Stage *self) {
-  return;
+  int STAGE_LENGTH = 1;
+  Keyframe *keyframes = malloc(STAGE_LENGTH * sizeof(Keyframe));
+  keyframes[0] = (Keyframe) {
+    .type = KEYFRAME_TYPE_FISH,
+    .effect = NULL,
+    .size = 5,
+  };
+  self->keyframes = keyframes;
+  self->length = STAGE_LENGTH;
 }
 
 void _Stage_createStageFourKeyframes(Stage *self) {
-  return;
+  int STAGE_LENGTH = 1;
+  Keyframe *keyframes = malloc(STAGE_LENGTH * sizeof(Keyframe));
+  keyframes[0] = (Keyframe) {
+    .type = KEYFRAME_TYPE_FISH,
+    .effect = NULL,
+    .size = 5,
+  };
+  self->keyframes = keyframes;
+  self->length = STAGE_LENGTH;
 }
 
 void _Stage_createStageFiveKeyframes(Stage *self) {
-  return;
+  int STAGE_LENGTH = 1;
+  Keyframe *keyframes = malloc(STAGE_LENGTH * sizeof(Keyframe));
+  keyframes[0] = (Keyframe) {
+    .type = KEYFRAME_TYPE_FISH,
+    .effect = NULL,
+    .size = 5,
+  };
+  self->keyframes = keyframes;
+  self->length = STAGE_LENGTH;
 }
 
 #endif
