@@ -12,10 +12,15 @@ void _Stage_createStageOneKeyframes(Stage *self) {
   int STAGE_LENGTH = 1;
   Keyframe *keyframes = malloc(STAGE_LENGTH * sizeof(Keyframe));
   keyframes[0] = (Keyframe) {
-    .type = KEYFRAME_TYPE_FISH,
-    .effect = NULL,
-    .size = 5,
+    .type = KEYFRAME_TYPE_ITEM,
+    .effect = ITEM_TYPE_LIFE,
+    .size = 3,
   };
+  // keyframes[0] = (Keyframe) {
+  //   .type = KEYFRAME_TYPE_FISH,
+  //   .effect = NULL,
+  //   .size = 5,
+  // };
   // keyframes[1] = (Keyframe){
   //   .type = KEYFRAME_TYPE_OBSTACLE_BOTTOM,
   //   .effect = NULL,

@@ -10,7 +10,9 @@
 #include "ImageLayer/ImageLayer.h"
 
 Item *(*ItemSegmentPointer)[] = NULL;
+int _animateItemSegments_received = 0;
 int _animateItemSegments_shown = 0;
+int _animateItemSegments_finished = 0;
 
 void animateItemSegments(AnimateProps* animateProps) {
   Cat *cat = animateProps->cat;
@@ -23,6 +25,7 @@ void animateItemSegments(AnimateProps* animateProps) {
         Image *image = currentItem->image;
         if (image->isShown) {
           image->isShown = false;
+          _animateItemSegments_finished++;
 
           if (cat->y >= 400) { // 아이템을 먹었을 때
             // 효과음 재생

@@ -8,6 +8,7 @@
 typedef struct _AnimateProps {
   Cat *cat;
   int objectLength;
+  int objectClass;
 } AnimateProps;
 
 #endif

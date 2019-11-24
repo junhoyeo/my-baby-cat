@@ -40,6 +40,7 @@ int main() {
 
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
   Image *images = malloc(20 * sizeof(Image));
+  imageLayer.initialize(&imageLayer);
 
   while (1) {
     PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
@@ -47,8 +48,6 @@ int main() {
     Sleep(100);
 
     // Mouse mouse = DEFAULT_MOUSE;
-
-    imageLayer.initialize(&imageLayer);
 
     renderLobby(&imageLayer, (firstRun) ? true : false);
 
@@ -140,6 +139,8 @@ int main() {
       ObstacleBottomSegments[i] = malloc(sizeof(Obstacle));
 
       ObstacleTopSegments[i] = malloc(sizeof(Obstacle));
+
+      ItemSegments[i] = malloc(sizeof(Item));
     }
 
     double isDead = false;
@@ -157,6 +158,7 @@ int main() {
         AnimateProps animateProps = (AnimateProps) {
           .cat = &cat,
           .objectLength = currentFrame.size,
+          .objectClass = (currentFrame.type != KEYFRAME_TYPE_ITEM) ? currentFrame.type : currentFrame.effect,
         };
 
         // TODO: 나중에 다시 건드리게 되면 추상화시키기,,, 꼭,,,
@@ -199,7 +201,6 @@ int main() {
             *ObstacleBottomSegments[i] = createObstacleByPos(&imageLayer, POSITION_BOTTOM);
             ObstacleBottomSegments[i]->x = 1900 + i * 200;
             ObstacleBottomSegments[i]->image->isShown = true;
-            printf("%d\n", ObstacleBottomSegments[i]->x);
           }
           ObstacleSegmentPointer = &ObstacleBottomSegments;
 
@@ -234,11 +235,19 @@ int main() {
 
         // 아이템 키프레임 렌더링 -> 이건 효과별로 따로 줘야 하니까 이따 생각
         else if (currentFrame.type == KEYFRAME_TYPE_ITEM) {
+          while (_animateItemSegments_finished < _animateItemSegments_received) {};
+
           for (int i = 0; i < currentFrame.size; i++) {
-            ItemSegments[i] = malloc(sizeof(Item));
             *ItemSegments[i] = createItemByType(&imageLayer, currentFrame.effect);
+            ItemSegments[i]->x = 1900 + i * 200;
+            ItemSegments[i]->image->isShown = true;
           }
           ItemSegmentPointer = &ItemSegments;
+
+          _animateItemSegments_finished = 0;
+          _animateItemSegments_shown = 0;
+          _animateItemSegments_received = currentFrame.size;
+
           _beginthread(animateItemSegments, 0, (AnimateProps*) &animateProps);
           while (_animateItemSegments_shown < currentFrame.size) {};
         }
@@ -254,7 +263,8 @@ int main() {
 
       while (
         _animateFishSegments_finished < _animateFishSegments_received ||
-        _animateObstacleSegments_finished < _animateObstacleSegments_received
+        _animateObstacleSegments_finished < _animateObstacleSegments_received ||
+        _animateItemSegments_finished < _animateItemSegments_received
       ) {};
       // 프레임 넘어가거나 죽기 전에 애니메이션 다 종료될 때까지 기다려야 함
       if (isDead)
