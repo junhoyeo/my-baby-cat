@@ -15,7 +15,6 @@
 #include "Init.h"
 #include "Utils.h"
 #include "Speed.h"
-#include "Title.h"
 #include "Lobby.h"
 
 // #include "Mouse/Mouse.h"
@@ -32,30 +31,22 @@
 #include "Animate/AnimateItem.h"
 #include "Animate/AnimateObstacle.h"
 
-#include <setjmp.h>
-
-// TRY, CATCH에 사용한다.
-#define TRY do{ jmp_buf ex_buf__; if(!setjmp(ex_buf__)){
-#define CATCH } else {
-#define ETRY } } while(0)
-#define THROW longjmp(ex_buf__, 1)
-
 int main() {
   PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
   initWindow();
   updateResources();
   Sleep(100);
-  // renderTitle();
-  // renderLobby();
-
-  CONSOLE_WIDTH = 120;
-  CONSOLE_HEIGHT = 30;
-  resizeConsole(SCREEN_HEIGHT, SCREEN_WIDTH);
 
   // Mouse mouse = DEFAULT_MOUSE;
 
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
   imageLayer.initialize(&imageLayer);
+
+  renderLobby(&imageLayer, true);
+
+  CONSOLE_WIDTH = 120;
+  CONSOLE_HEIGHT = 30;
+  resizeConsole(SCREEN_HEIGHT, SCREEN_WIDTH);
 
   Image *images = malloc(20 * sizeof(Image));
   images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1, .isShown = true };
