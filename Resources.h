@@ -9,7 +9,7 @@
 
 #define RESOURCE_CAT_LEN 10
 #define RESOURCE_FISH_LEN 1
-#define RESOURCE_BACKGROUND_LEN 1
+#define RESOURCE_BACKGROUND_LEN 5
 #define RESOURCE_OBST_TOP_LEN 3
 #define RESOURCE_OBST_BOTTOM_LEN 3
 #define RESOURCE_LIFE_LEN 21
@@ -25,6 +25,7 @@
 
 #define RESOURCE_BACKGROUND_TITLE "resources/background/title.bmp"
 #define RESOURCE_BACKGROUND_LOBBY "resources/background/lobby.bmp"
+#define RESOURCE_BACKGROUND_RESULT "resources/background/result.bmp"
 
 #define RESOURCE_TEXT_START "resources/text/start.bmp"
 
