@@ -32,6 +32,8 @@
 #include "Animate/AnimateItem.h"
 #include "Animate/AnimateObstacle.h"
 
+#define IMAGE_BACKGROUND_IDX 0
+
 int main() {
   PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
   initWindow();
@@ -141,6 +143,9 @@ int main() {
 
     // 타이틀 보여주기
     currentStage->addBackgroundThread(currentStage, currentStage->render);
+
+    // 배경 바꾸기
+    images[IMAGE_BACKGROUND_IDX].fileName = RESOURCE_BACKGROUND[key];
 
     for (int frame = 0; frame < currentStage->length; frame++) {
       Keyframe currentFrame = currentStage->keyframes[frame];
