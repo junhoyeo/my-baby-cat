@@ -237,8 +237,16 @@ int main() {
         _beginthread(animateItemSegments, 0, (AnimateProps*) &animateProps);
         while (_animateItemSegments_shown < currentFrame.size) {};
       }
+
+      // 죽었나 HP 체크하고, 드디어 죽었으면 루프 탈출
+      if (LIFE.hp < 1) {
+        key = 5;
+        break;
+      }
     }
   }
+
+  printf("디졌군ㅋ");
 
   getchar();
 }

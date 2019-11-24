@@ -47,7 +47,7 @@ void _Cat_run(Cat* self) {
 
     self->imageLayer->renderAll(self->imageLayer);
 
-    LIFE.update(&LIFE, -0.025);
+    LIFE.update(&LIFE, -0.5);
     // 달리는 도중에 생명이 미세하게 줄어든다.
 
     Sleep(SPEED.delay / 3);

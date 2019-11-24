@@ -10,7 +10,7 @@
 
 const Obstacle DEFAULT_OBSTACLE = {
   POSITION_BOTTOM,
-  0, 0,
+  1900, 0,
   NULL,
   NULL,
 
@@ -33,7 +33,7 @@ Obstacle createObstacleByPos(ImageLayer* imageLayer, int pos) {
 
   images[imageIndex] = (Image) {
     .fileName = fileName,
-    .x = 0,
+    .x = 1900,
     .y = 0,
     .scale = 1,
     .isShown = false,
