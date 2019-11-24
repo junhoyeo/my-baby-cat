@@ -12,10 +12,10 @@
 #include "Stage/StageFrames.h"
 
 Stage *createStages(ImageLayer *imageLayer, Image *image) {
-  Stage* stages;
+  Stage *stages[5];
   for (int idx = 0; idx < 5; idx++) {
     stages[idx] = malloc(sizeof(Stage));
-    stages[idx] = (Stage) {
+    *stages[idx] = (Stage) {
       .keyframes = NULL,
       .length = 0,
       .image = image,
@@ -33,8 +33,10 @@ Stage *createStages(ImageLayer *imageLayer, Image *image) {
   stages[3]->update = _Stage_createStageFourKeyframes;
   stages[4]->update = _Stage_createStageFiveKeyframes;
 
-  for (int i = 0; i < 5; i++)
+  for (int i = 0; i < 5; i++) {
     stages[i]->update(stages[i]);
+  }
+  return stages;
 }
 
 #endif

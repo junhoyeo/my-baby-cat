@@ -19,6 +19,7 @@
 
 // #include "Mouse/Mouse.h"
 #include "Keyframe/Keyframe.h"
+#include "Stage/Stage.h"
 #include "ImageLayer/ImageLayer.h"
 
 #include "Objects/Cat/Cat.h"
@@ -42,7 +43,7 @@ int main() {
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
   imageLayer.initialize(&imageLayer);
 
-  renderLobby(&imageLayer, true);
+  // renderLobby(&imageLayer, true);
 
   CONSOLE_WIDTH = 120;
   CONSOLE_HEIGHT = 30;
@@ -53,7 +54,8 @@ int main() {
   images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1, .isShown = true };
   images[2] = (Image) { .fileName = RESOURCE_LIFE[20], .x = 0, .y = 0, .scale = 1, .isShown = true };
   images[3] = (Image) { .fileName = RESOURCE_EFFECT[0], .x = -50, .y = 100, .scale = 0.9, .isShown = false };
-  for (int idx = 4; idx < 10; idx++) {
+  images[4] = (Image) { .fileName = RESOURCE_TEXT_STAGE[0], .x = 680, .y = 100, .scale = 1.5, .isShown = true };
+  for (int idx = 5; idx < 11; idx++) {
     images[idx] = (Image) {
       .fileName = RESOURCE_NUMBERS[0],
       .x = 2000 - idx * 65,
@@ -62,7 +64,7 @@ int main() {
       .isShown = true,
     };
   }
-  imageLayer.imageCount = 10;
+  imageLayer.imageCount = 11;
   imageLayer.images = images;
 
   // init cat
@@ -76,8 +78,8 @@ int main() {
   LIFE.imageLayer = &imageLayer;
 
   // set SCORE
-  for (int idx = 4; idx < 10; idx++) {
-    SCORE.images[idx - 4] = &images[idx];
+  for (int idx = 5; idx < 11; idx++) {
+    SCORE.images[idx - 5] = &images[idx];
     // printf("%s\n", SCORE.images[idx]->fileName);
   }
   SCORE.imageLayer = &imageLayer;
@@ -92,55 +94,61 @@ int main() {
   cat.addBackgroundThread(&cat, cat.listenKeys);
   // fish.addBackgroundThread(&fish, fish.move);
 
-  Keyframe *keyframes = createStageOneKeyframes();
-  for (int frame = 0; frame < STAGE_ONE_LENGTH; frame++) {
-    Keyframe currentFrame = keyframes[frame];
-    AnimateProps animateProps = (AnimateProps) {
-      .cat = &cat,
-      .objectLength = currentFrame.size,
-    };
+  Stage *stages = malloc(5 * sizeof(Stage));
+  stages = createStages(&imageLayer, &images[4]);
+  for (int key = 0; key < 5; key++) {
+    Stage *currentStage = &stages[key];
+    currentStage->update(currentStage);
+    for (int frame = 0; frame < currentStage->length; frame++) {
+      Keyframe currentFrame = currentStage->keyframes[frame];
+      printf("%d\n", currentFrame.type);
+      AnimateProps animateProps = (AnimateProps) {
+        .cat = &cat,
+        .objectLength = currentFrame.size,
+      };
 
-    if (currentFrame.type == KEYFRAME_TYPE_FISH) {
-      Fish *fishSegments[5];
-      for(int i = 0; i < currentFrame.size; i++) {
-        images[imageLayer.imageCount] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1900, .y = 600, .scale = 1, .isShown = true };
+      if (currentFrame.type == KEYFRAME_TYPE_FISH) {
+        Fish *fishSegments[5];
+        for(int i = 0; i < currentFrame.size; i++) {
+          images[imageLayer.imageCount] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1900, .y = 600, .scale = 1, .isShown = true };
 
-        fishSegments[i] = malloc(sizeof(Fish));
-        *fishSegments[i] = createFish(1900 + i * 200);
-        fishSegments[i]->image = &images[imageLayer.imageCount];
-        fishSegments[i]->imageLayer = &imageLayer;
-        fishSegments[i]->init(fishSegments[i]);
-        imageLayer.imageCount++;
-      }
-      fishSegmentPointer = &fishSegments;
+          fishSegments[i] = malloc(sizeof(Fish));
+          *fishSegments[i] = createFish(1900 + i * 200);
+          fishSegments[i]->image = &images[imageLayer.imageCount];
+          fishSegments[i]->imageLayer = &imageLayer;
+          fishSegments[i]->init(fishSegments[i]);
+          imageLayer.imageCount++;
+        }
+        fishSegmentPointer = &fishSegments;
 
-      _animateFishSegments_shown = 0;
-      _beginthread(animateFishSegments, 0, (AnimateProps*) &animateProps);
-      while (_animateFishSegments_shown < currentFrame.size) {};
-    }
-    else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_BOTTOM) {
-      Obstacle *ObstacleSegments[5];
-      for(int i = 0; i < currentFrame.size; i++) {
-        ObstacleSegments[i] = malloc(sizeof(Obstacle));
-        *ObstacleSegments[i] = createObstacleByPos(&imageLayer, POSITION_BOTTOM);
+        _animateFishSegments_shown = 0;
+        _beginthread(animateFishSegments, 0, (AnimateProps*) &animateProps);
+        while (_animateFishSegments_shown < currentFrame.size) {};
       }
-      ObstacleSegmentPointer = &ObstacleSegments;
-      _beginthread(animateObstacleSegments, 0, (AnimateProps*) &animateProps);
-      while (_animateObstacleSegments_shown < currentFrame.size) {};
-    }
-    else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_TOP) {
-      // obstacle = createObstacleByPos(POSITION_T OP, &imageLayer);
-      // imageLayer.renderAll(&imageLayer);
-    }
-    else if (currentFrame.type == KEYFRAME_TYPE_ITEM) {
-      Item *ItemSegments[5];
-      for (int i = 0; i < currentFrame.size; i++) {
-        ItemSegments[i] = malloc(sizeof(Item));
-        *ItemSegments[i] = createItemByType(&imageLayer, currentFrame.effect);
+      else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_BOTTOM) {
+        Obstacle *ObstacleSegments[5];
+        for(int i = 0; i < currentFrame.size; i++) {
+          ObstacleSegments[i] = malloc(sizeof(Obstacle));
+          *ObstacleSegments[i] = createObstacleByPos(&imageLayer, POSITION_BOTTOM);
+        }
+        ObstacleSegmentPointer = &ObstacleSegments;
+        _beginthread(animateObstacleSegments, 0, (AnimateProps*) &animateProps);
+        while (_animateObstacleSegments_shown < currentFrame.size) {};
       }
-      ItemSegmentPointer = &ItemSegments;
-      _beginthread(animateItemSegments, 0, (AnimateProps*) &animateProps);
-      while (_animateItemSegments_shown < currentFrame.size) {};
+      else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_TOP) {
+        // obstacle = createObstacleByPos(POSITION_T OP, &imageLayer);
+        // imageLayer.renderAll(&imageLayer);
+      }
+      else if (currentFrame.type == KEYFRAME_TYPE_ITEM) {
+        Item *ItemSegments[5];
+        for (int i = 0; i < currentFrame.size; i++) {
+          ItemSegments[i] = malloc(sizeof(Item));
+          *ItemSegments[i] = createItemByType(&imageLayer, currentFrame.effect);
+        }
+        ItemSegmentPointer = &ItemSegments;
+        _beginthread(animateItemSegments, 0, (AnimateProps*) &animateProps);
+        while (_animateItemSegments_shown < currentFrame.size) {};
+      }
     }
   }
 
