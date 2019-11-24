@@ -32,6 +32,9 @@ void animateObstacleSegments(AnimateProps* animateProps) {
 
             // 속도 느리게
             SPEED.decrease(&SPEED);
+
+            // 체력 감소
+            LIFE.update(&LIFE, -30);
           }
         }
       } else {
