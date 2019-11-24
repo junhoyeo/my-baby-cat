@@ -35,6 +35,7 @@ Stage *createStages(ImageLayer *imageLayer, Image *image) {
 
   for (int i = 0; i < 5; i++) {
     stages[i]->update(stages[i]);
+    printf("%d: %d\n", i, stages[i]->length);
   }
   return stages;
 }

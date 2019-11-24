@@ -94,14 +94,34 @@ int main() {
   cat.addBackgroundThread(&cat, cat.listenKeys);
   // fish.addBackgroundThread(&fish, fish.move);
 
-  Stage *stages = malloc(5 * sizeof(Stage));
-  stages = createStages(&imageLayer, &images[4]);
+  Stage *stages[5];
+  for (int idx = 0; idx < 5; idx++) {
+    stages[idx] = malloc(sizeof(Stage));
+    *stages[idx] = (Stage) {
+      .keyframes = NULL,
+      .length = 0,
+      .image = &images[4],
+      .imageLayer = &imageLayer,
+      .init = _Stage_init,
+      .render = _Stage_render,
+      .update = NULL,
+      .addBackgroundThread = _Stage_addBackgroundThread,
+    };
+  }
+
+  stages[0]->update = _Stage_createStageOneKeyframes;
+  stages[1]->update = _Stage_createStageTwoKeyframes;
+  stages[2]->update = _Stage_createStageThreeKeyframes;
+  stages[3]->update = _Stage_createStageFourKeyframes;
+  stages[4]->update = _Stage_createStageFiveKeyframes;
+
+  for (int i = 0; i < 5; i++)
+    stages[i]->update(stages[i]);
+
   for (int key = 0; key < 5; key++) {
-    Stage *currentStage = &stages[key];
-    currentStage->update(currentStage);
+    Stage *currentStage = stages[key];
     for (int frame = 0; frame < currentStage->length; frame++) {
       Keyframe currentFrame = currentStage->keyframes[frame];
-      printf("%d\n", currentFrame.type);
       AnimateProps animateProps = (AnimateProps) {
         .cat = &cat,
         .objectLength = currentFrame.size,
