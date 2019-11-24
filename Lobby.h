@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#ifndef _TITLE_
-#define _TITLE_
+#ifndef _LOBBY_
+#define _LOBBY_
 
 #include <stdbool.h>
 // #include <process.h>
