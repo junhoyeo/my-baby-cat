@@ -10,8 +10,9 @@
 #include "ImageLayer/ImageLayer.h"
 
 Fish *(*fishSegmentPointer)[] = NULL;
+int _animateFishSegments_received = 0;
 int _animateFishSegments_shown = 0;
-// int _animateFishSegments_finished = 0;
+int _animateFishSegments_finished = 0;
 // bool _animateFishSegments_done = false;
 
 void animateFishSegments(AnimateProps* animateProps) {
@@ -33,8 +34,8 @@ void animateFishSegments(AnimateProps* animateProps) {
             PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
             SCORE.update(&SCORE, 100);
+            _animateFishSegments_finished++;
           }
-          // _animateFishSegments_finished++;
         }
       } else { // 이동 가능
         // printf("%d\n", currentFish->x);

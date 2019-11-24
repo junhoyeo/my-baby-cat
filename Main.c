@@ -118,6 +118,12 @@ int main() {
   for (int i = 0; i < 5; i++)
     stages[i]->update(stages[i]);
 
+  Fish *fishSegments[5];
+  for (int i = 0; i < 5; i++) {
+    fishSegments[i] = malloc(sizeof(Fish));
+    *fishSegments[i] = createFish(1900 + i * 200);
+  }
+
   for (int key = 0; key < 5; key++) {
     Stage *currentStage = stages[key];
     for (int frame = 0; frame < currentStage->length; frame++) {
@@ -128,12 +134,20 @@ int main() {
       };
 
       if (currentFrame.type == KEYFRAME_TYPE_FISH) {
-        Fish *fishSegments[5];
+        while (_animateFishSegments_finished < _animateFishSegments_received) {};
+        // if (_animateFishSegments_received != 0) {
+        //   for(int i = 0; i < 5; i ++) {
+        //     free((*fishSegmentPointer)[i]);
+        //   }
+        // }
+
+        // Fish *fishSegments[5];
         for(int i = 0; i < currentFrame.size; i++) {
           images[imageLayer.imageCount] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1900, .y = 600, .scale = 1, .isShown = true };
 
-          fishSegments[i] = malloc(sizeof(Fish));
-          *fishSegments[i] = createFish(1900 + i * 200);
+          // fishSegments[i] = malloc(sizeof(Fish));
+          // *fishSegments[i] = createFish(1900 + i * 200);
+          fishSegments[i]->x = 1900 + i * 200;
           fishSegments[i]->image = &images[imageLayer.imageCount];
           fishSegments[i]->imageLayer = &imageLayer;
           fishSegments[i]->init(fishSegments[i]);
@@ -141,7 +155,9 @@ int main() {
         }
         fishSegmentPointer = &fishSegments;
 
+        _animateFishSegments_finished = 0;
         _animateFishSegments_shown = 0;
+        _animateFishSegments_received = currentFrame.size;
         _beginthread(animateFishSegments, 0, (AnimateProps*) &animateProps);
         while (_animateFishSegments_shown < currentFrame.size) {};
       }
@@ -156,8 +172,14 @@ int main() {
         while (_animateObstacleSegments_shown < currentFrame.size) {};
       }
       else if (currentFrame.type == KEYFRAME_TYPE_OBSTACLE_TOP) {
-        // obstacle = createObstacleByPos(POSITION_T OP, &imageLayer);
-        // imageLayer.renderAll(&imageLayer);
+        Obstacle *ObstacleSegments[5];
+        for(int i = 0; i < currentFrame.size; i++) {
+          ObstacleSegments[i] = malloc(sizeof(Obstacle));
+          *ObstacleSegments[i] = createObstacleByPos(&imageLayer, POSITION_TOP);
+        }
+        ObstacleSegmentPointer = &ObstacleSegments;
+        _beginthread(animateObstacleSegments, 0, (AnimateProps*) &animateProps);
+        while (_animateObstacleSegments_shown < currentFrame.size) {};
       }
       else if (currentFrame.type == KEYFRAME_TYPE_ITEM) {
         Item *ItemSegments[5];
