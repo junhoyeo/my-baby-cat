@@ -54,7 +54,7 @@ int main() {
   images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1, .isShown = true };
   images[2] = (Image) { .fileName = RESOURCE_LIFE[20], .x = 0, .y = 0, .scale = 1, .isShown = true };
   images[3] = (Image) { .fileName = RESOURCE_EFFECT[0], .x = -50, .y = 100, .scale = 0.9, .isShown = false };
-  images[4] = (Image) { .fileName = RESOURCE_TEXT_STAGE[0], .x = 680, .y = 100, .scale = 1.5, .isShown = true };
+  images[4] = (Image) { .fileName = RESOURCE_TEXT_STAGE[0], .x = 680, .y = 100, .scale = 1.5, .isShown = false };
   for (int idx = 5; idx < 11; idx++) {
     images[idx] = (Image) {
       .fileName = RESOURCE_NUMBERS[0],
@@ -138,6 +138,10 @@ int main() {
 
   for (int key = 0; key < 5; key++) {
     Stage *currentStage = stages[key];
+
+    // 타이틀 보여주기
+    currentStage->addBackgroundThread(currentStage, currentStage->render);
+
     for (int frame = 0; frame < currentStage->length; frame++) {
       Keyframe currentFrame = currentStage->keyframes[frame];
       AnimateProps animateProps = (AnimateProps) {

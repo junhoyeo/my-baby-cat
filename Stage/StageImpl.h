@@ -11,7 +11,11 @@ void _Stage_init(Stage* self) {
 }
 
 void _Stage_render(Stage* self) {
-  return;
+  self->image->fileName = RESOURCE_TEXT_STAGE[self->index];
+  self->image->isShown = true;
+  self->imageLayer->renderAll(self->imageLayer);
+  Sleep(3500);
+  self->image->isShown = false;
 }
 
 void _Stage_addBackgroundThread(Stage* self, int (*method)(Stage*)) {

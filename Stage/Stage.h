@@ -16,6 +16,7 @@ Stage *createStages(ImageLayer *imageLayer, Image *image) {
   for (int idx = 0; idx < 5; idx++) {
     stages[idx] = malloc(sizeof(Stage));
     *stages[idx] = (Stage) {
+      .index = idx,
       .keyframes = NULL,
       .length = 0,
       .image = image,

@@ -7,6 +7,7 @@
 #include "ImageLayer/ImageLayer.h"
 
 typedef struct _Stage {
+  int index;
   Keyframe *keyframes;
   int length;
   Image *image; // stage name image
