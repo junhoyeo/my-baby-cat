@@ -138,6 +138,7 @@ int main() {
     ObstacleTopSegments[i] = malloc(sizeof(Obstacle));
   }
 
+  double isDead = false;
   for (int key = 0; key < 5; key++) {
     Stage *currentStage = stages[key];
 
@@ -239,14 +240,21 @@ int main() {
       }
 
       // 죽었나 HP 체크하고, 드디어 죽었으면 루프 탈출
-      if (LIFE.hp < 1) {
+      if (LIFE.hp < 0.0) {
+        isDead = true;
         key = 5;
         break;
       }
     }
   }
 
-  printf("디졌군ㅋ");
+  // isDead 플래그가 설정되어 있다면 사고사,
+  // 설정되어 있지 않다면 자연사
+  if (isDead)
+    printf("디졌군ㅋ");
+  else
+    printf("자연사");
+  exit(0);
 
   getchar();
 }
