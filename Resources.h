@@ -28,6 +28,7 @@
 #define RESOURCE_BACKGROUND_RESULT "resources/background/result.bmp"
 
 #define RESOURCE_TEXT_START "resources/text/start.bmp"
+#define RESOURCE_TEXT_RETRY "resources/text/retry.bmp"
 
 char* RESOURCE_CAT[RESOURCE_CAT_LEN];
 char* RESOURCE_FISH[RESOURCE_FISH_LEN];

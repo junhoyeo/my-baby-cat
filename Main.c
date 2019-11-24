@@ -145,7 +145,7 @@ int main() {
     }
 
     double isDead = false;
-    for (int key = 0; key < 1; key++) {
+    for (int key = 0; key < 0; key++) {
       Stage *currentStage = stages[key];
 
       // 타이틀 보여주기
@@ -291,8 +291,10 @@ int main() {
       images[idx].isShown = true;
       images[idx].scale = 1.4;
     }
-    imageLayer.imageCount = 11;
+    images[11] = (Image) { .fileName = RESOURCE_TEXT_RETRY, .x = 700, .y = 750, .scale = 0.9, .isShown = true };
+    imageLayer.imageCount = 12;
     SCORE.update(&SCORE, 0); // 점수 표시
+    resizeConsole(SCREEN_HEIGHT + 2, SCREEN_WIDTH);
     imageLayer.renderAll(&imageLayer);
 
     SCORE.save(&SCORE, "data.dat");
