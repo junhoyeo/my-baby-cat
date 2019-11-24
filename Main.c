@@ -252,6 +252,10 @@ int main() {
         }
       }
 
+      while (
+        _animateFishSegments_finished < _animateFishSegments_received ||
+        _animateObstacleSegments_finished < _animateObstacleSegments_received
+      ) {};
       // 프레임 넘어가거나 죽기 전에 애니메이션 다 종료될 때까지 기다려야 함
       if (isDead)
         break;
