@@ -96,7 +96,7 @@ void _Cat_listenKeys(Cat *self) {
     if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
       // 스페이스 키가 입력된다면 점프합니다.
       self->jump(self);
-      // 점프 후 쓰레드를 다시 시작해 다시 달리게 합니다.
+      // 점프 후 스레드를 다시 시작해 다시 달리게 합니다.
       self->addBackgroundThread(self, self->run);
     } else if (GetAsyncKeyState(VK_DOWN) & 0x8001) {
       // 슬라이드 키를 누르고 있는 동안 슬라이딩합니다.
@@ -109,7 +109,7 @@ void _Cat_listenKeys(Cat *self) {
   }
 }
 
-// 백그라운드 쓰레드를 시작합니다.
+// 백그라운드 스레드를 시작합니다.
 void _Cat_addBackgroundThread(Cat* self, int (*method)(Cat*)) {
   self->isRunning = 1;
   // Sleep(50);

@@ -15,10 +15,14 @@ int _animateObstacleSegments_received = 0;
 int _animateObstacleSegments_shown = 0;
 int _animateObstacleSegments_finished = 0;
 
+// 백그라운드에서 장애물 세그먼트를 이동시키는 함수입니다.
 void animateObstacleSegments(AnimateProps* animateProps) {
+  // 인수로 고양이 객체의 포인터와 장애물 개수, 장애물 종류를 받습니다.
   Cat *cat = animateProps->cat;
   int obstacleLength = animateProps->objectLength;
   int obstacleType = animateProps->objectClass;
+
+  // 모든 장애물이 화면에 나타나 사라질 때까지 반복합니다.
   while (_animateObstacleSegments_finished < _animateObstacleSegments_received) {
     for (int idx = 0; idx < obstacleLength; idx++) {
       Obstacle *currentObstacle = (*ObstacleSegmentPointer)[idx];
@@ -26,12 +30,14 @@ void animateObstacleSegments(AnimateProps* animateProps) {
       if (currentObstacle->x <= 200) { // 플레이어와 만남
         Image *image = currentObstacle->image;
         if (image->isShown) {
+          // 장애물을 숨깁니다,.
           image->isShown = false;
 
           if (obstacleType == KEYFRAME_TYPE_OBSTACLE_BOTTOM && cat->y >= 450) { // 부딪힘
             // 애니메이션 표시
             Effect effect = createEffect(currentObstacle->imageLayer, obstacleType);
-            effect.addBackgroundThread(&effect, effect.render);
+            // effect.addBackgroundThread(&effect, effect.render);
+            effect.render(&effect);
 
             // 효과음 재생
             PlaySound(RESOURCE_SOUND_OBST, NULL, SND_FILENAME);

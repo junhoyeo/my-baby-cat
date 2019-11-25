@@ -24,14 +24,6 @@ void _Fish_update(Fish* self) {
   self->image->y = self->y;
 }
 
-// void _Fish_waitForEnd(Fish* self) {
-//   while (1) {
-//     if (self->x < 100)
-//       break;
-//   }
-//   self->isMoving = 0;
-// }
-
 // 물고기를 changeX만큼 왼쪽으로 이동시키고, 렌더링합니다.
 void _Fish_move(Fish* self, int changeX) {
   self->x -= changeX;
@@ -41,11 +33,7 @@ void _Fish_move(Fish* self, int changeX) {
   // TODO: delete or hide fish here
 }
 
-// void _Fish_addBackgroundThread(Fish* self, int (*method)(Fish*)) {
-//   self->isMoving = 1;
-//   _beginthread(*method, 0, (Fish*) self);
-// }
-
+// 물고기를 랜덤 레벨로 설정합니다.
 void _Fish_updateRandomLevel(Fish* self) {
   int rnd = randrange(100);
   if (rnd < 70) { // 레벨 1

@@ -20,7 +20,7 @@ inline int _Mouse_isClicked() {
   return 0;
 }
 
-// 마우스 포지션을 업데이트합니다. 다른 쓰레드에서 돌리거나 해야 합니다.
+// 마우스 포지션을 업데이트합니다. 다른 스레드에서 돌리거나 해야 합니다.
 inline void _Mouse_updatePosition(Mouse* self) {
   POINT cursor;
   GetCursorPos(&cursor);
