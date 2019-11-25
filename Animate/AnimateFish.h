@@ -33,7 +33,22 @@ void animateFishSegments(AnimateProps* animateProps) {
             PlaySound(RESOURCE_SOUND_FISH, NULL, SND_FILENAME);
             PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
-            SCORE.update(&SCORE, 100);
+            switch (currentFish->level) {
+              case FISH_LEVEL_1:
+                SCORE.update(&SCORE, 100);
+                break;
+              case FISH_LEVEL_2:
+                SCORE.update(&SCORE, 120);
+                break;
+              case FISH_LEVEL_3:
+                SCORE.update(&SCORE, 150);
+                break;
+              case FISH_LEVEL_4:
+                SCORE.update(&SCORE, 200);
+                break;
+              default:
+                break;
+            }
           }
 
           _animateFishSegments_finished++;

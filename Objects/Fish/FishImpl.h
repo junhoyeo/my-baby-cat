@@ -49,16 +49,16 @@ void _Fish_move(Fish* self, int changeX) {
 void _Fish_updateRandomLevel(Fish* self) {
   int rnd = randrange(100);
   if (rnd < 70) { // 레벨 1
-    self->level = 1;
+    self->level = FISH_LEVEL_1;
     self->image->fileName = RESOURCE_FISH[0];
   } else if (rnd < 85) { // 레벨 2
-    self->level = 2;
+    self->level = FISH_LEVEL_2;
     self->image->fileName = RESOURCE_FISH[1];
   } else if (rnd < 95) { // 레벨 3
-    self->level = 3;
+    self->level = FISH_LEVEL_3;
     self->image->fileName = RESOURCE_FISH[2];
   } else { // 레벨 3
-    self->level = 4;
+    self->level = FISH_LEVEL_4;
     self->image->fileName = RESOURCE_FISH[3];
   }
 }

@@ -3,6 +3,11 @@
 #ifndef _OBJ_FISH_INTF_
 #define _OBJ_FISH_INTF_
 
+#define FISH_LEVEL_1 0
+#define FISH_LEVEL_2 1
+#define FISH_LEVEL_3 2
+#define FISH_LEVEL_4 3
+
 #include <Windows.h>
 #include "ImageLayer/ImageLayer.h"
 
