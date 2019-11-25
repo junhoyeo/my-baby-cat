@@ -76,8 +76,8 @@ void renderLobby(ImageLayer* imageLayer, Mouse* mouse, bool showTitle /* = false
 
   while (1) {
     mouse->updatePosition(mouse);
-    gotoxy(0,0);
-    printf("%d, %d %d", mouse->isClicked(), mouse->x, mouse->y);
+    // gotoxy(0,0);
+    // printf("%d, %d %d", mouse->isClicked(), mouse->x, mouse->y);
 
     if (mouse->isClicked() &&
       mouse->x >= 600 && mouse->y >= 200) {

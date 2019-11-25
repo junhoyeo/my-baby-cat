@@ -41,13 +41,13 @@ int main() {
   Mouse mouse = DEFAULT_MOUSE;
 
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
-  Image *images = malloc(20 * sizeof(Image));
   imageLayer.initialize(&imageLayer);
 
   PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
   initWindow();
 
   while (1) {
+    Image *images = malloc(25 * sizeof(Image));
     if (!firstRun) {
       // 인트로를 보여주기 좋게 윈도우 사이즈를 재조정합니다.
       resizeConsole(SCREEN_HEIGHT + 2, SCREEN_WIDTH);
@@ -106,7 +106,6 @@ int main() {
     // set SCORE
     for (int idx = 5; idx < 11; idx++) {
       SCORE.images[idx - 5] = &images[idx];
-      // printf("%s\n", SCORE.images[idx]->fileName);
     }
     SCORE.imageLayer = &imageLayer;
 
@@ -165,7 +164,7 @@ int main() {
     }
 
     double isDead = false;
-    for (int key = 0; key < 1; key++) {
+    for (int key = 0; key < 5; key++) {
       Stage *currentStage = stages[key];
 
       // 타이틀 보여주기
@@ -333,6 +332,7 @@ int main() {
       free(ItemSegments[i]);
       free(stages[i]);
     }
+    free(images);
     firstRun = false;
   }
 }
