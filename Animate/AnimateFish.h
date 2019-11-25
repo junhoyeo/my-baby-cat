@@ -18,7 +18,7 @@ int _animateFishSegments_finished = 0;
 void animateFishSegments(AnimateProps* animateProps) {
   Cat *cat = animateProps->cat;
   int fishLength = animateProps->objectLength;
-  while (1) {
+  while (_animateFishSegments_finished < _animateFishSegments_received) {
     for (int idx = 0; idx < fishLength; idx++) {
       Fish *currentFish = (*fishSegmentPointer)[idx];
 
@@ -27,7 +27,6 @@ void animateFishSegments(AnimateProps* animateProps) {
         if (image->isShown) {
           // 살아 있는 물고기면 안 보이게 처리
           image->isShown = false;
-          _animateFishSegments_finished++;
 
           if (cat->y >= 400) { // 물고기를 먹었을 때
             // 효과음 재생
@@ -36,6 +35,8 @@ void animateFishSegments(AnimateProps* animateProps) {
 
             SCORE.update(&SCORE, 100);
           }
+
+          _animateFishSegments_finished++;
         }
       } else { // 이동 가능
         // printf("%d\n", currentFish->x);

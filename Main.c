@@ -42,13 +42,33 @@ int main() {
   Image *images = malloc(20 * sizeof(Image));
   imageLayer.initialize(&imageLayer);
 
+  PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+  initWindow();
+
   while (1) {
-    PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
-    initWindow();
+    if (!firstRun) {
+      // 인트로를 보여주기 좋게 윈도우 사이즈를 재조정합니다.
+      resizeConsole(SCREEN_HEIGHT + 2, SCREEN_WIDTH);
+
+      // 생명, 점수, 속도 오브젝트를 초기화합니다.
+      LIFE = createLife();
+      SCORE = createScore();
+      SPEED = createSpeed();
+
+      // 애니메이션 플래그를 초기화합니다.
+      _animateFishSegments_finished = 0;
+      _animateFishSegments_received = 0;
+      _animateFishSegments_shown = 0;
+      _animateItemSegments_finished = 0;
+      _animateItemSegments_received = 0;
+      _animateItemSegments_shown = 0;
+      _animateObstacleSegments_finished = 0;
+      _animateObstacleSegments_received = 0;
+      _animateObstacleSegments_shown = 0;
+    }
     Sleep(100);
 
     // Mouse mouse = DEFAULT_MOUSE;
-
     renderLobby(&imageLayer, (firstRun) ? true : false);
 
     CONSOLE_WIDTH = 120;
@@ -88,7 +108,6 @@ int main() {
       // printf("%s\n", SCORE.images[idx]->fileName);
     }
     SCORE.imageLayer = &imageLayer;
-    // exit(0);
 
     // game start
     imageLayer.renderAll(&imageLayer);
@@ -145,7 +164,7 @@ int main() {
     }
 
     double isDead = false;
-    for (int key = 0; key < 0; key++) {
+    for (int key = 0; key < 1; key++) {
       Stage *currentStage = stages[key];
 
       // 타이틀 보여주기
@@ -271,34 +290,42 @@ int main() {
       if (isDead)
         break;
     }
+    cat.isRunning = false;
 
     // isDead 플래그가 설정되어 있다면 사고사,
     // 설정되어 있지 않다면 자연사
-    // if (isDead)
-    //   printf("디졌군ㅋ");
-    // else
-    //   printf("자연사");
+    // TODO: isDead 값에 따라 다른 애니메이션 넣기
 
-    // render dead screen
-    images[0] = (Image) { .fileName = RESOURCE_BACKGROUND_RESULT, .x = 0, .y = 0, .scale = 1, .isShown = true };
-    for (int i = 1; i < 5; i++) {
-      images[i].isShown = false;
-    }
-    for (int idx = 5; idx < 11; idx++) {
-      images[idx].fileName = RESOURCE_NUMBERS[0];
-      images[idx].x = 1565 - idx * 85;
-      images[idx].y = 450;
-      images[idx].isShown = true;
-      images[idx].scale = 1.4;
-    }
-    images[11] = (Image) { .fileName = RESOURCE_TEXT_RETRY, .x = 700, .y = 750, .scale = 0.9, .isShown = true };
-    imageLayer.imageCount = 12;
-    SCORE.update(&SCORE, 0); // 점수 표시
-    resizeConsole(SCREEN_HEIGHT + 2, SCREEN_WIDTH);
-    imageLayer.renderAll(&imageLayer);
+    // 게임 오버 페이지
+    {
+      images[0] = (Image) { .fileName = RESOURCE_BACKGROUND_RESULT, .x = 0, .y = 0, .scale = 1, .isShown = true };
+      for (int i = 1; i < 5; i++) {
+        images[i].isShown = false;
+      }
+      for (int idx = 5; idx < 11; idx++) {
+        images[idx].fileName = RESOURCE_NUMBERS[0];
+        images[idx].x = 1565 - idx * 85;
+        images[idx].y = 450;
+        images[idx].isShown = true;
+        images[idx].scale = 1.4;
+      }
+      images[11] = (Image) { .fileName = RESOURCE_TEXT_RETRY, .x = 700, .y = 750, .scale = 0.9, .isShown = true };
+      imageLayer.imageCount = 12;
+      SCORE.update(&SCORE, 0); // 점수 표시
+      resizeConsole(SCREEN_HEIGHT + 2, SCREEN_WIDTH);
+      imageLayer.renderAll(&imageLayer);
 
-    SCORE.save(&SCORE, "data.dat");
-    while (1) {};
+      SCORE.save(&SCORE, "data.dat");
+      Sleep(2000);
+      // while (1) {};
+    }
+
+    for (int i = 0; i < 5; i++) {
+      free(fishSegments[i]);
+      free(ObstacleBottomSegments[i]);
+      free(ObstacleTopSegments[i]);
+      free(ItemSegments[i]);
+    }
+    firstRun = false;
   }
-  firstRun = false;
 }

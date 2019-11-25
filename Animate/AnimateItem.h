@@ -18,7 +18,7 @@ void animateItemSegments(AnimateProps* animateProps) {
   Cat *cat = animateProps->cat;
   int itemLength = animateProps->objectLength;
   int itemType = animateProps->objectClass;
-  while (1) {
+  while (_animateItemSegments_finished < _animateItemSegments_received) {
     for (int idx = 0; idx < itemLength; idx++) {
       Item *currentItem = (*ItemSegmentPointer)[idx];
 
@@ -26,7 +26,6 @@ void animateItemSegments(AnimateProps* animateProps) {
         Image *image = currentItem->image;
         if (image->isShown) {
           image->isShown = false;
-          _animateItemSegments_finished++;
 
           if (cat->y >= 400) { // 아이템을 먹었을 때
             // 효과음 재생
@@ -58,6 +57,8 @@ void animateItemSegments(AnimateProps* animateProps) {
             // 아이템도 젤리니까 점수 줌
             SCORE.update(&SCORE, 80);
           }
+
+          _animateItemSegments_finished++;
         }
       } else { // 이동 가능
         currentItem->move(currentItem, 20);
