@@ -318,8 +318,12 @@ int main() {
       imageLayer.renderAll(&imageLayer);
 
       SCORE.save(&SCORE, "data.dat");
-      Sleep(2000);
-      // while (1) {};
+      while (1) {
+        mouse.updatePosition(&mouse);
+        if (mouse.isClicked() && mouse.y >= 380) {
+          break;
+        }
+      }
     }
 
     for (int i = 0; i < 5; i++) {
