@@ -1,4 +1,26 @@
-﻿#ifdef _MSC_VER
+﻿/*
+My Baby Cat
+---------------
+MIT License
+Copyright (c) 2019 JUNO, Woo-sang yun
+
+My Baby Cat은 앞으로 달려가는 고양이를 조종해
+최대한 오래 살아남아 많은 점수를 얻는 게임이다.
+고양이의 속도는 점점 빨라지고, 이와 동시에 체력 또한 점점 줄어든다.
+스페이스 바를 눌러 점프할 수 있고, 방향키(아래)를 눌러 슬라이딩을 할 수 있으며,
+이를 통해 장애물을 피할 수 있다.
+만약 장애물에 충돌할 시 체력이 줄어들게 된다.
+고양이가 생선에 닿으면 점수가 올라가며, 아이템에 닿을 시 체력 회복,
+이동 속도 변경 등의 효과가 적용된다.
+최대한 많은 생선을 먹어 최고점수를 갱신해 나가는 것이 게임의 목표이고,
+쉽고 간단한 조작법, 그래픽으로 모두가 좋아할 만한 게임을 만들기 위해 노력했다.
+자세한 게임 문서는 공식 문서 사이트에서 확인할 수 있다.
+
+공식 문서 사이트: http://junhoyeo.github.io/my-baby-cat
+프로젝트 깃허브: https://github.com/junhoyeo/my-baby-cat
+*/
+
+#ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #pragma warning(disable: 4024)
 #pragma warning(disable: 4047)
@@ -55,7 +77,7 @@ int main() {
 
   while (1) {
     // 사용할 이미지 배열에 메모리를 할당합니다.
-    Image *images = malloc(35 * sizeof(Image));
+    Image *images = malloc(100 * sizeof(Image));
 
     // 첫 번째 실행이 아닐 경우에만 초기화합니다.
     if (!firstRun) {
