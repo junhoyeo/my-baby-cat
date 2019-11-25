@@ -1,5 +1,5 @@
-﻿# My Baby Cat
-
+# My Baby Cat
+
 ## Structure
 
 ```text
