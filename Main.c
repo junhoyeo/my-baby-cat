@@ -17,7 +17,7 @@
 #include "Speed.h"
 #include "Lobby.h"
 
-// #include "Mouse/Mouse.h"
+#include "Mouse/Mouse.h"
 #include "Keyframe/Keyframe.h"
 #include "Stage/Stage.h"
 #include "ImageLayer/ImageLayer.h"
@@ -37,6 +37,8 @@
 int main() {
   bool firstRun = true;
   updateResources();
+
+  Mouse mouse = DEFAULT_MOUSE;
 
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
   Image *images = malloc(20 * sizeof(Image));
@@ -68,8 +70,7 @@ int main() {
     }
     Sleep(100);
 
-    // Mouse mouse = DEFAULT_MOUSE;
-    renderLobby(&imageLayer, (firstRun) ? true : false);
+    renderLobby(&imageLayer, &mouse, (firstRun) ? true : false);
 
     CONSOLE_WIDTH = 120;
     CONSOLE_HEIGHT = 30;
@@ -199,6 +200,7 @@ int main() {
             fishSegments[i]->image->isShown = true;
             fishSegments[i]->init(fishSegments[i]);
           }
+
           fishSegmentPointer = &fishSegments;
 
           // 각종 플래그 초기화
@@ -325,8 +327,8 @@ int main() {
       free(ObstacleBottomSegments[i]);
       free(ObstacleTopSegments[i]);
       free(ItemSegments[i]);
+      free(stages[i]);
     }
-    free(stages);
     firstRun = false;
   }
 }

@@ -6,6 +6,7 @@
 #include <stdbool.h>
 // #include <process.h>
 #include "Resources.h"
+#include "Mouse/Mouse.h"
 #include "ImageLayer/ImageLayer.h"
 
 // typedef struct _AnimateTitleProps {
@@ -30,7 +31,7 @@
 //   }
 // }
 
-void renderLobby(ImageLayer* imageLayer, bool showTitle /* = false */) {
+void renderLobby(ImageLayer* imageLayer, Mouse* mouse, bool showTitle /* = false */) {
   Image *preImages = malloc(8 * sizeof(Image));
   preImages[0] = (Image) { RESOURCE_BACKGROUND_TITLE, -10, -10, 1, .isShown = true };
   preImages[1] = (Image) { RESOURCE_TEXT_START, 670, 880, 0.9, .isShown = true };
@@ -40,7 +41,12 @@ void renderLobby(ImageLayer* imageLayer, bool showTitle /* = false */) {
   // render title
   if (showTitle) {
     imageLayer->renderAll(imageLayer);
-    Sleep(1000);
+    while (1) {
+      mouse->updatePosition(mouse);
+      if (mouse->isClicked() && mouse->y >= 400) {
+        break;
+      }
+    }
   }
 
   // render lobby
@@ -67,7 +73,17 @@ void renderLobby(ImageLayer* imageLayer, bool showTitle /* = false */) {
     imageIdx++;
   }
   imageLayer->renderAll(imageLayer);
-  Sleep(3000);
+
+  while (1) {
+    mouse->updatePosition(mouse);
+    gotoxy(0,0);
+    printf("%d, %d %d", mouse->isClicked(), mouse->x, mouse->y);
+
+    if (mouse->isClicked() &&
+      mouse->x >= 600 && mouse->y >= 200) {
+      break;
+    }
+  }
 
   free(preImages);
 }

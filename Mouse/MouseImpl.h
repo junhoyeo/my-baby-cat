@@ -25,8 +25,8 @@ inline void _Mouse_updatePosition(Mouse* self) {
   POINT cursor;
   GetCursorPos(&cursor);
   ScreenToClient(WINDOW_HANDLE, &cursor);
-  self->pos.X = cursor.x;
-  self->pos.Y = cursor.y;
+  self->x = cursor.x;
+  self->y = cursor.y;
 }
 
 #endif

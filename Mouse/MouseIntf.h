@@ -7,7 +7,7 @@
 #include <Windows.h>
 
 typedef struct _Mouse {
-  COORD pos;
+  int x, y;
   int (*isClicked)();
   void (*updatePosition)(struct _Mouse*);
 } Mouse;

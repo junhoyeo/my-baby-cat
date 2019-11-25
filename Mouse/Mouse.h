@@ -7,7 +7,7 @@
 #include "Mouse/MouseImpl.h"
 
 const Mouse DEFAULT_MOUSE = {
-  { 0, 0, },
+  0, 0,
   _Mouse_isClicked,
   _Mouse_updatePosition,
 };
