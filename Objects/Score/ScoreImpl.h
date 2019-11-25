@@ -8,13 +8,14 @@
 #include "Utils.h"
 #include "Objects/Score/ScoreIntf.h"
 
+// 주어진 경로의 파일이 존재하는지의 여부를 반환합니다.ㄴ
 bool _Score_isFileExists(LPCTSTR szPath) {
   DWORD dwAttrib = GetFileAttributes(szPath);
   return (dwAttrib != INVALID_FILE_ATTRIBUTES &&
         !(dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
 }
 
-// 실제로 사용되지 않는 더미 함수입니다.
+// 실제로 사용되지 않는 placeholder 함수입니다.
 void _Score_init(Score *self) {
   return;
 }
@@ -48,6 +49,7 @@ void _Score_save(Score *self, char *filename) {
 // filename의 파일로부터 점수를 읽어와 반환합니다.
 int _Score_loadHighScore(Score *self, char *filename) {
   if (!_Score_isFileExists((LPCTSTR) filename)) {
+    // 파일이 없는 경우 현재 점수로 새로 생성합니다.
     self->save(self, filename);
   }
   int highScore;

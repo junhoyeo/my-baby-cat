@@ -7,6 +7,7 @@
 #include "Keyframe/Keyframe.h"
 #include "Stage/StageIntf.h"
 
+// 스테이지 1의 키프레임을 생성합니다.
 void _Stage_createStageOneKeyframes(Stage *self) {
   int STAGE_LENGTH = 5;
   Keyframe *keyframes = malloc(STAGE_LENGTH * sizeof(Keyframe));
@@ -39,6 +40,7 @@ void _Stage_createStageOneKeyframes(Stage *self) {
   self->length = STAGE_LENGTH;
 }
 
+// 스테이지 2의 키프레임을 생성합니다.
 void _Stage_createStageTwoKeyframes(Stage *self) {
   int STAGE_LENGTH = 5;
   Keyframe *keyframes = malloc(STAGE_LENGTH * sizeof(Keyframe));
@@ -71,6 +73,7 @@ void _Stage_createStageTwoKeyframes(Stage *self) {
   self->length = STAGE_LENGTH;
 }
 
+// 스테이지 3의 키프레임을 생성합니다.
 void _Stage_createStageThreeKeyframes(Stage *self) {
   int STAGE_LENGTH = 5;
   Keyframe *keyframes = malloc(STAGE_LENGTH * sizeof(Keyframe));
@@ -103,6 +106,7 @@ void _Stage_createStageThreeKeyframes(Stage *self) {
   self->length = STAGE_LENGTH;
 }
 
+// 스테이지 4의 키프레임을 생성합니다.
 void _Stage_createStageFourKeyframes(Stage *self) {
   int STAGE_LENGTH = 4;
   Keyframe *keyframes = malloc(STAGE_LENGTH * sizeof(Keyframe));
@@ -130,6 +134,7 @@ void _Stage_createStageFourKeyframes(Stage *self) {
   self->length = STAGE_LENGTH;
 }
 
+// 스테이지 5의 키프레임을 생성합니다.
 void _Stage_createStageFiveKeyframes(Stage *self) {
   int STAGE_LENGTH = 5;
   Keyframe *keyframes = malloc(STAGE_LENGTH * sizeof(Keyframe));

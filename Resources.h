@@ -42,6 +42,8 @@ char* RESOURCE_EFFECT[RESOURCE_EFFECT_LEN];
 char* RESOURCE_TEXT_STAGE[RESOURCE_TEXT_STAGE_LEN];
 char* RESOURCE_NUMBERS[10];
 
+// formatString의 형식을 가지는 resourceLength만큼의 파일 이름을 자동으로 생성해 resourceList에 저장합니다.
+// 각각의 리소스에 맞게 따로 로딩 함수를 만들었다가, 그 양이 많아지자 추상화를 시켰습니다.
 void loadResources(char *resouceList, int resourceLength, char* formatString) {
   char *(*resourceListPointer)[] = resouceList;
   for (int idx = 1; idx <= resourceLength; idx++) {
@@ -53,6 +55,7 @@ void loadResources(char *resouceList, int resourceLength, char* formatString) {
   }
 }
 
+// 모든 리소스를 업데이트합니다.
 inline void updateResources() {
   loadResources(&RESOURCE_CAT, RESOURCE_CAT_LEN, "resources/cat/cat-p%d.bmp");
   loadResources(&RESOURCE_FISH, RESOURCE_FISH_LEN, "resources/fish/fish%d.bmp");

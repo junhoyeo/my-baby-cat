@@ -19,6 +19,7 @@ const Item DEFAULT_ITEM = {
   .move = _Item_move,
 };
 
+// type에 맞는 새로운 Item 객체를 반환합니다.
 Item createItemByType(ImageLayer* imageLayer, int type) {
   Item newItem = DEFAULT_ITEM;
   imageLayer->imageCount++;

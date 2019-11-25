@@ -12,6 +12,7 @@ typedef struct _Speed {
   void (*addBackgroundThread)(struct _Speed*, void (*method)(struct _Speed*));
 } Speed;
 
+// 게임이 시작되자마자 일정 속도가 될 때까지 속도를 점차 높입니다.
 void _Speed_init(Speed* self) {
   for (int speed = self->delay; speed > 50; speed-=20) {
     Sleep(800);
@@ -39,6 +40,7 @@ void _Speed_decrease(Speed*self) {
   self->delay -= 25;
 }
 
+// 백그라운드 스레드를 시작합니다.
 void _Speed_addBackgroundThread(Speed* self, int (*method)(Speed*)) {
   _beginthread(*method, 0, (Speed*) self);
 }
@@ -49,6 +51,7 @@ void _Speed_addBackgroundThread(Speed* self, int (*method)(Speed*)) {
 
 Speed SPEED;
 
+// 새로운 속도 오브젝트를 생성합니다.
 Speed createSpeed() {
   return (Speed) {
     .delay = 150,

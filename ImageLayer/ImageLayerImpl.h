@@ -16,6 +16,7 @@ typedef struct {
   int width, height;
 } Size;
 
+// 현재 DPI를 가져옵니다.
 inline int getDPI(HWND hWnd) {
   const HANDLE user32 = GetModuleHandle(TEXT("user32"));
   const FARPROC func = GetProcAddress(user32, "GetDpiForWindow");
@@ -24,6 +25,7 @@ inline int getDPI(HWND hWnd) {
   return ((UINT(__stdcall*)(HWND))func)(hWnd);
 }
 
+// 비트맵을 인수로 받아 그 크기를 반환하는 함수입니다.
 inline Size getBitmapSize(HBITMAP bitmap) {
   BITMAP tmpBitmap;
   GetObject(bitmap, sizeof(BITMAP), &tmpBitmap);
@@ -31,6 +33,7 @@ inline Size getBitmapSize(HBITMAP bitmap) {
   return bitmapSize;
 }
 
+// 새로운 검정색 DC를 반환합니다.
 inline HDC createNewBackDC(HDC compatibleDC) {
   const HDC backDC = CreateCompatibleDC(compatibleDC);
   const HBITMAP backBitmap = CreateCompatibleBitmap(compatibleDC, windowWidth, windowHeight);
@@ -39,6 +42,7 @@ inline HDC createNewBackDC(HDC compatibleDC) {
   return backDC;
 }
 
+// DC에 인수로 들어온 이미지를 그립니다.
 inline void putBitmapToBackDC(HDC backDC, Image image, UINT transparentColor) {
   const HDC bitmapDC = CreateCompatibleDC(backDC);
   const HBITMAP bitmap = (HBITMAP)LoadImage(NULL, (LPCSTR)image.fileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
@@ -59,11 +63,13 @@ inline void putBitmapToBackDC(HDC backDC, Image image, UINT transparentColor) {
   DeleteDC(bitmapDC);
 }
 
+// dstDC에 srcDC를 복사합니다.
 inline void applyToDC(HDC dstDC, HDC srcDC) {
   BitBlt(dstDC, 0, 0, windowWidth, windowHeight,
     srcDC, 0, 0, SRCCOPY);
 }
 
+// ImageLayer를 초기화합니다.
 inline void _initialize(ImageLayer* self) {
   self->_windowHandle = GetConsoleWindow();
   self->_consoleDC = GetDC(self->_windowHandle);
@@ -74,6 +80,7 @@ inline void _initialize(ImageLayer* self) {
   windowHeight = (int)(CONSOLE_HEIGHT * 2 * DEFAULT_RESOLUTION_SCALE * RESOLUTION_MULTIPLIER);
 }
 
+// 모든 이미지가 렌더링된 DC를 반환합니다.
 inline HDC getRenderedBackDC(ImageLayer* self) {
   const HDC backDC = createNewBackDC(self->_consoleDC);
 
@@ -88,62 +95,9 @@ inline HDC getRenderedBackDC(ImageLayer* self) {
   return backDC;
 }
 
+// 화면에 렌더링된 DC를 표시합니다.
 inline void _renderAll(ImageLayer* self) {
   const HDC backDC = getRenderedBackDC(self);
   applyToDC(self->_consoleDC, backDC);
   DeleteDC(backDC);
 }
-
-inline BLENDFUNCTION getBlendFunction() {
-  BLENDFUNCTION bf;
-  bf.AlphaFormat = AC_SRC_ALPHA;
-  bf.BlendFlags = 0;
-  bf.BlendOp = AC_SRC_OVER;
-  bf.SourceConstantAlpha = 0;
-  return bf;
-}
-
-// 개발 당시 사용하지 않는 함수를 임시로 주석처리했으나 영영 사용하지 못할 것 같습니다...
-
-// inline void _renderAndFadeIn(ImageLayer* self, void(*applyToBackDC)(HDC)) {
-//   const HDC consoleDC = self->_consoleDC;
-//   const HDC backDC = getRenderedBackDC(self);
-//   if (applyToBackDC != NULL) applyToBackDC(backDC);
-
-//   const HBRUSH blackBrush = CreateSolidBrush(RGB(0, 0, 0));
-//   SelectObject(consoleDC, blackBrush);
-
-//   BLENDFUNCTION bf = getBlendFunction();
-//   bf.SourceConstantAlpha = 12;
-
-//   Rectangle(consoleDC, 0, 0, windowWidth, windowHeight);
-//   for (int i = 0; i < 20; i++) {
-//     AlphaBlend(consoleDC, 0, 0, windowWidth, windowHeight,
-//       backDC, 0, 0, windowWidth, windowHeight, bf);
-//   }
-//   applyToDC(consoleDC, backDC);
-//   DeleteObject(blackBrush);
-//   DeleteDC(backDC);
-// }
-
-// inline void _renderAndFadeOut(ImageLayer* self, void(*applyToBackDC)(HDC)) {
-//   const HDC consoleDC = self->_consoleDC;
-//   const HDC backDC = getRenderedBackDC(self);
-//   if (applyToBackDC != NULL) applyToBackDC(backDC);
-//   applyToDC(consoleDC, backDC);
-
-//   const HDC blackDC = createNewBackDC(consoleDC);
-//   BLENDFUNCTION bf = getBlendFunction();
-
-//   for (int i = 255; i >= 0; i -= 20) {
-//     bf.SourceConstantAlpha = i;
-//     applyToDC(consoleDC, blackDC);
-//     AlphaBlend(consoleDC, 0, 0, windowWidth, windowHeight,
-//       backDC, 0, 0, windowWidth, windowHeight, bf);
-//     Sleep(100);
-//   }
-//   applyToDC(consoleDC, blackDC);
-
-//   DeleteDC(backDC);
-//   DeleteDC(blackDC);
-// }

@@ -23,6 +23,7 @@ const Fish DEFAULT_FISH = {
   // _Fish_addBackgroundThread,
 };
 
+// startX를 시작 위치로 가지는 새로운 Fish 객체를 반환합니다.
 Fish createFish(int startX) {
   Fish fish = DEFAULT_FISH;
   fish.x = startX;

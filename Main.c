@@ -36,19 +36,28 @@
 #define IMAGE_BACKGROUND_IDX 0
 
 int main() {
+  // 첫 번째 실행인지를 확인할 때 사용하는 플래그입니다.
   bool firstRun = true;
+
+  // 리소스를 업데이트합니다,
   updateResources();
 
+  // 클릭을 감지하기 위한 마우스 객체를 생성합니다.
   Mouse mouse = DEFAULT_MOUSE;
 
+  // ImageLayer를 초기화합니다.
   ImageLayer imageLayer = DEFAULT_IMAGE_LAYER;
   imageLayer.initialize(&imageLayer);
 
+  // 배경음악을 재생하고, 윈도우를 초기화합니다.
   PlaySound(RESOURCE_SOUND_BGM_1, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
   initWindow();
 
   while (1) {
+    // 사용할 이미지 배열에 메모리를 할당합니다.
     Image *images = malloc(35 * sizeof(Image));
+
+    // 첫 번째 실행이 아닐 경우에만 초기화합니다.
     if (!firstRun) {
       // 인트로를 보여주기 좋게 윈도우 사이즈를 재조정합니다.
       resizeConsole(SCREEN_HEIGHT + 2, SCREEN_WIDTH);
@@ -69,14 +78,20 @@ int main() {
       _animateObstacleSegments_received = 0;
       _animateObstacleSegments_shown = 0;
     }
+
+    // 0.1초 딜레이를 줍니다.
     Sleep(100);
 
+    // 로비를 렌더링합니다.
+    // 첫 번째 실행일 경우에는 로비를 보여주기 전에 타이틀을 보여주고, 그렇지 않은 경우에는 로비만 보여줍니다.
     renderLobby(&imageLayer, &mouse, (firstRun) ? true : false);
 
+    // 실행 화면에 맞게 콘솔 사이즈를 재조정합니다.
     CONSOLE_WIDTH = 120;
     CONSOLE_HEIGHT = 30;
     resizeConsole(SCREEN_HEIGHT, SCREEN_WIDTH);
 
+    // 각종 이미지를 초기화합니다.
     images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1, .isShown = true };
     images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1, .isShown = true };
     images[2] = (Image) { .fileName = RESOURCE_LIFE[20], .x = 0, .y = 0, .scale = 1, .isShown = true };
@@ -94,31 +109,36 @@ int main() {
     imageLayer.imageCount = 11;
     imageLayer.images = images;
 
-    // init cat
+    // 고양이 객체를 초기화힙니다.
     Cat cat = DEFAULT_CAT;
     cat.image = &images[1];
     cat.imageLayer = &imageLayer;
     cat.init(&cat);
 
-    // set LIFE
+    // 생명 객체를 초기화합니다,
     LIFE.image = &images[2];
     LIFE.imageLayer = &imageLayer;
 
-    // set SCORE
+    // 점수 객체를 초기화합니다.
     for (int idx = 5; idx < 11; idx++) {
       SCORE.images[idx - 5] = &images[idx];
     }
     SCORE.imageLayer = &imageLayer;
 
-    // game start
+    // 게임을 시작합니다.
     imageLayer.renderAll(&imageLayer);
 
+    // 속도를 조금씩 줄입니다.
     SPEED.addBackgroundThread(&SPEED, SPEED.init);
 
+    // 고양이를 달리게 합니다.
     cat.addBackgroundThread(&cat, cat.run);
+
+    // 고양이의 점프 및 슬라이드를 감지하기 위해 리스너를 시작합니다.
     cat.addBackgroundThread(&cat, cat.listenKeys);
     // fish.addBackgroundThread(&fish, fish.move);
 
+    // 스테이지 배열을 만들고 초기화합니다.
     Stage *stages[5];
     for (int idx = 0; idx < 5; idx++) {
       stages[idx] = malloc(sizeof(Stage));
@@ -135,6 +155,7 @@ int main() {
       };
     }
 
+    // 각각의 스테이지에 업데이트 함수를 할당하고, 초기화합니다.
     stages[0]->update = _Stage_createStageOneKeyframes;
     stages[1]->update = _Stage_createStageTwoKeyframes;
     stages[2]->update = _Stage_createStageThreeKeyframes;
@@ -153,6 +174,7 @@ int main() {
     Obstacle *ObstacleTopSegments[5];
     Item *ItemSegments[5];
 
+    // 각각의 객체 세그먼트를 저장할 배열에 메모리를 할당합니다.
     for (int i = 0; i < 5; i++) {
       fishSegments[i] = malloc(sizeof(Fish));
       *fishSegments[i] = createFish(1900 + i * 200);
@@ -164,14 +186,15 @@ int main() {
       ItemSegments[i] = malloc(sizeof(Item));
     }
 
+    // 사고사로 죽었는지 체크하는 플래그입니다.
     double isDead = false;
     for (int key = 0; key < 5; key++) {
       Stage *currentStage = stages[key];
 
-      // 타이틀 보여주기
+      // 스테이지 타이틀을 보여줍니다.
       currentStage->addBackgroundThread(currentStage, currentStage->render);
 
-      // 배경 바꾸기
+      // 스테이지 배경을 바꿉니다.
       images[IMAGE_BACKGROUND_IDX].fileName = RESOURCE_BACKGROUND[key];
 
       for (int frame = 0; frame < currentStage->length; frame++) {
@@ -209,7 +232,7 @@ int main() {
           _animateFishSegments_shown = 0;
           _animateFishSegments_received = currentFrame.size;
 
-          // 백그라운드 쓰레드를 만들어서 배경에서 움직이게 함
+          // 백그라운드 스레드를 만들어서 배경에서 움직이게 함
           _beginthread(animateFishSegments, 0, (AnimateProps*) &animateProps);
 
           // 화면에 다 보여질 때까지 기다림
@@ -284,12 +307,12 @@ int main() {
         }
       }
 
+      // 프레임 넘어가거나 죽기 전에 애니메이션 다 종료될 때까지 기다려야 함
       while (
         _animateFishSegments_finished < _animateFishSegments_received ||
         _animateObstacleSegments_finished < _animateObstacleSegments_received ||
         _animateItemSegments_finished < _animateItemSegments_received
       ) {};
-      // 프레임 넘어가거나 죽기 전에 애니메이션 다 종료될 때까지 기다려야 함
       if (isDead)
         break;
     }
@@ -301,10 +324,13 @@ int main() {
 
     // 게임 오버 페이지
     {
+      // 레이어별 이미지를 세팅합니다.
       images[0] = (Image) { .fileName = RESOURCE_BACKGROUND_RESULT, .x = 0, .y = 0, .scale = 1, .isShown = true };
       for (int i = 1; i < 5; i++) {
         images[i].isShown = false;
       }
+
+      // 점수 카운터를 그립니다.
       for (int idx = 5; idx < 11; idx++) {
         images[idx].fileName = RESOURCE_NUMBERS[0];
         images[idx].x = 1565 - idx * 85;
@@ -314,19 +340,26 @@ int main() {
       }
       images[11] = (Image) { .fileName = RESOURCE_TEXT_RETRY, .x = 700, .y = 750, .scale = 0.9, .isShown = true };
       imageLayer.imageCount = 12;
-      SCORE.update(&SCORE, 0); // 점수 표시
+
+      // 게임 오버 화면을 보여주기 좋게 윈도우 사이즈를 재조정하고, 렌더링합니다.
       resizeConsole(SCREEN_HEIGHT + 2, SCREEN_WIDTH);
+      SCORE.update(&SCORE, 0); // 점수를 표시합니다.
       imageLayer.renderAll(&imageLayer);
 
+      // 현재 점수를 저장합니다.
+      // SCORE.save에서 내부적으로 최고 점수보다 높은지를 확인하고, 높은 경우에만 현재 점수를 갱신해 저장합니다.
       SCORE.save(&SCORE, "data.dat");
       while (1) {
         mouse.updatePosition(&mouse);
+
+        // 다시하기 버튼을 눌렀을 경우에만 계속합니다.
         if (mouse.isClicked() && mouse.y >= 380) {
           break;
         }
       }
     }
 
+    // 메모리 할당을 해제합니다.
     for (int i = 0; i < 5; i++) {
       free(fishSegments[i]);
       free(ObstacleBottomSegments[i]);
