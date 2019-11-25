@@ -326,6 +326,7 @@ int main() {
       free(ObstacleTopSegments[i]);
       free(ItemSegments[i]);
     }
+    free(stages);
     firstRun = false;
   }
 }
