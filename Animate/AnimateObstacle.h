@@ -31,7 +31,8 @@ void animateObstacleSegments(AnimateProps* animateProps) {
           if (obstacleType == KEYFRAME_TYPE_OBSTACLE_BOTTOM && cat->y >= 450) { // 부딪힘
             // 애니메이션 표시
             Effect effect = createEffect(currentObstacle->imageLayer, obstacleType);
-            effect.addBackgroundThread(&effect, effect.render);
+            // effect.addBackgroundThread(&effect, effect.render);
+            effect.render(&effect);
 
             // 효과음 재생
             PlaySound(RESOURCE_SOUND_OBST, NULL, SND_FILENAME);

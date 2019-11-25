@@ -137,6 +137,18 @@
     <ClInclude Include="Animate\AnimateObstacle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Stage\Stage.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\StageFrames.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\StageImpl.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\StageIntf.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig">

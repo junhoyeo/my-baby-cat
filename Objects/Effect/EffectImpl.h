@@ -11,7 +11,9 @@
 void _Effect_render(Effect *self) {
   self->image->isShown = true;
   for (int i = 0; i < 10; i++) {
-    self->image->fileName = RESOURCE_EFFECT[i];
+    if (self->image) {
+      self->image->fileName = RESOURCE_EFFECT[i];
+    }
     Sleep(100);
   }
   self->image->isShown = false;

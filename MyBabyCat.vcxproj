@@ -163,6 +163,10 @@
     <ClInclude Include="Objects\Score\ScoreIntf.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Speed.h" />
+    <ClInclude Include="Stage\Stage.h" />
+    <ClInclude Include="Stage\StageFrames.h" />
+    <ClInclude Include="Stage\StageImpl.h" />
+    <ClInclude Include="Stage\StageIntf.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>

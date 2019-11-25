@@ -16,13 +16,13 @@ void _Stage_createStageOneKeyframes(Stage *self) {
     .size = 5,
   };
   keyframes[1] = (Keyframe){
-    .type = KEYFRAME_TYPE_OBSTACLE_TOP,
+    .type = KEYFRAME_TYPE_OBSTACLE_BOTTOM,
     .effect = NULL,
     .size = 1,
   };
   keyframes[2] = (Keyframe) {
     .type = KEYFRAME_TYPE_ITEM,
-    .effect = ITEM_TYPE_LIFE,
+    .effect = ITEM_TYPE_FASTER,
     .size = 1,
   };
   keyframes[3] = (Keyframe) {
