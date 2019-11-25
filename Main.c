@@ -198,20 +198,7 @@ int main() {
             }
             fishSegments[i]->image->isShown = true;
             fishSegments[i]->init(fishSegments[i]);
-            int rnd = randrange(100);
-            if (rnd < 70) { // 레벨 1
-              fishSegments[i]->level = 1;
-              images[imageLayer.imageCount - 1].fileName = RESOURCE_FISH[0];
-            } else if (rnd < 85) { // 레벨 2
-              fishSegments[i]->level = 2;
-              images[imageLayer.imageCount - 1].fileName = RESOURCE_FISH[1];
-            } else if (rnd < 95) { // 레벨 3
-              fishSegments[i]->level = 3;
-              images[imageLayer.imageCount - 1].fileName = RESOURCE_FISH[2];
-            } else { // 레벨 3
-              fishSegments[i]->level = 4;
-              images[imageLayer.imageCount - 1].fileName = RESOURCE_FISH[3];
-            }
+            fishSegments[i]->updateRandomLevel(fishSegments[i]);
           }
 
           fishSegmentPointer = &fishSegments;
