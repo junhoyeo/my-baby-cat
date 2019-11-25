@@ -47,7 +47,7 @@ int main() {
   initWindow();
 
   while (1) {
-    Image *images = malloc(25 * sizeof(Image));
+    Image *images = malloc(35 * sizeof(Image));
     if (!firstRun) {
       // 인트로를 보여주기 좋게 윈도우 사이즈를 재조정합니다.
       resizeConsole(SCREEN_HEIGHT + 2, SCREEN_WIDTH);
@@ -198,6 +198,20 @@ int main() {
             }
             fishSegments[i]->image->isShown = true;
             fishSegments[i]->init(fishSegments[i]);
+            int rnd = randrange(100);
+            if (rnd < 70) { // 레벨 1
+              fishSegments[i]->level = 1;
+              images[imageLayer.imageCount - 1].fileName = RESOURCE_FISH[0];
+            } else if (rnd < 85) { // 레벨 2
+              fishSegments[i]->level = 2;
+              images[imageLayer.imageCount - 1].fileName = RESOURCE_FISH[1];
+            } else if (rnd < 95) { // 레벨 3
+              fishSegments[i]->level = 3;
+              images[imageLayer.imageCount - 1].fileName = RESOURCE_FISH[2];
+            } else { // 레벨 3
+              fishSegments[i]->level = 4;
+              images[imageLayer.imageCount - 1].fileName = RESOURCE_FISH[3];
+            }
           }
 
           fishSegmentPointer = &fishSegments;

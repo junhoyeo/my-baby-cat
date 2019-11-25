@@ -18,6 +18,7 @@ typedef struct _Fish {
   void (*init)(struct _Fish*);
   void (*update)(struct _Fish*);
   void (*move)(struct _Fish*, int);
+  void (*updateRandomLevel)(struct _Fish*);
   // void (*waitForEnd)(struct _Fish*);
   // void (*addBackgroundThread)(struct _Fish*, void (*method)(struct _Fish*));
 } Fish;

@@ -18,6 +18,7 @@ const Fish DEFAULT_FISH = {
   _Fish_init,
   _Fish_update,
   _Fish_move,
+  _Fish_updateRandomLevel,
   // _Fish_waitForEnd,
   // _Fish_addBackgroundThread,
 };

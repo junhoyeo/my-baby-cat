@@ -4,6 +4,7 @@
 #define _OBJ_FISH_IMPL_
 
 #include <Windows.h>
+#include "Utils.h"
 #include "Resources.h"
 #include "Objects/Fish/FishIntf.h"
 
@@ -44,5 +45,22 @@ void _Fish_move(Fish* self, int changeX) {
 //   self->isMoving = 1;
 //   _beginthread(*method, 0, (Fish*) self);
 // }
+
+void _Fish_updateRandomLevel(Fish* self) {
+  int rnd = randrange(100);
+  if (rnd < 70) { // 레벨 1
+    self->level = 1;
+    self->image->fileName = RESOURCE_FISH[0];
+  } else if (rnd < 85) { // 레벨 2
+    self->level = 2;
+    self->image->fileName = RESOURCE_FISH[1];
+  } else if (rnd < 95) { // 레벨 3
+    self->level = 3;
+    self->image->fileName = RESOURCE_FISH[2];
+  } else { // 레벨 3
+    self->level = 4;
+    self->image->fileName = RESOURCE_FISH[3];
+  }
+}
 
 #endif

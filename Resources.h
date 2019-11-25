@@ -8,7 +8,7 @@
 #include <string.h>
 
 #define RESOURCE_CAT_LEN 10
-#define RESOURCE_FISH_LEN 1
+#define RESOURCE_FISH_LEN 4
 #define RESOURCE_BACKGROUND_LEN 5
 #define RESOURCE_OBST_TOP_LEN 3
 #define RESOURCE_OBST_BOTTOM_LEN 3
@@ -55,7 +55,7 @@ void loadResources(char *resouceList, int resourceLength, char* formatString) {
 
 inline void updateResources() {
   loadResources(&RESOURCE_CAT, RESOURCE_CAT_LEN, "resources/cat/cat-p%d.bmp");
-  loadResources(&RESOURCE_FISH, RESOURCE_FISH_LEN, "resources/fish/fish-lv%d.bmp");
+  loadResources(&RESOURCE_FISH, RESOURCE_FISH_LEN, "resources/fish/fish%d.bmp");
   loadResources(&RESOURCE_BACKGROUND, RESOURCE_BACKGROUND_LEN, "resources/background/background-st%d.bmp");
   loadResources(&RESOURCE_OBST_TOP, RESOURCE_OBST_TOP_LEN, "resources/obstacles/top/ob%d.bmp");
   loadResources(&RESOURCE_OBST_BOTTOM, RESOURCE_OBST_BOTTOM_LEN, "resources/obstacles/bottom/ob%d.bmp");
