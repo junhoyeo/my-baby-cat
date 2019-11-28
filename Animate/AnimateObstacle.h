@@ -35,9 +35,18 @@ void animateObstacleSegments(AnimateProps* animateProps) {
 
           if (obstacleType == KEYFRAME_TYPE_OBSTACLE_BOTTOM && cat->y >= 450) { // 부딪힘
             // 애니메이션 표시
-            Effect effect = createEffect(currentObstacle->imageLayer, obstacleType);
-            // effect.addBackgroundThread(&effect, effect.render);
-            effect.render(&effect);
+            // Effect effect = createEffect(currentObstacle->imageLayer, obstacleType);
+            // // effect.addBackgroundThread(&effect, effect.render);
+            // effect.render(&effect);
+            Image *effect = &(currentObstacle->imageLayer->images[3]);
+            effect->x = -50;
+            effect->y = 300;
+            effect->isShown = true;
+            for (int i = 0; i < 10; i++) {
+              effect->fileName = RESOURCE_EFFECT[i];
+              Sleep(100);
+            }
+            effect->isShown = false;
 
             // 효과음 재생
             PlaySound(RESOURCE_SOUND_OBST, NULL, SND_FILENAME);
@@ -52,8 +61,15 @@ void animateObstacleSegments(AnimateProps* animateProps) {
             // 위에 달린 장애물을 만난 상태에서 슬라이드하는 중이 아니라 부딪힘
 
             // 애니메이션 표시
-            Effect effect = createEffect(currentObstacle->imageLayer, obstacleType);
-            effect.addBackgroundThread(&effect, effect.render);
+            Image *effect = &(currentObstacle->imageLayer->images[3]);
+            effect->x = -150;
+            effect->y = 10;
+            effect->isShown = true;
+            for (int i = 0; i < 10; i++) {
+              effect->fileName = RESOURCE_EFFECT[i];
+              Sleep(100);
+            }
+            effect->isShown = false;
 
             // 효과음 재생
             PlaySound(RESOURCE_SOUND_OBST, NULL, SND_FILENAME);

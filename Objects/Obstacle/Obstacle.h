@@ -35,7 +35,7 @@ Obstacle createObstacleByPos(ImageLayer* imageLayer, int pos) {
     .fileName = fileName,
     .x = 1900,
     .y = 0,
-    .scale = 1,
+    .scale = 3,
     .isShown = false,
   };
   // imageLayer->imageCount++;

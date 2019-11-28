@@ -16,7 +16,7 @@ Effect createEffect(ImageLayer *imageLayer, int obstacleType) {
     .render = _Effect_render,
     .addBackgroundThread = _Effect_addBackgroundThread,
   };
-  newEffect.image->y = (obstacleType == KEYFRAME_TYPE_OBSTACLE_TOP) ? -150 : -50;
+  newEffect.image->x = (obstacleType == KEYFRAME_TYPE_OBSTACLE_TOP) ? -150 : -50;
   newEffect.image->y = (obstacleType == KEYFRAME_TYPE_OBSTACLE_TOP) ? 10 : 100;
   return newEffect;
 }

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #pragma comment (lib, "Msimg32.lib")
 
+#include <string.h>
 #include <Windows.h>
 #include "ImageLayer.h"
 
@@ -56,8 +57,13 @@ inline void putBitmapToBackDC(HDC backDC, Image image, UINT transparentColor) {
   const Size bitmapSize = getBitmapSize(bitmap);
   const int width = (int)(bitmapSize.width * scale);
   const int height = (int)(bitmapSize.height * scale);
+  UINT tc = transparentColor;
+  if (image.fileName) {
+    tc = (strstr(image.fileName, "num") != NULL ||
+        strstr(image.fileName, "text") != NULL) ? RGB(0, 9, 255) : transparentColor;
+  }
   TransparentBlt(backDC, x, y, width, height,
-    bitmapDC, 0, 0, bitmapSize.width, bitmapSize.height, transparentColor);
+    bitmapDC, 0, 0, bitmapSize.width, bitmapSize.height, tc);
 
   DeleteObject(bitmap);
   DeleteDC(bitmapDC);

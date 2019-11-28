@@ -115,10 +115,10 @@ int main() {
     resizeConsole(SCREEN_HEIGHT, SCREEN_WIDTH);
 
     // 각종 이미지를 초기화합니다.
-    images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 1, .isShown = true };
-    images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 1, .isShown = true };
-    images[2] = (Image) { .fileName = RESOURCE_LIFE[20], .x = 0, .y = 0, .scale = 1, .isShown = true };
-    images[3] = (Image) { .fileName = RESOURCE_EFFECT[0], .x = -50, .y = 100, .scale = 0.9, .isShown = false };
+    images[0] = (Image) { .fileName = RESOURCE_BACKGROUND[0], .x = 0, .y = 0, .scale = 3, .isShown = true };
+    images[1] = (Image) { .fileName = RESOURCE_CAT[0], .x = 0, .y = 450, .scale = 3, .isShown = true };
+    images[2] = (Image) { .fileName = RESOURCE_LIFE[20], .x = 0, .y = 0, .scale = 3, .isShown = true };
+    images[3] = (Image) { .fileName = RESOURCE_EFFECT[0], .x = -50, .y = 100, .scale = 3, .isShown = false };
     images[4] = (Image) { .fileName = RESOURCE_TEXT_STAGE[0], .x = 680, .y = 100, .scale = 1.5, .isShown = false };
     for (int idx = 5; idx < 11; idx++) {
       images[idx] = (Image) {
@@ -238,7 +238,7 @@ int main() {
             // 물고기 위치 이동시키고 초기화
             fishSegments[i]->x = 1900 + i * 200;
             if (_animateFishSegments_received == 0) {
-              images[imageLayer.imageCount] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1900, .y = 600, .scale = 1, .isShown = true };
+              images[imageLayer.imageCount] = (Image) { .fileName = RESOURCE_FISH[0], .x = 1900, .y = 600, .scale = 3, .isShown = true };
               fishSegments[i]->image = &images[imageLayer.imageCount];
               fishSegments[i]->imageLayer = &imageLayer;
               imageLayer.imageCount++;
@@ -328,6 +328,8 @@ int main() {
           // 애니메이션 기다려야 함
           break;
         }
+        gotoxy(0,0);
+        printf("[%d]", LIFE.hp);
       }
 
       // 프레임 넘어가거나 죽기 전에 애니메이션 다 종료될 때까지 기다려야 함
@@ -336,6 +338,12 @@ int main() {
         _animateObstacleSegments_finished < _animateObstacleSegments_received ||
         _animateItemSegments_finished < _animateItemSegments_received
       ) {};
+      // _animateFishSegments_finished = _animateFishSegments_received;
+      // _animateFishSegments_shown = _animateFishSegments_received;
+      // _animateObstacleSegments_finished = _animateObstacleSegments_received;
+      // _animateObstacleSegments_shown = _animateObstacleSegments_received;
+      // _animateItemSegments_finished = _animateItemSegments_received;
+      // _animateItemSegments_shown = _animateItemSegments_received;
       if (isDead)
         break;
     }
@@ -346,6 +354,7 @@ int main() {
     // TODO: isDead 값에 따라 다른 애니메이션 넣기
 
     // 게임 오버 페이지
+    exit(0);
     {
       // 레이어별 이미지를 세팅합니다.
       images[0] = (Image) { .fileName = RESOURCE_BACKGROUND_RESULT, .x = 0, .y = 0, .scale = 1, .isShown = true };

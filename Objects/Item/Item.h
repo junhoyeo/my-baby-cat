@@ -30,7 +30,7 @@ Item createItemByType(ImageLayer* imageLayer, int type) {
     .fileName = RESOURCE_ITEM[type],
     .x = 0,
     .y = 0,
-    .scale = 1,
+    .scale = 3,
     .isShown = false,
   };
   // imageLayer->imageCount++;

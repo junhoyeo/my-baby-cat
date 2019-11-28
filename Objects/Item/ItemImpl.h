@@ -13,7 +13,7 @@ void _Item_init(Item *self) {
   BITMAP bitmap;
   GetObject(hbitmap, sizeof(BITMAP), &bitmap);
   int height = bitmap.bmHeight;
-  self->y = 650 - height;
+  self->y = 600 - height;
   self->update(self);
   self->image->isShown = true;
 }
