@@ -1,5 +1,14 @@
 # My Baby Cat
 
+## Rewrite for dimigo console game contest
+오늘 밤 새면 어떻게든 되겠지.
+
+- [ ] [커스텀 폰트](https://www.cookierunfont.com/) 적용
+- [ ] 이미지 렌더링 직접 처리
+- [ ] 애니메이션 등 더욱 유연하게 처리
+- [ ] 로비 기능 다양화
+- [ ] 튜토리얼 추가
+
 ## Structure
 
 ```text
